@@ -23,7 +23,7 @@ paths:
                 allOf:
                   - $ref: ../models/rsp.success.v1.json
                   - $ref: ../models/rsp.x-trace.v1.json
-                  - $ref: ../models/rsp.pagination.v1.json
+                  - $ref: '#/components/schemas/rsp.pagination'
                   - type: object
                     properties:
                       data:
@@ -5500,6 +5500,52 @@ components:
         - /terminals
       title: /terminals response body
       type: object
+    rsp.pagination:
+      title: pagination.v1
+      type: object
+      description: 'Pagination response, required only in responses retreiving lits.'
+      x-examples: {}
+      properties:
+        pagination:
+          type: object
+          description: pagination object
+          required:
+            - total_count
+            - total_pages
+            - current_page
+            - limit
+          properties:
+            total_count:
+              type: integer
+              default: 0
+              example: 100
+              description: total result count
+              format: double
+              minimum: 0
+              maximum: 1000
+            total_pages:
+              type: integer
+              default: 0
+              example: 20
+              description: total number of result pages
+              maximum: 1000
+              minimum: 0
+            current_page:
+              type: integer
+              default: '0'
+              example: 3
+              description: current result page according to pagination limit
+              minimum: 0
+              maximum: 1000
+            limit:
+              type: integer
+              default: 10
+              example: 10
+              description: result limit per page
+              maximum: 1000
+              minimum: 0
+      required:
+        - pagination
   parameters:
     xTraceId:
       schema:
