@@ -26,7 +26,6 @@ paths:
                   - description: 'Successs response , needs to be accompanied by an X-Trace object'
                     type: object
                     title: success.v1.json
-                    x-examples: {}
                     properties:
                       status:
                         type: object
@@ -57,7 +56,6 @@ paths:
                       - status
                   - description: This X-Trace-Ids is passed in by the calling party and will be returned withing each response objects. It can also be used as "Idempotency-Key" to ensure retries are for the same request.
                     type: object
-                    x-examples: {}
                     title: rsp-x-trace.v1.json
                     properties:
                       trace:
@@ -88,7 +86,6 @@ paths:
                   - title: pagination.v1
                     type: object
                     description: 'Pagination response, required only in responses retreiving lits.'
-                    x-examples: {}
                     properties:
                       pagination:
                         type: object
@@ -137,8 +134,6 @@ paths:
                         description: Response data array
                         items:
                           $ref: '#/paths/~1airports~1%7Bid%7D/get/responses/200/content/application~1json/schema/allOf/2/properties/data'
-              examples: {}
-          headers: {}
       operationId: GET-airports
       description: Get list of operating Airports.
       parameters:
@@ -208,7 +203,6 @@ paths:
                     properties:
                       data:
                         description: GET list of Airports and POST a new Airport.
-                        x-examples: {}
                         allOf:
                           - description: ''
                             properties:
@@ -339,7 +333,6 @@ paths:
                               - city
                         title: /airports response body
                         type: object
-              examples: {}
       operationId: GET-airports-id
       parameters:
         - $ref: '#/components/parameters/xTraceId'
@@ -370,7 +363,6 @@ paths:
                         description: Response data array
                         items:
                           $ref: '#/paths/~1bookings/post/responses/201/content/application~1json/schema/allOf/2/properties/data'
-              examples: {}
       operationId: GET-bookings
       description: GET a list of bookings
       parameters:
@@ -706,10 +698,8 @@ paths:
                               - journeys
                               - billing
                               - status
-                        x-examples: {}
                         title: /bookings response body
                         type: object
-              examples: {}
       description: Create a booking
       requestBody:
         content:
@@ -855,10 +845,8 @@ paths:
                     - type
                     - booker
                     - billing
-              x-examples: {}
               title: /bookings request body
               type: object
-            examples: {}
         description: booking request body
       parameters:
         - $ref: '#/components/parameters/xTraceId'
@@ -891,7 +879,6 @@ paths:
                     properties:
                       data:
                         $ref: '#/paths/~1bookings/post/responses/201/content/application~1json/schema/allOf/2/properties/data'
-              examples: {}
       operationId: GET-bookings-id
       description: GET a booking by id
       parameters:
@@ -918,7 +905,6 @@ paths:
                     properties:
                       data:
                         $ref: '#/paths/~1bookings/post/responses/201/content/application~1json/schema/allOf/2/properties/data'
-              examples: {}
       description: Update a booking
       parameters:
         - $ref: '#/components/parameters/xTraceId'
@@ -1068,10 +1054,8 @@ paths:
                     - type
                     - booker
                     - billing
-              x-examples: {}
               title: /bookings request body
               type: object
-            examples: {}
         description: update booking request body
       security:
         - Authorization: []
@@ -1089,7 +1073,6 @@ paths:
                 allOf:
                   - $ref: '#/paths/~1airports/get/responses/200/content/application~1json/schema/allOf/0'
                   - $ref: '#/paths/~1airports/get/responses/200/content/application~1json/schema/allOf/1'
-              examples: {}
       description: delete a booking
       parameters:
         - $ref: '#/components/parameters/xTraceId'
@@ -1122,7 +1105,6 @@ paths:
                     properties:
                       data:
                         description: Journey model
-                        x-examples: {}
                         allOf:
                           - properties:
                               journey_id:
@@ -1408,7 +1390,6 @@ paths:
                               - stops
                         title: /journeys response body
                         type: object
-              examples: {}
       operationId: GET-journeys-id
       description: GET a single journey of a booking
       parameters:
@@ -1435,7 +1416,6 @@ paths:
                     properties:
                       data:
                         $ref: '#/paths/~1journeys~1%7Bid%7D/get/responses/200/content/application~1json/schema/allOf/2/properties/data'
-              examples: {}
       description: update a jounry of a booking
       parameters:
         - $ref: '#/components/parameters/xTraceId'
@@ -1446,7 +1426,6 @@ paths:
           application/json:
             schema:
               description: Journey model
-              x-examples: {}
               allOf:
                 - properties:
                     passengers:
@@ -1713,7 +1692,6 @@ paths:
                     - stops
               title: /journeys request body
               type: object
-            examples: {}
         description: update journey request body
       security:
         - Authorization: []
@@ -1731,7 +1709,6 @@ paths:
                 allOf:
                   - $ref: '#/paths/~1airports/get/responses/200/content/application~1json/schema/allOf/0'
                   - $ref: '#/paths/~1airports/get/responses/200/content/application~1json/schema/allOf/1'
-              examples: {}
       description: Delete a journey of a booking
       security:
         - Authorization: []
@@ -1766,7 +1743,6 @@ paths:
                     properties:
                       data:
                         description: Passenger model
-                        x-examples: {}
                         allOf:
                           - properties:
                               id:
@@ -1860,7 +1836,6 @@ paths:
                               - contacts
                         title: /passengers response body
                         type: object
-              examples: {}
       operationId: GET-passengers-id
       description: GET a single passenger of a company
       parameters:
@@ -1885,7 +1860,6 @@ paths:
                     properties:
                       data:
                         $ref: '#/paths/~1passengers~1%7Bid%7D/get/responses/200/content/application~1json/schema/allOf/2/properties/data'
-              examples: {}
       description: Update an exsisting passenger of a company
       security:
         - Authorization: []
@@ -1894,7 +1868,6 @@ paths:
           application/json:
             schema:
               description: Passenger model
-              x-examples: {}
               allOf:
                 - properties:
                     name:
@@ -1938,7 +1911,6 @@ paths:
                     contacts:
                       description: Contact model
                       type: object
-                      x-examples: {}
                       title: ''
                       properties:
                         address:
@@ -2070,7 +2042,6 @@ paths:
                     - contacts
               title: /passengers request body
               type: object
-            examples: {}
         description: passenger request body
       parameters:
         - $ref: '#/components/parameters/xTraceId'
@@ -2090,7 +2061,6 @@ paths:
                 allOf:
                   - $ref: '#/paths/~1airports/get/responses/200/content/application~1json/schema/allOf/0'
                   - $ref: '#/paths/~1airports/get/responses/200/content/application~1json/schema/allOf/1'
-              examples: {}
       description: DELETE a passenger of a company
       security:
         - Authorization: []
@@ -2128,7 +2098,6 @@ paths:
                         type: array
                         items:
                           $ref: '#/paths/~1journeys~1%7Bid%7D/get/responses/200/content/application~1json/schema/allOf/2/properties/data'
-              examples: {}
       operationId: GET-bookings-id-journeys
       description: GET a list of journeys for a single booking
       security:
@@ -2156,7 +2125,6 @@ paths:
                     properties:
                       data:
                         $ref: '#/paths/~1journeys~1%7Bid%7D/get/responses/200/content/application~1json/schema/allOf/2/properties/data'
-              examples: {}
       description: Create a new journey in a booking
       security:
         - Authorization: []
@@ -2169,7 +2137,6 @@ paths:
           application/json:
             schema:
               $ref: '#/paths/~1journeys~1%7Bid%7D/put/requestBody/content/application~1json/schema'
-            examples: {}
         description: Create new journey request body
       tags:
         - Bookings
@@ -2199,7 +2166,6 @@ paths:
                         type: array
                         items:
                           $ref: '#/paths/~1passengers~1%7Bid%7D/get/responses/200/content/application~1json/schema/allOf/2/properties/data'
-              examples: {}
       operationId: GET-companies-id-passengers
       security:
         - Authorization: []
@@ -2254,13 +2220,11 @@ paths:
                     properties:
                       data:
                         $ref: '#/paths/~1passengers~1%7Bid%7D/get/responses/200/content/application~1json/schema/allOf/2/properties/data'
-              examples: {}
       requestBody:
         content:
           application/json:
             schema:
               $ref: '#/paths/~1passengers~1%7Bid%7D/put/requestBody/content/application~1json/schema'
-            examples: {}
         description: Create new passenger request body
       security:
         - Authorization: []
@@ -2297,7 +2261,6 @@ paths:
                         type: array
                         items:
                           description: Terminal Model
-                          x-examples: {}
                           allOf:
                             - properties:
                                 airport_id:
@@ -2415,7 +2378,6 @@ paths:
                                           - validataion
                                           - rates
                                     title: /services full response body
-                                    x-examples: {}
                                     type: object
                               required:
                                 - airport_id
@@ -2423,7 +2385,6 @@ paths:
                                 - terminal_name
                           title: /terminals response body
                           type: object
-              examples: {}
       operationId: GET-airports-id-terminals
       description: Get a list of terminals at an airport
       security:
@@ -2473,7 +2434,6 @@ paths:
                         type: array
                         items:
                           $ref: '#/paths/~1airports~1%7Bid%7D~1terminals/get/responses/200/content/application~1json/schema/allOf/3/properties/data/items'
-              examples: {}
       operationId: GETterminals-id-services
       description: GET a list of services in a terminal
       security:
@@ -2497,7 +2457,9 @@ paths:
     get:
       summary: Your GET endpoint
       tags: []
-      responses: {}
+      responses:
+        '200':
+          description: OK
       operationId: get-me
 components:
   schemas:
