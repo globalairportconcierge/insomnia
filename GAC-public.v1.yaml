@@ -2164,7 +2164,6 @@ paths:
                     properties:
                       data:
                         type: array
-                        minItems: 10
                         items:
                           $ref: '#/paths/~1passengers~1%7Bid%7D/get/responses/200/content/application~1json/schema/allOf/2/properties/data'
       operationId: GET-companies-id-passengers
@@ -2286,18 +2285,34 @@ paths:
                                   uniqueItems: false
                                   description: Services provided at the terminal
                                   items:
-                                    description: Create new service in an airport
                                     allOf:
-                                      - properties:
+                                      - type: object
+                                        description: servicve id model
+                                        title: /services id response body
+                                        minProperties: 1
+                                        properties:
                                           id:
                                             type: string
-                                            description: Service object ID
                                             example: 497f6eca-6276-4993-bfeb-53cbbbba6f08
+                                            description: service id
                                             format: uuid
+                                        required:
+                                          - id
+                                      - type: object
+                                        description: Create new service in an airport
+                                        title: /services main response body
+                                        minProperties: 1
+                                        properties:
                                           service_name:
                                             type: string
                                             minLength: 1
                                             description: Name of the service
+                                        required:
+                                          - service_name
+                                      - type: object
+                                        description: service field model
+                                        title: /services fields response body
+                                        properties:
                                           fields:
                                             type: array
                                             uniqueItems: true
@@ -2306,12 +2321,21 @@ paths:
                                             items:
                                               type: object
                                               properties:
-                                                field_name:
+                                                type:
                                                   type: string
                                                   minLength: 1
-                                                field_type:
+                                                  example: integer
+                                                  maxLength: 20
+                                                name:
                                                   type: string
                                                   minLength: 1
+                                                  example: paxCount
+                                                  maxLength: 50
+                                                label:
+                                                  type: string
+                                                  example: Pax Count
+                                                  minLength: 1
+                                                  maxLength: 100
                                                 validation:
                                                   type: array
                                                   uniqueItems: true
@@ -2321,65 +2345,44 @@ paths:
                                                     properties:
                                                       required:
                                                         type: boolean
+                                                      pattern:
+                                                        type: string
+                                                        example: '([A-Z])\\w+'
+                                                        minLength: 1
+                                                        maxLength: 100
+                                                      min:
+                                                        type: integer
+                                                        example: 1
+                                                        minimum: 1
+                                                        maximum: 1000
+                                                      max:
+                                                        type: integer
+                                                        example: 100
+                                                        minimum: 1
+                                                        maximum: 1000
                                                     required:
                                                       - required
+                                                      - pattern
+                                                      - min
+                                                      - max
                                               required:
-                                                - field_name
-                                                - field_type
-                                          validataion:
-                                            type: array
-                                            uniqueItems: true
-                                            minItems: 1
-                                            description: Validation of the service
-                                            items:
-                                              type: object
-                                              properties:
-                                                rule:
-                                                  type: string
-                                                  minLength: 1
-                                                service_id:
-                                                  type: string
-                                                  minLength: 1
-                                              required:
-                                                - rule
-                                                - service_id
-                                          rates:
-                                            type: array
-                                            uniqueItems: true
-                                            minItems: 1
-                                            description: rates of the service
-                                            items:
-                                              type: object
-                                              properties:
-                                                currency:
-                                                  type: string
-                                                  minLength: 1
-                                                  default: USD
-                                                  example: USD
-                                                packages:
-                                                  type: array
-                                                  uniqueItems: true
-                                                  minItems: 1
-                                                  items:
-                                                    type: object
-                                                    properties:
-                                                      pax:
-                                                        type: number
-                                                      value:
-                                                        type: number
-                                                    required:
-                                                      - pax
-                                                      - value
-                                              required:
-                                                - currency
+                                                - type
+                                                - name
+                                                - label
+                                                - validation
                                         required:
-                                          - id
-                                          - service_name
                                           - fields
-                                          - validataion
-                                          - rates
-                                    title: /services full response body
-                                    type: object
+                                      - title: image.v1
+                                        type: object
+                                        properties:
+                                          image:
+                                            type: string
+                                            x-faker: image.imageUrl
+                                            example: service_image.png
+                                            minLength: 1
+                                            maxLength: 500
+                                            description: service image
+                                        description: image model
                               required:
                                 - airport_id
                                 - id
@@ -2454,71 +2457,10 @@ paths:
         - $ref: '#/components/parameters/queryLimit'
         - $ref: '#/components/parameters/startingFrom'
         - $ref: '#/components/parameters/querySort'
-  /me:
-    get:
-      summary: Your GET endpoint
-      tags: []
-      responses:
-        '200':
-          description: OK
-      operationId: get-me
 components:
   schemas:
     Airport:
       description: GET list of Airports and POST a new Airport.
-      x-examples:
-        airports response body example:
-          id: 497f6eca-6276-4993-bfeb-53cbbbba6f08
-          code: LHR
-          name: LHR London Heahrow Airport
-          country: United Kingdom
-          city: London
-          booking_window: 48
-          terminals:
-            - airport_id: 497f6eca-6276-4993-bfeb-53cbbbba6f08
-              id: 497f6eca-6276-4993-bfeb-53cbbbba6f08
-              terminal_name: LHR Terminal 2
-              services:
-                - id: 497f6eca-6276-4993-bfeb-53cbbbba6f08
-                  service_name: string
-                  fields:
-                    - field_name: string
-                      field_type: string
-                      validation:
-                        - required: true
-                  validataion:
-                    - rule: string
-                      service_id: string
-                  rates:
-                    - currency: USD
-                      packages:
-                        - pax: 0
-                          value: 0
-                  created_by:
-                    id: 497f6eca-6276-4993-bfeb-53cbbbba6f08
-                    username: Resil
-                  updated_by:
-                    id: 497f6eca-6276-4993-bfeb-53cbbbba6f08
-                    username: Anna
-                  created_at: '2019-08-24T14:15:22Z'
-                  updated_at: '2019-08-24T14:15:22Z'
-                  deleted_at: '2019-08-24T14:15:22Z'
-          charges:
-            surcharge:
-              - below: 48
-                percentage: 50
-            additional_hour_charge:
-              - currancy: GBP
-                rate: 50
-          air_side_meetup:
-            international:
-              arrival: true
-              depature: true
-              transit: true
-            domestic:
-              arrival: true
-              depature: true
-              transit: true
       allOf:
         - description: ''
           properties:
@@ -2572,45 +2514,6 @@ components:
               description: List of terminals at the airport
               items:
                 description: Terminal Model
-                x-examples:
-                  terminal response body example:
-                    airport_id: 497f6eca-6276-4993-bfeb-53cbbbba6f08
-                    id: 497f6eca-6276-4993-bfeb-53cbbbba6f08
-                    terminal_name: LHR Terminal 2
-                    services:
-                      - id: 497f6eca-6276-4993-bfeb-53cbbbba6f08
-                        service_name: string
-                        fields:
-                          - field_name: string
-                            field_type: string
-                            validation:
-                              - required: true
-                        validataion:
-                          - rule: string
-                            service_id: string
-                        rates:
-                          - currency: USD
-                            packages:
-                              - pax: 0
-                                value: 0
-                        created_by:
-                          id: 497f6eca-6276-4993-bfeb-53cbbbba6f08
-                          username: Resil
-                        updated_by:
-                          id: 497f6eca-6276-4993-bfeb-53cbbbba6f08
-                          username: Anna
-                        created_at: '2019-08-24T14:15:22Z'
-                        updated_at: '2019-08-24T14:15:22Z'
-                        deleted_at: '2019-08-24T14:15:22Z'
-                    created_by:
-                      id: 497f6eca-6276-4993-bfeb-53cbbbba6f08
-                      username: Resil
-                    updated_by:
-                      id: 497f6eca-6276-4993-bfeb-53cbbbba6f08
-                      username: Anna
-                    created_at: '2019-08-24T14:15:22Z'
-                    updated_at: '2019-08-24T14:15:22Z'
-                    deleted_at: '2019-08-24T14:15:22Z'
                 allOf:
                   - properties:
                       airport_id:
@@ -2730,32 +2633,6 @@ components:
                           title: /services full response body
                           x-tags:
                             - /services
-                          x-examples:
-                            service response body example:
-                              id: 497f6eca-6276-4993-bfeb-53cbbbba6f08
-                              service_name: string
-                              fields:
-                                - field_name: string
-                                  field_type: string
-                                  validation:
-                                    - required: true
-                              validataion:
-                                - rule: string
-                                  service_id: string
-                              rates:
-                                - currency: USD
-                                  packages:
-                                    - pax: 0
-                                      value: 0
-                              created_by:
-                                id: 497f6eca-6276-4993-bfeb-53cbbbba6f08
-                                username: Resil
-                              updated_by:
-                                id: 497f6eca-6276-4993-bfeb-53cbbbba6f08
-                                username: Anna
-                              created_at: '2019-08-24T14:15:22Z'
-                              updated_at: '2019-08-24T14:15:22Z'
-                              deleted_at: '2019-08-24T14:15:22Z'
                           type: object
                     required:
                       - airport_id
@@ -2973,113 +2850,6 @@ components:
               minItems: 1
               items:
                 description: Journey model
-                x-examples:
-                  journey response body example:
-                    journey_id: 497f6eca-6276-4993-bfeb-53cbbbba6f08
-                    reference_id: 1
-                    passengers:
-                      meta:
-                        adult: 2
-                        child: 2
-                        infant: 0
-                        bags: 5
-                      pax:
-                        - type: Lead
-                          pnr: JHS3ES
-                          class: First
-                          details:
-                            id: 497f6eca-6276-4993-bfeb-53cbbbba6f08
-                            name:
-                              title: Mr.
-                              forename: John
-                              surname: Doe
-                            contacts:
-                              address:
-                                streets:
-                                  - 'No 221/1, Baker''s Street'
-                                city: Hethrow
-                                state: London
-                                postal_code: LN223 2323
-                                country: United Kingdom
-                              emails:
-                                - type: Main
-                                  email: email@email.com
-                              phones:
-                                - type: Office
-                                  name: Head Office
-                                  phone: '+18666612345'
-                            date_of_birth: '1989-02-14'
-                            passport_no: N32343423
-                            comments: First time traveller.
-                            signage: John Doe
-                            sig_image: signage_image.png
-                            image: passenger_image.png
-                            pas_stat: true
-                    stops:
-                      - type: Connection
-                        meeting_date: '2020-10-31'
-                        meeting_time: '18:20:00'
-                        location: United Kingdom
-                        airport:
-                          id: 497f6eca-6276-4993-bfeb-53cbbbba6f08
-                          name: LHR London Hethrow Airport
-                        flights:
-                          arrival:
-                            flight_no: BA281
-                            terminal: LHR Terminal 2
-                            date: '2020-11-05'
-                            time: '20:15:00'
-                            origin:
-                              id: 497f6eca-6276-4993-bfeb-53cbbbba6f08
-                              name: LAX Los Angeles Airport
-                          departure:
-                            flight_no: BA282
-                            terminal: LHR Terminal 4
-                            date: '2020-11-05'
-                            time: '22:15:00'
-                            destination:
-                              id: 497f6eca-6276-4993-bfeb-53cbbbba6f08
-                              name: DXB Dubai International Airport
-                        services:
-                          - id: 497f6eca-6276-4993-bfeb-53cbbbba6f08
-                            service_name: Meet & Assist Service
-                            passengers:
-                              meta:
-                                adult: 2
-                                child: 2
-                                infant: 0
-                                bags: 5
-                              pax:
-                                - type: Lead
-                                  details:
-                                    id: 497f6eca-6276-4993-bfeb-53cbbbba6f08
-                                    name:
-                                      title: Mr.
-                                      forename: John
-                                      surname: Doe
-                                    contacts:
-                                      address:
-                                        streets:
-                                          - 'No 221/1, Baker''s Street'
-                                        city: Hethrow
-                                        state: London
-                                        postal_code: LN223 2323
-                                        country: United Kingdom
-                                      emails:
-                                        - type: Main
-                                          email: email@email.com
-                                      phones:
-                                        - type: Office
-                                          name: Head Office
-                                          phone: '+18666612345'
-                                    date_of_birth: '1989-02-14'
-                                    passport_no: N32343423
-                                    comments: First time traveller.
-                                    signage: John Doe
-                                    sig_image: signage_image.png
-                                    image: passenger_image.png
-                                    pas_stat: true
-                    special_notes: string
                 allOf:
                   - properties:
                       journey_id:
@@ -3151,35 +2921,6 @@ components:
                                   maxLength: 100
                                 details:
                                   description: Passenger model
-                                  x-examples:
-                                    passenger response body example:
-                                      id: 497f6eca-6276-4993-bfeb-53cbbbba6f08
-                                      name:
-                                        title: Mr.
-                                        forename: John
-                                        surname: Doe
-                                      contacts:
-                                        address:
-                                          streets:
-                                            - 'No 221/1, Baker''s Street'
-                                          city: Hethrow
-                                          state: London
-                                          postal_code: LN223 2323
-                                          country: United Kingdom
-                                        emails:
-                                          - type: Main
-                                            email: email@email.com
-                                        phones:
-                                          - type: Office
-                                            name: Head Office
-                                            phone: '+18666612345'
-                                      date_of_birth: '1989-02-14'
-                                      passport_no: N32343423
-                                      comments: First time traveller.
-                                      signage: John Doe
-                                      sig_image: signage_image.png
-                                      image: passenger_image.png
-                                      pas_stat: true
                                   allOf:
                                     - properties:
                                         id:
@@ -3228,22 +2969,6 @@ components:
                                         contacts:
                                           description: Contact model
                                           type: object
-                                          x-examples:
-                                            contacts example:
-                                              address:
-                                                streets:
-                                                  - 'No 221/1, Baker''s Street'
-                                                city: Hethrow
-                                                state: London
-                                                postal_code: LN223 2323
-                                                country: United Kingdom
-                                              emails:
-                                                - type: Main
-                                                  email: email@email.com
-                                              phones:
-                                                - type: Office
-                                                  name: Head Office
-                                                  phone: '+18666612345'
                                           properties:
                                             address:
                                               type: object
@@ -3575,35 +3300,6 @@ components:
                                               maxLength: 10
                                             details:
                                               description: Passenger model
-                                              x-examples:
-                                                passenger response body example:
-                                                  id: 497f6eca-6276-4993-bfeb-53cbbbba6f08
-                                                  name:
-                                                    title: Mr.
-                                                    forename: John
-                                                    surname: Doe
-                                                  contacts:
-                                                    address:
-                                                      streets:
-                                                        - 'No 221/1, Baker''s Street'
-                                                      city: Hethrow
-                                                      state: London
-                                                      postal_code: LN223 2323
-                                                      country: United Kingdom
-                                                    emails:
-                                                      - type: Main
-                                                        email: email@email.com
-                                                    phones:
-                                                      - type: Office
-                                                        name: Head Office
-                                                        phone: '+18666612345'
-                                                  date_of_birth: '1989-02-14'
-                                                  passport_no: N32343423
-                                                  comments: First time traveller.
-                                                  signage: John Doe
-                                                  sig_image: signage_image.png
-                                                  image: passenger_image.png
-                                                  pas_stat: true
                                               allOf:
                                                 - properties:
                                                     id:
@@ -3652,22 +3348,6 @@ components:
                                                     contacts:
                                                       description: Contact model
                                                       type: object
-                                                      x-examples:
-                                                        contacts example:
-                                                          address:
-                                                            streets:
-                                                              - 'No 221/1, Baker''s Street'
-                                                            city: Hethrow
-                                                            state: London
-                                                            postal_code: LN223 2323
-                                                            country: United Kingdom
-                                                          emails:
-                                                            - type: Main
-                                                              email: email@email.com
-                                                          phones:
-                                                            - type: Office
-                                                              name: Head Office
-                                                              phone: '+18666612345'
                                                       properties:
                                                         address:
                                                           type: object
@@ -3933,258 +3613,12 @@ components:
             - journeys
             - billing
             - status
-      x-examples:
-        booking response body example:
-          id: 497f6eca-6276-4993-bfeb-53cbbbba6f08
-          reference_id: 1001
-          type: GAC
-          booker:
-            id: 497f6eca-6276-4993-bfeb-53cbbbba6f08
-            email: email@email.com
-            email_contacts:
-              - type: Main
-                email: email@email.com
-            name:
-              title: Mr.
-              forename: John
-              surname: Doe
-            company:
-              id: 497f6eca-6276-4993-bfeb-53cbbbba6f08
-              name: This is a Company PVT Ltd
-          journeys:
-            - journey_id: 497f6eca-6276-4993-bfeb-53cbbbba6f08
-              reference_id: 1
-              passengers:
-                meta:
-                  adult: 2
-                  child: 2
-                  infant: 0
-                  bags: 5
-                pax:
-                  - type: Lead
-                    pnr: JHS3ES
-                    class: First
-                    details:
-                      id: 497f6eca-6276-4993-bfeb-53cbbbba6f08
-                      name:
-                        title: Mr.
-                        forename: John
-                        surname: Doe
-                      contacts:
-                        address:
-                          streets:
-                            - 'No 221/1, Baker''s Street'
-                          city: Hethrow
-                          state: London
-                          postal_code: LN223 2323
-                          country: United Kingdom
-                        emails:
-                          - type: Main
-                            email: email@email.com
-                        phones:
-                          - type: Office
-                            name: Head Office
-                            phone: '+18666612345'
-                      date_of_birth: '1989-02-14'
-                      passport_no: N32343423
-                      comments: First time traveller.
-                      signage: John Doe
-                      sig_image: signage_image.png
-                      image: passenger_image.png
-                      pas_stat: true
-              stops:
-                - type: Connection
-                  meeting_date: '2020-10-31'
-                  meeting_time: '18:20:00'
-                  location: United Kingdom
-                  airport:
-                    id: 497f6eca-6276-4993-bfeb-53cbbbba6f08
-                    name: LHR London Hethrow Airport
-                  flights:
-                    arrival:
-                      flight_no: BA281
-                      terminal: LHR Terminal 2
-                      date: '2020-11-05'
-                      time: '20:15:00'
-                      origin:
-                        id: 497f6eca-6276-4993-bfeb-53cbbbba6f08
-                        name: LAX Los Angeles Airport
-                    departure:
-                      flight_no: BA282
-                      terminal: LHR Terminal 4
-                      date: '2020-11-05'
-                      time: '22:15:00'
-                      destination:
-                        id: 497f6eca-6276-4993-bfeb-53cbbbba6f08
-                        name: DXB Dubai International Airport
-                  services:
-                    - id: 497f6eca-6276-4993-bfeb-53cbbbba6f08
-                      service_name: Meet & Assist Service
-                      passengers:
-                        meta:
-                          adult: 2
-                          child: 2
-                          infant: 0
-                          bags: 5
-                        pax:
-                          - type: Lead
-                            details:
-                              id: 497f6eca-6276-4993-bfeb-53cbbbba6f08
-                              name:
-                                title: Mr.
-                                forename: John
-                                surname: Doe
-                              contacts:
-                                address:
-                                  streets:
-                                    - 'No 221/1, Baker''s Street'
-                                  city: Hethrow
-                                  state: London
-                                  postal_code: LN223 2323
-                                  country: United Kingdom
-                                emails:
-                                  - type: Main
-                                    email: email@email.com
-                                phones:
-                                  - type: Office
-                                    name: Head Office
-                                    phone: '+18666612345'
-                              date_of_birth: '1989-02-14'
-                              passport_no: N32343423
-                              comments: First time traveller.
-                              signage: John Doe
-                              sig_image: signage_image.png
-                              image: passenger_image.png
-                              pas_stat: true
-              special_notes: string
-          billing:
-            type: Online
-            status: 1
-            ref_id: txn_1Hgdg0KqcoAJEUrOcr6pMaw4
-            card: Visa 4242
-            total_service_cost: '336.38'
-            add_hrs_charge: '0.00'
-            surcharge: 0
-            total_booking_cost: 336.38
-            promo_code: PROMO10
-            total_discount: 33.63
-            grand_total: 302.75
-            total_paid: 302.75
-          commets: First Time Traveller
-          status: true
       x-tags:
         - /bookings
       title: /bookings response body
       type: object
     journey:
       description: Journey model
-      x-examples:
-        journey response body example:
-          journey_id: 497f6eca-6276-4993-bfeb-53cbbbba6f08
-          reference_id: 1
-          passengers:
-            meta:
-              adult: 2
-              child: 2
-              infant: 0
-              bags: 5
-            pax:
-              - type: Lead
-                pnr: JHS3ES
-                class: First
-                details:
-                  id: 497f6eca-6276-4993-bfeb-53cbbbba6f08
-                  name:
-                    title: Mr.
-                    forename: John
-                    surname: Doe
-                  contacts:
-                    address:
-                      streets:
-                        - 'No 221/1, Baker''s Street'
-                      city: Hethrow
-                      state: London
-                      postal_code: LN223 2323
-                      country: United Kingdom
-                    emails:
-                      - type: Main
-                        email: email@email.com
-                    phones:
-                      - type: Office
-                        name: Head Office
-                        phone: '+18666612345'
-                  date_of_birth: '1989-02-14'
-                  passport_no: N32343423
-                  comments: First time traveller.
-                  signage: John Doe
-                  sig_image: signage_image.png
-                  image: passenger_image.png
-                  pas_stat: true
-          stops:
-            - type: Connection
-              meeting_date: '2020-10-31'
-              meeting_time: '18:20:00'
-              location: United Kingdom
-              airport:
-                id: 497f6eca-6276-4993-bfeb-53cbbbba6f08
-                name: LHR London Hethrow Airport
-              flights:
-                arrival:
-                  flight_no: BA281
-                  terminal: LHR Terminal 2
-                  date: '2020-11-05'
-                  time: '20:15:00'
-                  origin:
-                    id: 497f6eca-6276-4993-bfeb-53cbbbba6f08
-                    name: LAX Los Angeles Airport
-                departure:
-                  flight_no: BA282
-                  terminal: LHR Terminal 4
-                  date: '2020-11-05'
-                  time: '22:15:00'
-                  destination:
-                    id: 497f6eca-6276-4993-bfeb-53cbbbba6f08
-                    name: DXB Dubai International Airport
-              services:
-                - id: 497f6eca-6276-4993-bfeb-53cbbbba6f08
-                  service_name: Meet & Assist Service
-                  passengers:
-                    meta:
-                      adult: 2
-                      child: 2
-                      infant: 0
-                      bags: 5
-                    pax:
-                      - type: Lead
-                        details:
-                          id: 497f6eca-6276-4993-bfeb-53cbbbba6f08
-                          name:
-                            title: Mr.
-                            forename: John
-                            surname: Doe
-                          contacts:
-                            address:
-                              streets:
-                                - 'No 221/1, Baker''s Street'
-                              city: Hethrow
-                              state: London
-                              postal_code: LN223 2323
-                              country: United Kingdom
-                            emails:
-                              - type: Main
-                                email: email@email.com
-                            phones:
-                              - type: Office
-                                name: Head Office
-                                phone: '+18666612345'
-                          date_of_birth: '1989-02-14'
-                          passport_no: N32343423
-                          comments: First time traveller.
-                          signage: John Doe
-                          sig_image: signage_image.png
-                          image: passenger_image.png
-                          pas_stat: true
-          special_notes: string
       allOf:
         - properties:
             journey_id:
@@ -4256,35 +3690,6 @@ components:
                         maxLength: 100
                       details:
                         description: Passenger model
-                        x-examples:
-                          passenger response body example:
-                            id: 497f6eca-6276-4993-bfeb-53cbbbba6f08
-                            name:
-                              title: Mr.
-                              forename: John
-                              surname: Doe
-                            contacts:
-                              address:
-                                streets:
-                                  - 'No 221/1, Baker''s Street'
-                                city: Hethrow
-                                state: London
-                                postal_code: LN223 2323
-                                country: United Kingdom
-                              emails:
-                                - type: Main
-                                  email: email@email.com
-                              phones:
-                                - type: Office
-                                  name: Head Office
-                                  phone: '+18666612345'
-                            date_of_birth: '1989-02-14'
-                            passport_no: N32343423
-                            comments: First time traveller.
-                            signage: John Doe
-                            sig_image: signage_image.png
-                            image: passenger_image.png
-                            pas_stat: true
                         allOf:
                           - properties:
                               id:
@@ -4333,22 +3738,6 @@ components:
                               contacts:
                                 description: Contact model
                                 type: object
-                                x-examples:
-                                  contacts example:
-                                    address:
-                                      streets:
-                                        - 'No 221/1, Baker''s Street'
-                                      city: Hethrow
-                                      state: London
-                                      postal_code: LN223 2323
-                                      country: United Kingdom
-                                    emails:
-                                      - type: Main
-                                        email: email@email.com
-                                    phones:
-                                      - type: Office
-                                        name: Head Office
-                                        phone: '+18666612345'
                                 properties:
                                   address:
                                     type: object
@@ -4680,35 +4069,6 @@ components:
                                     maxLength: 10
                                   details:
                                     description: Passenger model
-                                    x-examples:
-                                      passenger response body example:
-                                        id: 497f6eca-6276-4993-bfeb-53cbbbba6f08
-                                        name:
-                                          title: Mr.
-                                          forename: John
-                                          surname: Doe
-                                        contacts:
-                                          address:
-                                            streets:
-                                              - 'No 221/1, Baker''s Street'
-                                            city: Hethrow
-                                            state: London
-                                            postal_code: LN223 2323
-                                            country: United Kingdom
-                                          emails:
-                                            - type: Main
-                                              email: email@email.com
-                                          phones:
-                                            - type: Office
-                                              name: Head Office
-                                              phone: '+18666612345'
-                                        date_of_birth: '1989-02-14'
-                                        passport_no: N32343423
-                                        comments: First time traveller.
-                                        signage: John Doe
-                                        sig_image: signage_image.png
-                                        image: passenger_image.png
-                                        pas_stat: true
                                     allOf:
                                       - properties:
                                           id:
@@ -4757,22 +4117,6 @@ components:
                                           contacts:
                                             description: Contact model
                                             type: object
-                                            x-examples:
-                                              contacts example:
-                                                address:
-                                                  streets:
-                                                    - 'No 221/1, Baker''s Street'
-                                                  city: Hethrow
-                                                  state: London
-                                                  postal_code: LN223 2323
-                                                  country: United Kingdom
-                                                emails:
-                                                  - type: Main
-                                                    email: email@email.com
-                                                phones:
-                                                  - type: Office
-                                                    name: Head Office
-                                                    phone: '+18666612345'
                                             properties:
                                               address:
                                                 type: object
@@ -4928,35 +4272,6 @@ components:
       type: object
     passenger:
       description: Passenger model
-      x-examples:
-        passenger response body example:
-          id: 497f6eca-6276-4993-bfeb-53cbbbba6f08
-          name:
-            title: Mr.
-            forename: John
-            surname: Doe
-          contacts:
-            address:
-              streets:
-                - 'No 221/1, Baker''s Street'
-              city: Hethrow
-              state: London
-              postal_code: LN223 2323
-              country: United Kingdom
-            emails:
-              - type: Main
-                email: email@email.com
-            phones:
-              - type: Office
-                name: Head Office
-                phone: '+18666612345'
-          date_of_birth: '1989-02-14'
-          passport_no: N32343423
-          comments: First time traveller.
-          signage: John Doe
-          sig_image: signage_image.png
-          image: passenger_image.png
-          pas_stat: true
       allOf:
         - properties:
             id:
@@ -5005,22 +4320,6 @@ components:
             contacts:
               description: Contact model
               type: object
-              x-examples:
-                contacts example:
-                  address:
-                    streets:
-                      - 'No 221/1, Baker''s Street'
-                    city: Hethrow
-                    state: London
-                    postal_code: LN223 2323
-                    country: United Kingdom
-                  emails:
-                    - type: Main
-                      email: email@email.com
-                  phones:
-                    - type: Office
-                      name: Head Office
-                      phone: '+18666612345'
               properties:
                 address:
                   type: object
@@ -5251,47 +4550,9 @@ components:
       title: /services full response body
       x-tags:
         - /services
-      x-examples:
-        service response body example:
-          id: 497f6eca-6276-4993-bfeb-53cbbbba6f08
-          service_name: string
-          fields:
-            - field_name: string
-              field_type: string
-              validation:
-                - required: true
-          validataion:
-            - rule: string
-              service_id: string
-          rates:
-            - currency: USD
-              packages:
-                - pax: 0
-                  value: 0
       type: object
     terminal:
       description: Terminal Model
-      x-examples:
-        terminal response body example:
-          airport_id: 497f6eca-6276-4993-bfeb-53cbbbba6f08
-          id: 497f6eca-6276-4993-bfeb-53cbbbba6f08
-          terminal_name: LHR Terminal 2
-          services:
-            - id: 497f6eca-6276-4993-bfeb-53cbbbba6f08
-              service_name: string
-              fields:
-                - field_name: string
-                  field_type: string
-                  validation:
-                    - required: true
-              validataion:
-                - rule: string
-                  service_id: string
-              rates:
-                - currency: USD
-                  packages:
-                    - pax: 0
-                      value: 0
       allOf:
         - properties:
             airport_id:
@@ -5411,23 +4672,6 @@ components:
                 title: /services full response body
                 x-tags:
                   - /services
-                x-examples:
-                  service response body example:
-                    id: 497f6eca-6276-4993-bfeb-53cbbbba6f08
-                    service_name: string
-                    fields:
-                      - field_name: string
-                        field_type: string
-                        validation:
-                          - required: true
-                    validataion:
-                      - rule: string
-                        service_id: string
-                    rates:
-                      - currency: USD
-                        packages:
-                          - pax: 0
-                            value: 0
                 type: object
           required:
             - airport_id
