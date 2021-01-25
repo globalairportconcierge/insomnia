@@ -136,6 +136,11 @@ paths:
                           description: GET Booking details and POST new Booking.
                           allOf:
                             - properties:
+                                id:
+                                  type: string
+                                  example: 497f6eca-6276-4993-bfeb-53cbbbba6f08
+                                  format: uuid
+                                  description: booking id
                                 ref_no:
                                   type: string
                                   example: 497f6eca-6276-4993-bfeb-53cbbbba6f08
@@ -411,26 +416,11 @@ paths:
                                                                   example: John Doe
                                                                   maxLength: 200
                                                                   description: Signage of the passenger
-                                                                sig_image:
-                                                                  type: string
-                                                                  x-faker: image.imageUrl
-                                                                  example: signage_image.png
-                                                                  maxLength: 200
-                                                                  description: Sge image
-                                                                image:
-                                                                  type: string
-                                                                  x-faker: image.imageUrl
-                                                                  example: passenger_image.png
-                                                                  maxLength: 200
-                                                                  description: Sge image
-                                                                pas_stat:
-                                                                  type: boolean
-                                                                  description: Status of the passenger
                                                               required:
                                                                 - id
+                                                                - type
                                                                 - name
                                                                 - contacts
-                                                                - type
                                                           title: /passengers response body
                                                           type: object
                                                       required:
@@ -629,26 +619,11 @@ paths:
                                                                   example: John Doe
                                                                   maxLength: 200
                                                                   description: Signage of the passenger
-                                                                sig_image:
-                                                                  type: string
-                                                                  x-faker: image.imageUrl
-                                                                  example: signage_image.png
-                                                                  maxLength: 200
-                                                                  description: Sge image
-                                                                image:
-                                                                  type: string
-                                                                  x-faker: image.imageUrl
-                                                                  example: passenger_image.png
-                                                                  maxLength: 200
-                                                                  description: Sge image
-                                                                pas_stat:
-                                                                  type: boolean
-                                                                  description: Status of the passenger
                                                               required:
                                                                 - id
+                                                                - type
                                                                 - name
                                                                 - contacts
-                                                                - type
                                                           title: /passengers response body
                                                           type: object
                                                       required:
@@ -847,26 +822,11 @@ paths:
                                                                   example: John Doe
                                                                   maxLength: 200
                                                                   description: Signage of the passenger
-                                                                sig_image:
-                                                                  type: string
-                                                                  x-faker: image.imageUrl
-                                                                  example: signage_image.png
-                                                                  maxLength: 200
-                                                                  description: Sge image
-                                                                image:
-                                                                  type: string
-                                                                  x-faker: image.imageUrl
-                                                                  example: passenger_image.png
-                                                                  maxLength: 200
-                                                                  description: Sge image
-                                                                pas_stat:
-                                                                  type: boolean
-                                                                  description: Status of the passenger
                                                               required:
                                                                 - id
+                                                                - type
                                                                 - name
                                                                 - contacts
-                                                                - type
                                                           title: /passengers response body
                                                           type: object
                                                       required:
@@ -885,12 +845,15 @@ paths:
                                                   - connection
                                                   - meeting_date
                                                   - departure_date
+                                                  - terminal_id
+                                                  - terminal_name
                                                   - airport
                                                   - contact_point
                                                   - special_notes
                                                   - additional_hour_charge
                                                   - surcharge
                                                   - services
+                                                  - location_total
                                                 properties:
                                                   connection:
                                                     type: boolean
@@ -903,6 +866,15 @@ paths:
                                                     example: '2020-10-10T20:13:00.000Z'
                                                     format: date-time
                                                     description: flight arrival date
+                                                  terminal_id:
+                                                    type: string
+                                                    example: 497f6eca-6276-4993-bfeb-53cbbbba6f08
+                                                    format: uuid
+                                                  terminal_name:
+                                                    type: string
+                                                    minLength: 1
+                                                    example: LHR Terminal 2
+                                                    maxLength: 200
                                                   airport:
                                                     type: object
                                                     required:
@@ -912,8 +884,6 @@ paths:
                                                       - name
                                                       - city
                                                       - country
-                                                      - terminal
-                                                      - time_zone
                                                     properties:
                                                       id:
                                                         type: string
@@ -947,16 +917,6 @@ paths:
                                                         minLength: 1
                                                         example: United Kingdom
                                                         maxLength: 60
-                                                      terminal:
-                                                        type: string
-                                                        minLength: 1
-                                                        example: LHR Terminal 2
-                                                        maxLength: 200
-                                                      time_zone:
-                                                        type: string
-                                                        example: Europe/London
-                                                        minLength: 1
-                                                        maxLength: 200
                                                   contact_point:
                                                     type: object
                                                     required:
@@ -998,27 +958,68 @@ paths:
                                                     uniqueItems: true
                                                     minItems: 1
                                                     items:
-                                                      type: object
-                                                      properties:
-                                                        id:
-                                                          type: string
-                                                          example: 497f6eca-6276-4993-bfeb-53cbbbba6f08
-                                                          format: uuid
-                                                        service_name:
-                                                          type: string
-                                                          minLength: 1
-                                                          example: Meet & Assist
-                                                          maxLength: 200
-                                                        rate:
-                                                          type: number
-                                                          x-faker: commerce.price
-                                                          example: 200
-                                                          minimum: 1
-                                                          maximum: 10000
-                                                      required:
-                                                        - id
-                                                        - service_name
-                                                        - rate
+                                                      allOf:
+                                                        - type: object
+                                                          properties:
+                                                            id:
+                                                              type: string
+                                                              example: 497f6eca-6276-4993-bfeb-53cbbbba6f08
+                                                              format: uuid
+                                                            service_name:
+                                                              type: string
+                                                              minLength: 1
+                                                              example: Meet & Assist
+                                                              maxLength: 200
+                                                            rate:
+                                                              type: number
+                                                              x-faker: commerce.price
+                                                              example: 200
+                                                              minimum: 1
+                                                              maximum: 10000
+                                                          required:
+                                                            - id
+                                                            - service_name
+                                                            - rate
+                                                        - type: object
+                                                          description: service field request model
+                                                          title: /services fields request body
+                                                          properties:
+                                                            fields:
+                                                              type: array
+                                                              uniqueItems: true
+                                                              minItems: 1
+                                                              description: Fields of the service
+                                                              items:
+                                                                type: object
+                                                                properties:
+                                                                  name:
+                                                                    type: string
+                                                                    minLength: 1
+                                                                    maxLength: 50
+                                                                    example: pax_count
+                                                                  value:
+                                                                    type: string
+                                                                    example: '1'
+                                                                    minLength: 1
+                                                                    maxLength: 100
+                                                                required:
+                                                                  - name
+                                                                  - value
+                                                          required:
+                                                            - fields
+                                                  location_total:
+                                                    type: object
+                                                    required:
+                                                      - value
+                                                      - currency
+                                                    properties:
+                                                      value:
+                                                        type: number
+                                                        example: 200
+                                                        minimum: 1
+                                                        maximum: 10000
+                                                      currency:
+                                                        type: string
                                               arrival:
                                                 type: object
                                                 properties:
@@ -1033,6 +1034,15 @@ paths:
                                                     example: '2020-10-10T18:13:00.000Z'
                                                     format: date-time
                                                     description: flight adate
+                                                  terminal_id:
+                                                    type: string
+                                                    example: 497f6eca-6276-4993-bfeb-53cbbbba6f08
+                                                    format: uuid
+                                                  terminal_name:
+                                                    type: string
+                                                    minLength: 1
+                                                    example: LHR Terminal 2
+                                                    maxLength: 200
                                                   airport:
                                                     type: object
                                                     required:
@@ -1042,8 +1052,6 @@ paths:
                                                       - name
                                                       - city
                                                       - country
-                                                      - terminal
-                                                      - time_zone
                                                     properties:
                                                       id:
                                                         type: string
@@ -1077,16 +1085,6 @@ paths:
                                                         minLength: 1
                                                         example: United Kingdom
                                                         maxLength: 60
-                                                      terminal:
-                                                        type: string
-                                                        minLength: 1
-                                                        example: LHR Terminal 2
-                                                        maxLength: 200
-                                                      time_zone:
-                                                        type: string
-                                                        example: Europe/London
-                                                        minLength: 1
-                                                        maxLength: 200
                                                   contact_point:
                                                     type: object
                                                     required:
@@ -1128,37 +1126,81 @@ paths:
                                                     uniqueItems: true
                                                     minItems: 1
                                                     items:
-                                                      type: object
-                                                      properties:
-                                                        id:
-                                                          type: string
-                                                          example: 497f6eca-6276-4993-bfeb-53cbbbba6f08
-                                                          format: uuid
-                                                        service_name:
-                                                          type: string
-                                                          minLength: 1
-                                                          example: Meet & Assist
-                                                          maxLength: 200
-                                                        rate:
-                                                          type: number
-                                                          x-faker: commerce.price
-                                                          example: 200
-                                                          minimum: 1
-                                                          maximum: 10000
-                                                      required:
-                                                        - id
-                                                        - service_name
-                                                        - rate
+                                                      allOf:
+                                                        - type: object
+                                                          properties:
+                                                            id:
+                                                              type: string
+                                                              example: 497f6eca-6276-4993-bfeb-53cbbbba6f08
+                                                              format: uuid
+                                                            service_name:
+                                                              type: string
+                                                              minLength: 1
+                                                              example: Meet & Assist
+                                                              maxLength: 200
+                                                            rate:
+                                                              type: number
+                                                              x-faker: commerce.price
+                                                              example: 200
+                                                              minimum: 1
+                                                              maximum: 10000
+                                                          required:
+                                                            - id
+                                                            - service_name
+                                                            - rate
+                                                        - type: object
+                                                          description: service field request model
+                                                          title: /services fields request body
+                                                          properties:
+                                                            fields:
+                                                              type: array
+                                                              uniqueItems: true
+                                                              minItems: 1
+                                                              description: Fields of the service
+                                                              items:
+                                                                type: object
+                                                                properties:
+                                                                  name:
+                                                                    type: string
+                                                                    minLength: 1
+                                                                    maxLength: 50
+                                                                    example: pax_count
+                                                                  value:
+                                                                    type: string
+                                                                    example: '1'
+                                                                    minLength: 1
+                                                                    maxLength: 100
+                                                                required:
+                                                                  - name
+                                                                  - value
+                                                          required:
+                                                            - fields
+                                                  location_total:
+                                                    type: object
+                                                    required:
+                                                      - value
+                                                      - currency
+                                                    properties:
+                                                      value:
+                                                        type: number
+                                                        example: 200
+                                                        minimum: 1
+                                                        maximum: 10000
+                                                      currency:
+                                                        type: string
                                                 required:
                                                   - connection
                                                   - meeting_date
                                                   - date
+                                                  - terminal_id
+                                                  - terminal_name
                                                   - airport
                                                   - contact_point
                                                   - special_notes
                                                   - additional_hour_charge
                                                   - surcharge
                                                   - services
+                                                  - location_total
                                         required:
                                           - flight
                                           - pax
@@ -1196,7 +1238,7 @@ paths:
                                     add_hrs_charge:
                                       type: number
                                       x-faker: commerce.price
-                                      example: 0
+                                      example: 0.00
                                       minimum: 0
                                       maximum: 10000
                                     surcharge:
@@ -1236,6 +1278,7 @@ paths:
                                   maxLength: 750
                                   description: Special comments of the booking
                               required:
+                                - id
                                 - ref_no
                                 - status
                                 - expires_on
@@ -1452,6 +1495,11 @@ paths:
                         description: GET Booking details and POST new Booking.
                         allOf:
                           - properties:
+                              id:
+                                type: string
+                                example: 497f6eca-6276-4993-bfeb-53cbbbba6f08
+                                format: uuid
+                                description: booking id
                               ref_no:
                                 type: string
                                 example: 497f6eca-6276-4993-bfeb-53cbbbba6f08
@@ -1727,26 +1775,11 @@ paths:
                                                                 example: John Doe
                                                                 maxLength: 200
                                                                 description: Signage of the passenger
-                                                              sig_image:
-                                                                type: string
-                                                                x-faker: image.imageUrl
-                                                                example: signage_image.png
-                                                                maxLength: 200
-                                                                description: Sge image
-                                                              image:
-                                                                type: string
-                                                                x-faker: image.imageUrl
-                                                                example: passenger_image.png
-                                                                maxLength: 200
-                                                                description: Sge image
-                                                              pas_stat:
-                                                                type: boolean
-                                                                description: Status of the passenger
                                                             required:
                                                               - id
+                                                              - type
                                                               - name
                                                               - contacts
-                                                              - type
                                                         title: /passengers response body
                                                         type: object
                                                     required:
@@ -1945,26 +1978,11 @@ paths:
                                                                 example: John Doe
                                                                 maxLength: 200
                                                                 description: Signage of the passenger
-                                                              sig_image:
-                                                                type: string
-                                                                x-faker: image.imageUrl
-                                                                example: signage_image.png
-                                                                maxLength: 200
-                                                                description: Sge image
-                                                              image:
-                                                                type: string
-                                                                x-faker: image.imageUrl
-                                                                example: passenger_image.png
-                                                                maxLength: 200
-                                                                description: Sge image
-                                                              pas_stat:
-                                                                type: boolean
-                                                                description: Status of the passenger
                                                             required:
                                                               - id
+                                                              - type
                                                               - name
                                                               - contacts
-                                                              - type
                                                         title: /passengers response body
                                                         type: object
                                                     required:
@@ -2163,26 +2181,11 @@ paths:
                                                                 example: John Doe
                                                                 maxLength: 200
                                                                 description: Signage of the passenger
-                                                              sig_image:
-                                                                type: string
-                                                                x-faker: image.imageUrl
-                                                                example: signage_image.png
-                                                                maxLength: 200
-                                                                description: Sge image
-                                                              image:
-                                                                type: string
-                                                                x-faker: image.imageUrl
-                                                                example: passenger_image.png
-                                                                maxLength: 200
-                                                                description: Sge image
-                                                              pas_stat:
-                                                                type: boolean
-                                                                description: Status of the passenger
                                                             required:
                                                               - id
+                                                              - type
                                                               - name
                                                               - contacts
-                                                              - type
                                                         title: /passengers response body
                                                         type: object
                                                     required:
@@ -2201,12 +2204,15 @@ paths:
                                                 - connection
                                                 - meeting_date
                                                 - departure_date
+                                                - terminal_id
+                                                - terminal_name
                                                 - airport
                                                 - contact_point
                                                 - special_notes
                                                 - additional_hour_charge
                                                 - surcharge
                                                 - services
+                                                - location_total
                                               properties:
                                                 connection:
                                                   type: boolean
@@ -2219,6 +2225,15 @@ paths:
                                                   example: '2020-10-10T20:13:00.000Z'
                                                   format: date-time
                                                   description: flight arrival date
+                                                terminal_id:
+                                                  type: string
+                                                  example: 497f6eca-6276-4993-bfeb-53cbbbba6f08
+                                                  format: uuid
+                                                terminal_name:
+                                                  type: string
+                                                  minLength: 1
+                                                  example: LHR Terminal 2
+                                                  maxLength: 200
                                                 airport:
                                                   type: object
                                                   required:
@@ -2228,8 +2243,6 @@ paths:
                                                     - name
                                                     - city
                                                     - country
-                                                    - terminal
-                                                    - time_zone
                                                   properties:
                                                     id:
                                                       type: string
@@ -2263,16 +2276,6 @@ paths:
                                                       minLength: 1
                                                       example: United Kingdom
                                                       maxLength: 60
-                                                    terminal:
-                                                      type: string
-                                                      minLength: 1
-                                                      example: LHR Terminal 2
-                                                      maxLength: 200
-                                                    time_zone:
-                                                      type: string
-                                                      example: Europe/London
-                                                      minLength: 1
-                                                      maxLength: 200
                                                 contact_point:
                                                   type: object
                                                   required:
@@ -2314,27 +2317,68 @@ paths:
                                                   uniqueItems: true
                                                   minItems: 1
                                                   items:
-                                                    type: object
-                                                    properties:
-                                                      id:
-                                                        type: string
-                                                        example: 497f6eca-6276-4993-bfeb-53cbbbba6f08
-                                                        format: uuid
-                                                      service_name:
-                                                        type: string
-                                                        minLength: 1
-                                                        example: Meet & Assist
-                                                        maxLength: 200
-                                                      rate:
-                                                        type: number
-                                                        x-faker: commerce.price
-                                                        example: 200
-                                                        minimum: 1
-                                                        maximum: 10000
-                                                    required:
-                                                      - id
-                                                      - service_name
-                                                      - rate
+                                                    allOf:
+                                                      - type: object
+                                                        properties:
+                                                          id:
+                                                            type: string
+                                                            example: 497f6eca-6276-4993-bfeb-53cbbbba6f08
+                                                            format: uuid
+                                                          service_name:
+                                                            type: string
+                                                            minLength: 1
+                                                            example: Meet & Assist
+                                                            maxLength: 200
+                                                          rate:
+                                                            type: number
+                                                            x-faker: commerce.price
+                                                            example: 200
+                                                            minimum: 1
+                                                            maximum: 10000
+                                                        required:
+                                                          - id
+                                                          - service_name
+                                                          - rate
+                                                      - type: object
+                                                        description: service field request model
+                                                        title: /services fields request body
+                                                        properties:
+                                                          fields:
+                                                            type: array
+                                                            uniqueItems: true
+                                                            minItems: 1
+                                                            description: Fields of the service
+                                                            items:
+                                                              type: object
+                                                              properties:
+                                                                name:
+                                                                  type: string
+                                                                  minLength: 1
+                                                                  maxLength: 50
+                                                                  example: pax_count
+                                                                value:
+                                                                  type: string
+                                                                  example: '1'
+                                                                  minLength: 1
+                                                                  maxLength: 100
+                                                              required:
+                                                                - name
+                                                                - value
+                                                        required:
+                                                          - fields
+                                                location_total:
+                                                  type: object
+                                                  required:
+                                                    - value
+                                                    - currency
+                                                  properties:
+                                                    value:
+                                                      type: number
+                                                      example: 200
+                                                      minimum: 1
+                                                      maximum: 10000
+                                                    currency:
+                                                      type: string
                                             arrival:
                                               type: object
                                               properties:
@@ -2349,6 +2393,15 @@ paths:
                                                   example: '2020-10-10T18:13:00.000Z'
                                                   format: date-time
                                                   description: flight adate
+                                                terminal_id:
+                                                  type: string
+                                                  example: 497f6eca-6276-4993-bfeb-53cbbbba6f08
+                                                  format: uuid
+                                                terminal_name:
+                                                  type: string
+                                                  minLength: 1
+                                                  example: LHR Terminal 2
+                                                  maxLength: 200
                                                 airport:
                                                   type: object
                                                   required:
@@ -2358,8 +2411,6 @@ paths:
                                                     - name
                                                     - city
                                                     - country
-                                                    - terminal
-                                                    - time_zone
                                                   properties:
                                                     id:
                                                       type: string
@@ -2393,16 +2444,6 @@ paths:
                                                       minLength: 1
                                                       example: United Kingdom
                                                       maxLength: 60
-                                                    terminal:
-                                                      type: string
-                                                      minLength: 1
-                                                      example: LHR Terminal 2
-                                                      maxLength: 200
-                                                    time_zone:
-                                                      type: string
-                                                      example: Europe/London
-                                                      minLength: 1
-                                                      maxLength: 200
                                                 contact_point:
                                                   type: object
                                                   required:
@@ -2444,37 +2485,81 @@ paths:
                                                   uniqueItems: true
                                                   minItems: 1
                                                   items:
-                                                    type: object
-                                                    properties:
-                                                      id:
-                                                        type: string
-                                                        example: 497f6eca-6276-4993-bfeb-53cbbbba6f08
-                                                        format: uuid
-                                                      service_name:
-                                                        type: string
-                                                        minLength: 1
-                                                        example: Meet & Assist
-                                                        maxLength: 200
-                                                      rate:
-                                                        type: number
-                                                        x-faker: commerce.price
-                                                        example: 200
-                                                        minimum: 1
-                                                        maximum: 10000
-                                                    required:
-                                                      - id
-                                                      - service_name
-                                                      - rate
+                                                    allOf:
+                                                      - type: object
+                                                        properties:
+                                                          id:
+                                                            type: string
+                                                            example: 497f6eca-6276-4993-bfeb-53cbbbba6f08
+                                                            format: uuid
+                                                          service_name:
+                                                            type: string
+                                                            minLength: 1
+                                                            example: Meet & Assist
+                                                            maxLength: 200
+                                                          rate:
+                                                            type: number
+                                                            x-faker: commerce.price
+                                                            example: 200
+                                                            minimum: 1
+                                                            maximum: 10000
+                                                        required:
+                                                          - id
+                                                          - service_name
+                                                          - rate
+                                                      - type: object
+                                                        description: service field request model
+                                                        title: /services fields request body
+                                                        properties:
+                                                          fields:
+                                                            type: array
+                                                            uniqueItems: true
+                                                            minItems: 1
+                                                            description: Fields of the service
+                                                            items:
+                                                              type: object
+                                                              properties:
+                                                                name:
+                                                                  type: string
+                                                                  minLength: 1
+                                                                  maxLength: 50
+                                                                  example: pax_count
+                                                                value:
+                                                                  type: string
+                                                                  example: '1'
+                                                                  minLength: 1
+                                                                  maxLength: 100
+                                                              required:
+                                                                - name
+                                                                - value
+                                                        required:
+                                                          - fields
+                                                location_total:
+                                                  type: object
+                                                  required:
+                                                    - value
+                                                    - currency
+                                                  properties:
+                                                    value:
+                                                      type: number
+                                                      example: 200
+                                                      minimum: 1
+                                                      maximum: 10000
+                                                    currency:
+                                                      type: string
                                               required:
                                                 - connection
                                                 - meeting_date
                                                 - date
+                                                - terminal_id
+                                                - terminal_name
                                                 - airport
                                                 - contact_point
                                                 - special_notes
                                                 - additional_hour_charge
                                                 - surcharge
                                                 - services
+                                                - location_total
                                       required:
                                         - flight
                                         - pax
@@ -2512,7 +2597,7 @@ paths:
                                   add_hrs_charge:
                                     type: number
                                     x-faker: commerce.price
-                                    example: 0
+                                    example: 0.00
                                     minimum: 0
                                     maximum: 10000
                                   surcharge:
@@ -2552,6 +2637,7 @@ paths:
                                 maxLength: 750
                                 description: Special comments of the booking
                             required:
+                              - id
                               - ref_no
                               - status
                               - expires_on
@@ -2592,9 +2678,10 @@ paths:
                       minItems: 1
                       description: list of journeys in the booking
                       items:
-                        description: journey request model
                         type: object
+                        description: journey request model
                         title: ''
+                        minProperties: 1
                         properties:
                           flight:
                             type: string
@@ -2844,20 +2931,6 @@ paths:
                                                   example: John Doe
                                                   maxLength: 200
                                                   description: Signage of the passenger
-                                                sig_image:
-                                                  type: string
-                                                  x-faker: image.imageUrl
-                                                  example: signage_image.png
-                                                  maxLength: 200
-                                                  description: Signage image of the pasenger
-                                                image:
-                                                  type: string
-                                                  x-faker: image.imageUrl
-                                                  example: passenger_image.jpg
-                                                  description: Image of the passenger
-                                                pas_stat:
-                                                  type: boolean
-                                                  description: Status of the passenger
                                               required:
                                                 - type
                                                 - name
@@ -3055,20 +3128,6 @@ paths:
                                                   example: John Doe
                                                   maxLength: 200
                                                   description: Signage of the passenger
-                                                sig_image:
-                                                  type: string
-                                                  x-faker: image.imageUrl
-                                                  example: signage_image.png
-                                                  maxLength: 200
-                                                  description: Signage image of the pasenger
-                                                image:
-                                                  type: string
-                                                  x-faker: image.imageUrl
-                                                  example: passenger_image.jpg
-                                                  description: Image of the passenger
-                                                pas_stat:
-                                                  type: boolean
-                                                  description: Status of the passenger
                                               required:
                                                 - type
                                                 - name
@@ -3266,20 +3325,6 @@ paths:
                                                   example: John Doe
                                                   maxLength: 200
                                                   description: Signage of the passenger
-                                                sig_image:
-                                                  type: string
-                                                  x-faker: image.imageUrl
-                                                  example: signage_image.png
-                                                  maxLength: 200
-                                                  description: Signage image of the pasenger
-                                                image:
-                                                  type: string
-                                                  x-faker: image.imageUrl
-                                                  example: passenger_image.jpg
-                                                  description: Image of the passenger
-                                                pas_stat:
-                                                  type: boolean
-                                                  description: Status of the passenger
                                               required:
                                                 - type
                                                 - name
@@ -3600,6 +3645,11 @@ paths:
                         description: GET Booking details and POST new Booking.
                         allOf:
                           - properties:
+                              id:
+                                type: string
+                                example: 497f6eca-6276-4993-bfeb-53cbbbba6f08
+                                format: uuid
+                                description: booking id
                               ref_no:
                                 type: string
                                 example: 497f6eca-6276-4993-bfeb-53cbbbba6f08
@@ -3875,26 +3925,11 @@ paths:
                                                                 example: John Doe
                                                                 maxLength: 200
                                                                 description: Signage of the passenger
-                                                              sig_image:
-                                                                type: string
-                                                                x-faker: image.imageUrl
-                                                                example: signage_image.png
-                                                                maxLength: 200
-                                                                description: Sge image
-                                                              image:
-                                                                type: string
-                                                                x-faker: image.imageUrl
-                                                                example: passenger_image.png
-                                                                maxLength: 200
-                                                                description: Sge image
-                                                              pas_stat:
-                                                                type: boolean
-                                                                description: Status of the passenger
                                                             required:
                                                               - id
+                                                              - type
                                                               - name
                                                               - contacts
-                                                              - type
                                                         title: /passengers response body
                                                         type: object
                                                     required:
@@ -4093,26 +4128,11 @@ paths:
                                                                 example: John Doe
                                                                 maxLength: 200
                                                                 description: Signage of the passenger
-                                                              sig_image:
-                                                                type: string
-                                                                x-faker: image.imageUrl
-                                                                example: signage_image.png
-                                                                maxLength: 200
-                                                                description: Sge image
-                                                              image:
-                                                                type: string
-                                                                x-faker: image.imageUrl
-                                                                example: passenger_image.png
-                                                                maxLength: 200
-                                                                description: Sge image
-                                                              pas_stat:
-                                                                type: boolean
-                                                                description: Status of the passenger
                                                             required:
                                                               - id
+                                                              - type
                                                               - name
                                                               - contacts
-                                                              - type
                                                         title: /passengers response body
                                                         type: object
                                                     required:
@@ -4311,26 +4331,11 @@ paths:
                                                                 example: John Doe
                                                                 maxLength: 200
                                                                 description: Signage of the passenger
-                                                              sig_image:
-                                                                type: string
-                                                                x-faker: image.imageUrl
-                                                                example: signage_image.png
-                                                                maxLength: 200
-                                                                description: Sge image
-                                                              image:
-                                                                type: string
-                                                                x-faker: image.imageUrl
-                                                                example: passenger_image.png
-                                                                maxLength: 200
-                                                                description: Sge image
-                                                              pas_stat:
-                                                                type: boolean
-                                                                description: Status of the passenger
                                                             required:
                                                               - id
+                                                              - type
                                                               - name
                                                               - contacts
-                                                              - type
                                                         title: /passengers response body
                                                         type: object
                                                     required:
@@ -4349,12 +4354,15 @@ paths:
                                                 - connection
                                                 - meeting_date
                                                 - departure_date
+                                                - terminal_id
+                                                - terminal_name
                                                 - airport
                                                 - contact_point
                                                 - special_notes
                                                 - additional_hour_charge
                                                 - surcharge
                                                 - services
+                                                - location_total
                                               properties:
                                                 connection:
                                                   type: boolean
@@ -4367,6 +4375,15 @@ paths:
                                                   example: '2020-10-10T20:13:00.000Z'
                                                   format: date-time
                                                   description: flight arrival date
+                                                terminal_id:
+                                                  type: string
+                                                  example: 497f6eca-6276-4993-bfeb-53cbbbba6f08
+                                                  format: uuid
+                                                terminal_name:
+                                                  type: string
+                                                  minLength: 1
+                                                  example: LHR Terminal 2
+                                                  maxLength: 200
                                                 airport:
                                                   type: object
                                                   required:
@@ -4376,8 +4393,6 @@ paths:
                                                     - name
                                                     - city
                                                     - country
-                                                    - terminal
-                                                    - time_zone
                                                   properties:
                                                     id:
                                                       type: string
@@ -4411,16 +4426,6 @@ paths:
                                                       minLength: 1
                                                       example: United Kingdom
                                                       maxLength: 60
-                                                    terminal:
-                                                      type: string
-                                                      minLength: 1
-                                                      example: LHR Terminal 2
-                                                      maxLength: 200
-                                                    time_zone:
-                                                      type: string
-                                                      example: Europe/London
-                                                      minLength: 1
-                                                      maxLength: 200
                                                 contact_point:
                                                   type: object
                                                   required:
@@ -4462,27 +4467,68 @@ paths:
                                                   uniqueItems: true
                                                   minItems: 1
                                                   items:
-                                                    type: object
-                                                    properties:
-                                                      id:
-                                                        type: string
-                                                        example: 497f6eca-6276-4993-bfeb-53cbbbba6f08
-                                                        format: uuid
-                                                      service_name:
-                                                        type: string
-                                                        minLength: 1
-                                                        example: Meet & Assist
-                                                        maxLength: 200
-                                                      rate:
-                                                        type: number
-                                                        x-faker: commerce.price
-                                                        example: 200
-                                                        minimum: 1
-                                                        maximum: 10000
-                                                    required:
-                                                      - id
-                                                      - service_name
-                                                      - rate
+                                                    allOf:
+                                                      - type: object
+                                                        properties:
+                                                          id:
+                                                            type: string
+                                                            example: 497f6eca-6276-4993-bfeb-53cbbbba6f08
+                                                            format: uuid
+                                                          service_name:
+                                                            type: string
+                                                            minLength: 1
+                                                            example: Meet & Assist
+                                                            maxLength: 200
+                                                          rate:
+                                                            type: number
+                                                            x-faker: commerce.price
+                                                            example: 200
+                                                            minimum: 1
+                                                            maximum: 10000
+                                                        required:
+                                                          - id
+                                                          - service_name
+                                                          - rate
+                                                      - type: object
+                                                        description: service field request model
+                                                        title: /services fields request body
+                                                        properties:
+                                                          fields:
+                                                            type: array
+                                                            uniqueItems: true
+                                                            minItems: 1
+                                                            description: Fields of the service
+                                                            items:
+                                                              type: object
+                                                              properties:
+                                                                name:
+                                                                  type: string
+                                                                  minLength: 1
+                                                                  maxLength: 50
+                                                                  example: pax_count
+                                                                value:
+                                                                  type: string
+                                                                  example: '1'
+                                                                  minLength: 1
+                                                                  maxLength: 100
+                                                              required:
+                                                                - name
+                                                                - value
+                                                        required:
+                                                          - fields
+                                                location_total:
+                                                  type: object
+                                                  required:
+                                                    - value
+                                                    - currency
+                                                  properties:
+                                                    value:
+                                                      type: number
+                                                      example: 200
+                                                      minimum: 1
+                                                      maximum: 10000
+                                                    currency:
+                                                      type: string
                                             arrival:
                                               type: object
                                               properties:
@@ -4497,6 +4543,15 @@ paths:
                                                   example: '2020-10-10T18:13:00.000Z'
                                                   format: date-time
                                                   description: flight adate
+                                                terminal_id:
+                                                  type: string
+                                                  example: 497f6eca-6276-4993-bfeb-53cbbbba6f08
+                                                  format: uuid
+                                                terminal_name:
+                                                  type: string
+                                                  minLength: 1
+                                                  example: LHR Terminal 2
+                                                  maxLength: 200
                                                 airport:
                                                   type: object
                                                   required:
@@ -4506,8 +4561,6 @@ paths:
                                                     - name
                                                     - city
                                                     - country
-                                                    - terminal
-                                                    - time_zone
                                                   properties:
                                                     id:
                                                       type: string
@@ -4541,16 +4594,6 @@ paths:
                                                       minLength: 1
                                                       example: United Kingdom
                                                       maxLength: 60
-                                                    terminal:
-                                                      type: string
-                                                      minLength: 1
-                                                      example: LHR Terminal 2
-                                                      maxLength: 200
-                                                    time_zone:
-                                                      type: string
-                                                      example: Europe/London
-                                                      minLength: 1
-                                                      maxLength: 200
                                                 contact_point:
                                                   type: object
                                                   required:
@@ -4592,37 +4635,81 @@ paths:
                                                   uniqueItems: true
                                                   minItems: 1
                                                   items:
-                                                    type: object
-                                                    properties:
-                                                      id:
-                                                        type: string
-                                                        example: 497f6eca-6276-4993-bfeb-53cbbbba6f08
-                                                        format: uuid
-                                                      service_name:
-                                                        type: string
-                                                        minLength: 1
-                                                        example: Meet & Assist
-                                                        maxLength: 200
-                                                      rate:
-                                                        type: number
-                                                        x-faker: commerce.price
-                                                        example: 200
-                                                        minimum: 1
-                                                        maximum: 10000
-                                                    required:
-                                                      - id
-                                                      - service_name
-                                                      - rate
+                                                    allOf:
+                                                      - type: object
+                                                        properties:
+                                                          id:
+                                                            type: string
+                                                            example: 497f6eca-6276-4993-bfeb-53cbbbba6f08
+                                                            format: uuid
+                                                          service_name:
+                                                            type: string
+                                                            minLength: 1
+                                                            example: Meet & Assist
+                                                            maxLength: 200
+                                                          rate:
+                                                            type: number
+                                                            x-faker: commerce.price
+                                                            example: 200
+                                                            minimum: 1
+                                                            maximum: 10000
+                                                        required:
+                                                          - id
+                                                          - service_name
+                                                          - rate
+                                                      - type: object
+                                                        description: service field request model
+                                                        title: /services fields request body
+                                                        properties:
+                                                          fields:
+                                                            type: array
+                                                            uniqueItems: true
+                                                            minItems: 1
+                                                            description: Fields of the service
+                                                            items:
+                                                              type: object
+                                                              properties:
+                                                                name:
+                                                                  type: string
+                                                                  minLength: 1
+                                                                  maxLength: 50
+                                                                  example: pax_count
+                                                                value:
+                                                                  type: string
+                                                                  example: '1'
+                                                                  minLength: 1
+                                                                  maxLength: 100
+                                                              required:
+                                                                - name
+                                                                - value
+                                                        required:
+                                                          - fields
+                                                location_total:
+                                                  type: object
+                                                  required:
+                                                    - value
+                                                    - currency
+                                                  properties:
+                                                    value:
+                                                      type: number
+                                                      example: 200
+                                                      minimum: 1
+                                                      maximum: 10000
+                                                    currency:
+                                                      type: string
                                               required:
                                                 - connection
                                                 - meeting_date
                                                 - date
+                                                - terminal_id
+                                                - terminal_name
                                                 - airport
                                                 - contact_point
                                                 - special_notes
                                                 - additional_hour_charge
                                                 - surcharge
                                                 - services
+                                                - location_total
                                       required:
                                         - flight
                                         - pax
@@ -4660,7 +4747,7 @@ paths:
                                   add_hrs_charge:
                                     type: number
                                     x-faker: commerce.price
-                                    example: 0
+                                    example: 0.00
                                     minimum: 0
                                     maximum: 10000
                                   surcharge:
@@ -4700,6 +4787,7 @@ paths:
                                 maxLength: 750
                                 description: Special comments of the booking
                             required:
+                              - id
                               - ref_no
                               - status
                               - expires_on
@@ -4814,6 +4902,11 @@ paths:
                         description: GET Booking details and POST new Booking.
                         allOf:
                           - properties:
+                              id:
+                                type: string
+                                example: 497f6eca-6276-4993-bfeb-53cbbbba6f08
+                                format: uuid
+                                description: booking id
                               ref_no:
                                 type: string
                                 example: 497f6eca-6276-4993-bfeb-53cbbbba6f08
@@ -5089,26 +5182,11 @@ paths:
                                                                 example: John Doe
                                                                 maxLength: 200
                                                                 description: Signage of the passenger
-                                                              sig_image:
-                                                                type: string
-                                                                x-faker: image.imageUrl
-                                                                example: signage_image.png
-                                                                maxLength: 200
-                                                                description: Sge image
-                                                              image:
-                                                                type: string
-                                                                x-faker: image.imageUrl
-                                                                example: passenger_image.png
-                                                                maxLength: 200
-                                                                description: Sge image
-                                                              pas_stat:
-                                                                type: boolean
-                                                                description: Status of the passenger
                                                             required:
                                                               - id
+                                                              - type
                                                               - name
                                                               - contacts
-                                                              - type
                                                         title: /passengers response body
                                                         type: object
                                                     required:
@@ -5307,26 +5385,11 @@ paths:
                                                                 example: John Doe
                                                                 maxLength: 200
                                                                 description: Signage of the passenger
-                                                              sig_image:
-                                                                type: string
-                                                                x-faker: image.imageUrl
-                                                                example: signage_image.png
-                                                                maxLength: 200
-                                                                description: Sge image
-                                                              image:
-                                                                type: string
-                                                                x-faker: image.imageUrl
-                                                                example: passenger_image.png
-                                                                maxLength: 200
-                                                                description: Sge image
-                                                              pas_stat:
-                                                                type: boolean
-                                                                description: Status of the passenger
                                                             required:
                                                               - id
+                                                              - type
                                                               - name
                                                               - contacts
-                                                              - type
                                                         title: /passengers response body
                                                         type: object
                                                     required:
@@ -5525,26 +5588,11 @@ paths:
                                                                 example: John Doe
                                                                 maxLength: 200
                                                                 description: Signage of the passenger
-                                                              sig_image:
-                                                                type: string
-                                                                x-faker: image.imageUrl
-                                                                example: signage_image.png
-                                                                maxLength: 200
-                                                                description: Sge image
-                                                              image:
-                                                                type: string
-                                                                x-faker: image.imageUrl
-                                                                example: passenger_image.png
-                                                                maxLength: 200
-                                                                description: Sge image
-                                                              pas_stat:
-                                                                type: boolean
-                                                                description: Status of the passenger
                                                             required:
                                                               - id
+                                                              - type
                                                               - name
                                                               - contacts
-                                                              - type
                                                         title: /passengers response body
                                                         type: object
                                                     required:
@@ -5563,12 +5611,15 @@ paths:
                                                 - connection
                                                 - meeting_date
                                                 - departure_date
+                                                - terminal_id
+                                                - terminal_name
                                                 - airport
                                                 - contact_point
                                                 - special_notes
                                                 - additional_hour_charge
                                                 - surcharge
                                                 - services
+                                                - location_total
                                               properties:
                                                 connection:
                                                   type: boolean
@@ -5581,6 +5632,15 @@ paths:
                                                   example: '2020-10-10T20:13:00.000Z'
                                                   format: date-time
                                                   description: flight arrival date
+                                                terminal_id:
+                                                  type: string
+                                                  example: 497f6eca-6276-4993-bfeb-53cbbbba6f08
+                                                  format: uuid
+                                                terminal_name:
+                                                  type: string
+                                                  minLength: 1
+                                                  example: LHR Terminal 2
+                                                  maxLength: 200
                                                 airport:
                                                   type: object
                                                   required:
@@ -5590,8 +5650,6 @@ paths:
                                                     - name
                                                     - city
                                                     - country
-                                                    - terminal
-                                                    - time_zone
                                                   properties:
                                                     id:
                                                       type: string
@@ -5625,16 +5683,6 @@ paths:
                                                       minLength: 1
                                                       example: United Kingdom
                                                       maxLength: 60
-                                                    terminal:
-                                                      type: string
-                                                      minLength: 1
-                                                      example: LHR Terminal 2
-                                                      maxLength: 200
-                                                    time_zone:
-                                                      type: string
-                                                      example: Europe/London
-                                                      minLength: 1
-                                                      maxLength: 200
                                                 contact_point:
                                                   type: object
                                                   required:
@@ -5676,27 +5724,68 @@ paths:
                                                   uniqueItems: true
                                                   minItems: 1
                                                   items:
-                                                    type: object
-                                                    properties:
-                                                      id:
-                                                        type: string
-                                                        example: 497f6eca-6276-4993-bfeb-53cbbbba6f08
-                                                        format: uuid
-                                                      service_name:
-                                                        type: string
-                                                        minLength: 1
-                                                        example: Meet & Assist
-                                                        maxLength: 200
-                                                      rate:
-                                                        type: number
-                                                        x-faker: commerce.price
-                                                        example: 200
-                                                        minimum: 1
-                                                        maximum: 10000
-                                                    required:
-                                                      - id
-                                                      - service_name
-                                                      - rate
+                                                    allOf:
+                                                      - type: object
+                                                        properties:
+                                                          id:
+                                                            type: string
+                                                            example: 497f6eca-6276-4993-bfeb-53cbbbba6f08
+                                                            format: uuid
+                                                          service_name:
+                                                            type: string
+                                                            minLength: 1
+                                                            example: Meet & Assist
+                                                            maxLength: 200
+                                                          rate:
+                                                            type: number
+                                                            x-faker: commerce.price
+                                                            example: 200
+                                                            minimum: 1
+                                                            maximum: 10000
+                                                        required:
+                                                          - id
+                                                          - service_name
+                                                          - rate
+                                                      - type: object
+                                                        description: service field request model
+                                                        title: /services fields request body
+                                                        properties:
+                                                          fields:
+                                                            type: array
+                                                            uniqueItems: true
+                                                            minItems: 1
+                                                            description: Fields of the service
+                                                            items:
+                                                              type: object
+                                                              properties:
+                                                                name:
+                                                                  type: string
+                                                                  minLength: 1
+                                                                  maxLength: 50
+                                                                  example: pax_count
+                                                                value:
+                                                                  type: string
+                                                                  example: '1'
+                                                                  minLength: 1
+                                                                  maxLength: 100
+                                                              required:
+                                                                - name
+                                                                - value
+                                                        required:
+                                                          - fields
+                                                location_total:
+                                                  type: object
+                                                  required:
+                                                    - value
+                                                    - currency
+                                                  properties:
+                                                    value:
+                                                      type: number
+                                                      example: 200
+                                                      minimum: 1
+                                                      maximum: 10000
+                                                    currency:
+                                                      type: string
                                             arrival:
                                               type: object
                                               properties:
@@ -5711,6 +5800,15 @@ paths:
                                                   example: '2020-10-10T18:13:00.000Z'
                                                   format: date-time
                                                   description: flight adate
+                                                terminal_id:
+                                                  type: string
+                                                  example: 497f6eca-6276-4993-bfeb-53cbbbba6f08
+                                                  format: uuid
+                                                terminal_name:
+                                                  type: string
+                                                  minLength: 1
+                                                  example: LHR Terminal 2
+                                                  maxLength: 200
                                                 airport:
                                                   type: object
                                                   required:
@@ -5720,8 +5818,6 @@ paths:
                                                     - name
                                                     - city
                                                     - country
-                                                    - terminal
-                                                    - time_zone
                                                   properties:
                                                     id:
                                                       type: string
@@ -5755,16 +5851,6 @@ paths:
                                                       minLength: 1
                                                       example: United Kingdom
                                                       maxLength: 60
-                                                    terminal:
-                                                      type: string
-                                                      minLength: 1
-                                                      example: LHR Terminal 2
-                                                      maxLength: 200
-                                                    time_zone:
-                                                      type: string
-                                                      example: Europe/London
-                                                      minLength: 1
-                                                      maxLength: 200
                                                 contact_point:
                                                   type: object
                                                   required:
@@ -5806,37 +5892,81 @@ paths:
                                                   uniqueItems: true
                                                   minItems: 1
                                                   items:
-                                                    type: object
-                                                    properties:
-                                                      id:
-                                                        type: string
-                                                        example: 497f6eca-6276-4993-bfeb-53cbbbba6f08
-                                                        format: uuid
-                                                      service_name:
-                                                        type: string
-                                                        minLength: 1
-                                                        example: Meet & Assist
-                                                        maxLength: 200
-                                                      rate:
-                                                        type: number
-                                                        x-faker: commerce.price
-                                                        example: 200
-                                                        minimum: 1
-                                                        maximum: 10000
-                                                    required:
-                                                      - id
-                                                      - service_name
-                                                      - rate
+                                                    allOf:
+                                                      - type: object
+                                                        properties:
+                                                          id:
+                                                            type: string
+                                                            example: 497f6eca-6276-4993-bfeb-53cbbbba6f08
+                                                            format: uuid
+                                                          service_name:
+                                                            type: string
+                                                            minLength: 1
+                                                            example: Meet & Assist
+                                                            maxLength: 200
+                                                          rate:
+                                                            type: number
+                                                            x-faker: commerce.price
+                                                            example: 200
+                                                            minimum: 1
+                                                            maximum: 10000
+                                                        required:
+                                                          - id
+                                                          - service_name
+                                                          - rate
+                                                      - type: object
+                                                        description: service field request model
+                                                        title: /services fields request body
+                                                        properties:
+                                                          fields:
+                                                            type: array
+                                                            uniqueItems: true
+                                                            minItems: 1
+                                                            description: Fields of the service
+                                                            items:
+                                                              type: object
+                                                              properties:
+                                                                name:
+                                                                  type: string
+                                                                  minLength: 1
+                                                                  maxLength: 50
+                                                                  example: pax_count
+                                                                value:
+                                                                  type: string
+                                                                  example: '1'
+                                                                  minLength: 1
+                                                                  maxLength: 100
+                                                              required:
+                                                                - name
+                                                                - value
+                                                        required:
+                                                          - fields
+                                                location_total:
+                                                  type: object
+                                                  required:
+                                                    - value
+                                                    - currency
+                                                  properties:
+                                                    value:
+                                                      type: number
+                                                      example: 200
+                                                      minimum: 1
+                                                      maximum: 10000
+                                                    currency:
+                                                      type: string
                                               required:
                                                 - connection
                                                 - meeting_date
                                                 - date
+                                                - terminal_id
+                                                - terminal_name
                                                 - airport
                                                 - contact_point
                                                 - special_notes
                                                 - additional_hour_charge
                                                 - surcharge
                                                 - services
+                                                - location_total
                                       required:
                                         - flight
                                         - pax
@@ -5874,7 +6004,7 @@ paths:
                                   add_hrs_charge:
                                     type: number
                                     x-faker: commerce.price
-                                    example: 0
+                                    example: 0.00
                                     minimum: 0
                                     maximum: 10000
                                   surcharge:
@@ -5914,6 +6044,7 @@ paths:
                                 maxLength: 750
                                 description: Special comments of the booking
                             required:
+                              - id
                               - ref_no
                               - status
                               - expires_on
@@ -5979,9 +6110,10 @@ paths:
                       minItems: 1
                       description: list of journeys in the booking
                       items:
-                        description: journey request model
                         type: object
+                        description: journey request model
                         title: ''
+                        minProperties: 1
                         properties:
                           flight:
                             type: string
@@ -6231,20 +6363,6 @@ paths:
                                                   example: John Doe
                                                   maxLength: 200
                                                   description: Signage of the passenger
-                                                sig_image:
-                                                  type: string
-                                                  x-faker: image.imageUrl
-                                                  example: signage_image.png
-                                                  maxLength: 200
-                                                  description: Signage image of the pasenger
-                                                image:
-                                                  type: string
-                                                  x-faker: image.imageUrl
-                                                  example: passenger_image.jpg
-                                                  description: Image of the passenger
-                                                pas_stat:
-                                                  type: boolean
-                                                  description: Status of the passenger
                                               required:
                                                 - type
                                                 - name
@@ -6442,20 +6560,6 @@ paths:
                                                   example: John Doe
                                                   maxLength: 200
                                                   description: Signage of the passenger
-                                                sig_image:
-                                                  type: string
-                                                  x-faker: image.imageUrl
-                                                  example: signage_image.png
-                                                  maxLength: 200
-                                                  description: Signage image of the pasenger
-                                                image:
-                                                  type: string
-                                                  x-faker: image.imageUrl
-                                                  example: passenger_image.jpg
-                                                  description: Image of the passenger
-                                                pas_stat:
-                                                  type: boolean
-                                                  description: Status of the passenger
                                               required:
                                                 - type
                                                 - name
@@ -6653,20 +6757,6 @@ paths:
                                                   example: John Doe
                                                   maxLength: 200
                                                   description: Signage of the passenger
-                                                sig_image:
-                                                  type: string
-                                                  x-faker: image.imageUrl
-                                                  example: signage_image.png
-                                                  maxLength: 200
-                                                  description: Signage image of the pasenger
-                                                image:
-                                                  type: string
-                                                  x-faker: image.imageUrl
-                                                  example: passenger_image.jpg
-                                                  description: Image of the passenger
-                                                pas_stat:
-                                                  type: boolean
-                                                  description: Status of the passenger
                                               required:
                                                 - type
                                                 - name
@@ -7124,17 +7214,6 @@ paths:
                                                           - validation
                                                   required:
                                                     - fields
-                                                - title: image.v1
-                                                  type: object
-                                                  properties:
-                                                    image:
-                                                      type: string
-                                                      x-faker: image.imageUrl
-                                                      example: service_image.png
-                                                      minLength: 1
-                                                      maxLength: 500
-                                                      description: service image
-                                                  description: image model
                                         required:
                                           - terminal_id
                                           - terminal_name
@@ -7243,6 +7322,11 @@ paths:
                                 description: Departure Airport GAC ID
                                 example: 497f6eca-6276-4993-bfeb-53cbbbba6f08
                                 format: uuid
+                              iata:
+                                type: string
+                                example: EWR
+                                minLength: 3
+                                maxLength: 3
                         type: object
                       flight_no:
                         type: string
@@ -7349,6 +7433,11 @@ paths:
                         description: GET Booking details and POST new Booking.
                         allOf:
                           - properties:
+                              id:
+                                type: string
+                                example: 497f6eca-6276-4993-bfeb-53cbbbba6f08
+                                format: uuid
+                                description: booking id
                               ref_no:
                                 type: string
                                 example: 497f6eca-6276-4993-bfeb-53cbbbba6f08
@@ -7624,26 +7713,11 @@ paths:
                                                                 example: John Doe
                                                                 maxLength: 200
                                                                 description: Signage of the passenger
-                                                              sig_image:
-                                                                type: string
-                                                                x-faker: image.imageUrl
-                                                                example: signage_image.png
-                                                                maxLength: 200
-                                                                description: Sge image
-                                                              image:
-                                                                type: string
-                                                                x-faker: image.imageUrl
-                                                                example: passenger_image.png
-                                                                maxLength: 200
-                                                                description: Sge image
-                                                              pas_stat:
-                                                                type: boolean
-                                                                description: Status of the passenger
                                                             required:
                                                               - id
+                                                              - type
                                                               - name
                                                               - contacts
-                                                              - type
                                                         title: /passengers response body
                                                         type: object
                                                     required:
@@ -7842,26 +7916,11 @@ paths:
                                                                 example: John Doe
                                                                 maxLength: 200
                                                                 description: Signage of the passenger
-                                                              sig_image:
-                                                                type: string
-                                                                x-faker: image.imageUrl
-                                                                example: signage_image.png
-                                                                maxLength: 200
-                                                                description: Sge image
-                                                              image:
-                                                                type: string
-                                                                x-faker: image.imageUrl
-                                                                example: passenger_image.png
-                                                                maxLength: 200
-                                                                description: Sge image
-                                                              pas_stat:
-                                                                type: boolean
-                                                                description: Status of the passenger
                                                             required:
                                                               - id
+                                                              - type
                                                               - name
                                                               - contacts
-                                                              - type
                                                         title: /passengers response body
                                                         type: object
                                                     required:
@@ -8060,26 +8119,11 @@ paths:
                                                                 example: John Doe
                                                                 maxLength: 200
                                                                 description: Signage of the passenger
-                                                              sig_image:
-                                                                type: string
-                                                                x-faker: image.imageUrl
-                                                                example: signage_image.png
-                                                                maxLength: 200
-                                                                description: Sge image
-                                                              image:
-                                                                type: string
-                                                                x-faker: image.imageUrl
-                                                                example: passenger_image.png
-                                                                maxLength: 200
-                                                                description: Sge image
-                                                              pas_stat:
-                                                                type: boolean
-                                                                description: Status of the passenger
                                                             required:
                                                               - id
+                                                              - type
                                                               - name
                                                               - contacts
-                                                              - type
                                                         title: /passengers response body
                                                         type: object
                                                     required:
@@ -8098,12 +8142,15 @@ paths:
                                                 - connection
                                                 - meeting_date
                                                 - departure_date
+                                                - terminal_id
+                                                - terminal_name
                                                 - airport
                                                 - contact_point
                                                 - special_notes
                                                 - additional_hour_charge
                                                 - surcharge
                                                 - services
+                                                - location_total
                                               properties:
                                                 connection:
                                                   type: boolean
@@ -8116,6 +8163,15 @@ paths:
                                                   example: '2020-10-10T20:13:00.000Z'
                                                   format: date-time
                                                   description: flight arrival date
+                                                terminal_id:
+                                                  type: string
+                                                  example: 497f6eca-6276-4993-bfeb-53cbbbba6f08
+                                                  format: uuid
+                                                terminal_name:
+                                                  type: string
+                                                  minLength: 1
+                                                  example: LHR Terminal 2
+                                                  maxLength: 200
                                                 airport:
                                                   type: object
                                                   required:
@@ -8125,8 +8181,6 @@ paths:
                                                     - name
                                                     - city
                                                     - country
-                                                    - terminal
-                                                    - time_zone
                                                   properties:
                                                     id:
                                                       type: string
@@ -8160,16 +8214,6 @@ paths:
                                                       minLength: 1
                                                       example: United Kingdom
                                                       maxLength: 60
-                                                    terminal:
-                                                      type: string
-                                                      minLength: 1
-                                                      example: LHR Terminal 2
-                                                      maxLength: 200
-                                                    time_zone:
-                                                      type: string
-                                                      example: Europe/London
-                                                      minLength: 1
-                                                      maxLength: 200
                                                 contact_point:
                                                   type: object
                                                   required:
@@ -8211,27 +8255,68 @@ paths:
                                                   uniqueItems: true
                                                   minItems: 1
                                                   items:
-                                                    type: object
-                                                    properties:
-                                                      id:
-                                                        type: string
-                                                        example: 497f6eca-6276-4993-bfeb-53cbbbba6f08
-                                                        format: uuid
-                                                      service_name:
-                                                        type: string
-                                                        minLength: 1
-                                                        example: Meet & Assist
-                                                        maxLength: 200
-                                                      rate:
-                                                        type: number
-                                                        x-faker: commerce.price
-                                                        example: 200
-                                                        minimum: 1
-                                                        maximum: 10000
-                                                    required:
-                                                      - id
-                                                      - service_name
-                                                      - rate
+                                                    allOf:
+                                                      - type: object
+                                                        properties:
+                                                          id:
+                                                            type: string
+                                                            example: 497f6eca-6276-4993-bfeb-53cbbbba6f08
+                                                            format: uuid
+                                                          service_name:
+                                                            type: string
+                                                            minLength: 1
+                                                            example: Meet & Assist
+                                                            maxLength: 200
+                                                          rate:
+                                                            type: number
+                                                            x-faker: commerce.price
+                                                            example: 200
+                                                            minimum: 1
+                                                            maximum: 10000
+                                                        required:
+                                                          - id
+                                                          - service_name
+                                                          - rate
+                                                      - type: object
+                                                        description: service field request model
+                                                        title: /services fields request body
+                                                        properties:
+                                                          fields:
+                                                            type: array
+                                                            uniqueItems: true
+                                                            minItems: 1
+                                                            description: Fields of the service
+                                                            items:
+                                                              type: object
+                                                              properties:
+                                                                name:
+                                                                  type: string
+                                                                  minLength: 1
+                                                                  maxLength: 50
+                                                                  example: pax_count
+                                                                value:
+                                                                  type: string
+                                                                  example: '1'
+                                                                  minLength: 1
+                                                                  maxLength: 100
+                                                              required:
+                                                                - name
+                                                                - value
+                                                        required:
+                                                          - fields
+                                                location_total:
+                                                  type: object
+                                                  required:
+                                                    - value
+                                                    - currency
+                                                  properties:
+                                                    value:
+                                                      type: number
+                                                      example: 200
+                                                      minimum: 1
+                                                      maximum: 10000
+                                                    currency:
+                                                      type: string
                                             arrival:
                                               type: object
                                               properties:
@@ -8246,6 +8331,15 @@ paths:
                                                   example: '2020-10-10T18:13:00.000Z'
                                                   format: date-time
                                                   description: flight adate
+                                                terminal_id:
+                                                  type: string
+                                                  example: 497f6eca-6276-4993-bfeb-53cbbbba6f08
+                                                  format: uuid
+                                                terminal_name:
+                                                  type: string
+                                                  minLength: 1
+                                                  example: LHR Terminal 2
+                                                  maxLength: 200
                                                 airport:
                                                   type: object
                                                   required:
@@ -8255,8 +8349,6 @@ paths:
                                                     - name
                                                     - city
                                                     - country
-                                                    - terminal
-                                                    - time_zone
                                                   properties:
                                                     id:
                                                       type: string
@@ -8290,16 +8382,6 @@ paths:
                                                       minLength: 1
                                                       example: United Kingdom
                                                       maxLength: 60
-                                                    terminal:
-                                                      type: string
-                                                      minLength: 1
-                                                      example: LHR Terminal 2
-                                                      maxLength: 200
-                                                    time_zone:
-                                                      type: string
-                                                      example: Europe/London
-                                                      minLength: 1
-                                                      maxLength: 200
                                                 contact_point:
                                                   type: object
                                                   required:
@@ -8341,37 +8423,81 @@ paths:
                                                   uniqueItems: true
                                                   minItems: 1
                                                   items:
-                                                    type: object
-                                                    properties:
-                                                      id:
-                                                        type: string
-                                                        example: 497f6eca-6276-4993-bfeb-53cbbbba6f08
-                                                        format: uuid
-                                                      service_name:
-                                                        type: string
-                                                        minLength: 1
-                                                        example: Meet & Assist
-                                                        maxLength: 200
-                                                      rate:
-                                                        type: number
-                                                        x-faker: commerce.price
-                                                        example: 200
-                                                        minimum: 1
-                                                        maximum: 10000
-                                                    required:
-                                                      - id
-                                                      - service_name
-                                                      - rate
+                                                    allOf:
+                                                      - type: object
+                                                        properties:
+                                                          id:
+                                                            type: string
+                                                            example: 497f6eca-6276-4993-bfeb-53cbbbba6f08
+                                                            format: uuid
+                                                          service_name:
+                                                            type: string
+                                                            minLength: 1
+                                                            example: Meet & Assist
+                                                            maxLength: 200
+                                                          rate:
+                                                            type: number
+                                                            x-faker: commerce.price
+                                                            example: 200
+                                                            minimum: 1
+                                                            maximum: 10000
+                                                        required:
+                                                          - id
+                                                          - service_name
+                                                          - rate
+                                                      - type: object
+                                                        description: service field request model
+                                                        title: /services fields request body
+                                                        properties:
+                                                          fields:
+                                                            type: array
+                                                            uniqueItems: true
+                                                            minItems: 1
+                                                            description: Fields of the service
+                                                            items:
+                                                              type: object
+                                                              properties:
+                                                                name:
+                                                                  type: string
+                                                                  minLength: 1
+                                                                  maxLength: 50
+                                                                  example: pax_count
+                                                                value:
+                                                                  type: string
+                                                                  example: '1'
+                                                                  minLength: 1
+                                                                  maxLength: 100
+                                                              required:
+                                                                - name
+                                                                - value
+                                                        required:
+                                                          - fields
+                                                location_total:
+                                                  type: object
+                                                  required:
+                                                    - value
+                                                    - currency
+                                                  properties:
+                                                    value:
+                                                      type: number
+                                                      example: 200
+                                                      minimum: 1
+                                                      maximum: 10000
+                                                    currency:
+                                                      type: string
                                               required:
                                                 - connection
                                                 - meeting_date
                                                 - date
+                                                - terminal_id
+                                                - terminal_name
                                                 - airport
                                                 - contact_point
                                                 - special_notes
                                                 - additional_hour_charge
                                                 - surcharge
                                                 - services
+                                                - location_total
                                       required:
                                         - flight
                                         - pax
@@ -8409,7 +8535,7 @@ paths:
                                   add_hrs_charge:
                                     type: number
                                     x-faker: commerce.price
-                                    example: 0
+                                    example: 0.00
                                     minimum: 0
                                     maximum: 10000
                                   surcharge:
@@ -8449,6 +8575,7 @@ paths:
                                 maxLength: 750
                                 description: Special comments of the booking
                             required:
+                              - id
                               - ref_no
                               - status
                               - expires_on
@@ -8648,6 +8775,11 @@ paths:
                         description: GET Booking details and POST new Booking.
                         allOf:
                           - properties:
+                              id:
+                                type: string
+                                example: 497f6eca-6276-4993-bfeb-53cbbbba6f08
+                                format: uuid
+                                description: booking id
                               ref_no:
                                 type: string
                                 example: 497f6eca-6276-4993-bfeb-53cbbbba6f08
@@ -8923,26 +9055,11 @@ paths:
                                                                 example: John Doe
                                                                 maxLength: 200
                                                                 description: Signage of the passenger
-                                                              sig_image:
-                                                                type: string
-                                                                x-faker: image.imageUrl
-                                                                example: signage_image.png
-                                                                maxLength: 200
-                                                                description: Sge image
-                                                              image:
-                                                                type: string
-                                                                x-faker: image.imageUrl
-                                                                example: passenger_image.png
-                                                                maxLength: 200
-                                                                description: Sge image
-                                                              pas_stat:
-                                                                type: boolean
-                                                                description: Status of the passenger
                                                             required:
                                                               - id
+                                                              - type
                                                               - name
                                                               - contacts
-                                                              - type
                                                         title: /passengers response body
                                                         type: object
                                                     required:
@@ -9141,26 +9258,11 @@ paths:
                                                                 example: John Doe
                                                                 maxLength: 200
                                                                 description: Signage of the passenger
-                                                              sig_image:
-                                                                type: string
-                                                                x-faker: image.imageUrl
-                                                                example: signage_image.png
-                                                                maxLength: 200
-                                                                description: Sge image
-                                                              image:
-                                                                type: string
-                                                                x-faker: image.imageUrl
-                                                                example: passenger_image.png
-                                                                maxLength: 200
-                                                                description: Sge image
-                                                              pas_stat:
-                                                                type: boolean
-                                                                description: Status of the passenger
                                                             required:
                                                               - id
+                                                              - type
                                                               - name
                                                               - contacts
-                                                              - type
                                                         title: /passengers response body
                                                         type: object
                                                     required:
@@ -9359,26 +9461,11 @@ paths:
                                                                 example: John Doe
                                                                 maxLength: 200
                                                                 description: Signage of the passenger
-                                                              sig_image:
-                                                                type: string
-                                                                x-faker: image.imageUrl
-                                                                example: signage_image.png
-                                                                maxLength: 200
-                                                                description: Sge image
-                                                              image:
-                                                                type: string
-                                                                x-faker: image.imageUrl
-                                                                example: passenger_image.png
-                                                                maxLength: 200
-                                                                description: Sge image
-                                                              pas_stat:
-                                                                type: boolean
-                                                                description: Status of the passenger
                                                             required:
                                                               - id
+                                                              - type
                                                               - name
                                                               - contacts
-                                                              - type
                                                         title: /passengers response body
                                                         type: object
                                                     required:
@@ -9397,12 +9484,15 @@ paths:
                                                 - connection
                                                 - meeting_date
                                                 - departure_date
+                                                - terminal_id
+                                                - terminal_name
                                                 - airport
                                                 - contact_point
                                                 - special_notes
                                                 - additional_hour_charge
                                                 - surcharge
                                                 - services
+                                                - location_total
                                               properties:
                                                 connection:
                                                   type: boolean
@@ -9415,6 +9505,15 @@ paths:
                                                   example: '2020-10-10T20:13:00.000Z'
                                                   format: date-time
                                                   description: flight arrival date
+                                                terminal_id:
+                                                  type: string
+                                                  example: 497f6eca-6276-4993-bfeb-53cbbbba6f08
+                                                  format: uuid
+                                                terminal_name:
+                                                  type: string
+                                                  minLength: 1
+                                                  example: LHR Terminal 2
+                                                  maxLength: 200
                                                 airport:
                                                   type: object
                                                   required:
@@ -9424,8 +9523,6 @@ paths:
                                                     - name
                                                     - city
                                                     - country
-                                                    - terminal
-                                                    - time_zone
                                                   properties:
                                                     id:
                                                       type: string
@@ -9459,16 +9556,6 @@ paths:
                                                       minLength: 1
                                                       example: United Kingdom
                                                       maxLength: 60
-                                                    terminal:
-                                                      type: string
-                                                      minLength: 1
-                                                      example: LHR Terminal 2
-                                                      maxLength: 200
-                                                    time_zone:
-                                                      type: string
-                                                      example: Europe/London
-                                                      minLength: 1
-                                                      maxLength: 200
                                                 contact_point:
                                                   type: object
                                                   required:
@@ -9510,27 +9597,68 @@ paths:
                                                   uniqueItems: true
                                                   minItems: 1
                                                   items:
-                                                    type: object
-                                                    properties:
-                                                      id:
-                                                        type: string
-                                                        example: 497f6eca-6276-4993-bfeb-53cbbbba6f08
-                                                        format: uuid
-                                                      service_name:
-                                                        type: string
-                                                        minLength: 1
-                                                        example: Meet & Assist
-                                                        maxLength: 200
-                                                      rate:
-                                                        type: number
-                                                        x-faker: commerce.price
-                                                        example: 200
-                                                        minimum: 1
-                                                        maximum: 10000
-                                                    required:
-                                                      - id
-                                                      - service_name
-                                                      - rate
+                                                    allOf:
+                                                      - type: object
+                                                        properties:
+                                                          id:
+                                                            type: string
+                                                            example: 497f6eca-6276-4993-bfeb-53cbbbba6f08
+                                                            format: uuid
+                                                          service_name:
+                                                            type: string
+                                                            minLength: 1
+                                                            example: Meet & Assist
+                                                            maxLength: 200
+                                                          rate:
+                                                            type: number
+                                                            x-faker: commerce.price
+                                                            example: 200
+                                                            minimum: 1
+                                                            maximum: 10000
+                                                        required:
+                                                          - id
+                                                          - service_name
+                                                          - rate
+                                                      - type: object
+                                                        description: service field request model
+                                                        title: /services fields request body
+                                                        properties:
+                                                          fields:
+                                                            type: array
+                                                            uniqueItems: true
+                                                            minItems: 1
+                                                            description: Fields of the service
+                                                            items:
+                                                              type: object
+                                                              properties:
+                                                                name:
+                                                                  type: string
+                                                                  minLength: 1
+                                                                  maxLength: 50
+                                                                  example: pax_count
+                                                                value:
+                                                                  type: string
+                                                                  example: '1'
+                                                                  minLength: 1
+                                                                  maxLength: 100
+                                                              required:
+                                                                - name
+                                                                - value
+                                                        required:
+                                                          - fields
+                                                location_total:
+                                                  type: object
+                                                  required:
+                                                    - value
+                                                    - currency
+                                                  properties:
+                                                    value:
+                                                      type: number
+                                                      example: 200
+                                                      minimum: 1
+                                                      maximum: 10000
+                                                    currency:
+                                                      type: string
                                             arrival:
                                               type: object
                                               properties:
@@ -9545,6 +9673,15 @@ paths:
                                                   example: '2020-10-10T18:13:00.000Z'
                                                   format: date-time
                                                   description: flight adate
+                                                terminal_id:
+                                                  type: string
+                                                  example: 497f6eca-6276-4993-bfeb-53cbbbba6f08
+                                                  format: uuid
+                                                terminal_name:
+                                                  type: string
+                                                  minLength: 1
+                                                  example: LHR Terminal 2
+                                                  maxLength: 200
                                                 airport:
                                                   type: object
                                                   required:
@@ -9554,8 +9691,6 @@ paths:
                                                     - name
                                                     - city
                                                     - country
-                                                    - terminal
-                                                    - time_zone
                                                   properties:
                                                     id:
                                                       type: string
@@ -9589,16 +9724,6 @@ paths:
                                                       minLength: 1
                                                       example: United Kingdom
                                                       maxLength: 60
-                                                    terminal:
-                                                      type: string
-                                                      minLength: 1
-                                                      example: LHR Terminal 2
-                                                      maxLength: 200
-                                                    time_zone:
-                                                      type: string
-                                                      example: Europe/London
-                                                      minLength: 1
-                                                      maxLength: 200
                                                 contact_point:
                                                   type: object
                                                   required:
@@ -9640,37 +9765,81 @@ paths:
                                                   uniqueItems: true
                                                   minItems: 1
                                                   items:
-                                                    type: object
-                                                    properties:
-                                                      id:
-                                                        type: string
-                                                        example: 497f6eca-6276-4993-bfeb-53cbbbba6f08
-                                                        format: uuid
-                                                      service_name:
-                                                        type: string
-                                                        minLength: 1
-                                                        example: Meet & Assist
-                                                        maxLength: 200
-                                                      rate:
-                                                        type: number
-                                                        x-faker: commerce.price
-                                                        example: 200
-                                                        minimum: 1
-                                                        maximum: 10000
-                                                    required:
-                                                      - id
-                                                      - service_name
-                                                      - rate
+                                                    allOf:
+                                                      - type: object
+                                                        properties:
+                                                          id:
+                                                            type: string
+                                                            example: 497f6eca-6276-4993-bfeb-53cbbbba6f08
+                                                            format: uuid
+                                                          service_name:
+                                                            type: string
+                                                            minLength: 1
+                                                            example: Meet & Assist
+                                                            maxLength: 200
+                                                          rate:
+                                                            type: number
+                                                            x-faker: commerce.price
+                                                            example: 200
+                                                            minimum: 1
+                                                            maximum: 10000
+                                                        required:
+                                                          - id
+                                                          - service_name
+                                                          - rate
+                                                      - type: object
+                                                        description: service field request model
+                                                        title: /services fields request body
+                                                        properties:
+                                                          fields:
+                                                            type: array
+                                                            uniqueItems: true
+                                                            minItems: 1
+                                                            description: Fields of the service
+                                                            items:
+                                                              type: object
+                                                              properties:
+                                                                name:
+                                                                  type: string
+                                                                  minLength: 1
+                                                                  maxLength: 50
+                                                                  example: pax_count
+                                                                value:
+                                                                  type: string
+                                                                  example: '1'
+                                                                  minLength: 1
+                                                                  maxLength: 100
+                                                              required:
+                                                                - name
+                                                                - value
+                                                        required:
+                                                          - fields
+                                                location_total:
+                                                  type: object
+                                                  required:
+                                                    - value
+                                                    - currency
+                                                  properties:
+                                                    value:
+                                                      type: number
+                                                      example: 200
+                                                      minimum: 1
+                                                      maximum: 10000
+                                                    currency:
+                                                      type: string
                                               required:
                                                 - connection
                                                 - meeting_date
                                                 - date
+                                                - terminal_id
+                                                - terminal_name
                                                 - airport
                                                 - contact_point
                                                 - special_notes
                                                 - additional_hour_charge
                                                 - surcharge
                                                 - services
+                                                - location_total
                                       required:
                                         - flight
                                         - pax
@@ -9708,7 +9877,7 @@ paths:
                                   add_hrs_charge:
                                     type: number
                                     x-faker: commerce.price
-                                    example: 0
+                                    example: 0.00
                                     minimum: 0
                                     maximum: 10000
                                   surcharge:
@@ -9748,6 +9917,7 @@ paths:
                                 maxLength: 750
                                 description: Special comments of the booking
                             required:
+                              - id
                               - ref_no
                               - status
                               - expires_on
