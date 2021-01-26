@@ -1254,6 +1254,11 @@ paths:
                                       format: double
                                       minimum: 1
                                       maximum: 100000
+                                    promo_code:
+                                      type: string
+                                      example: PROMO21
+                                      minLength: 1
+                                      maxLength: 20
                                     total_discount:
                                       type: number
                                       x-faker: commerce.price
@@ -2613,6 +2618,11 @@ paths:
                                     format: double
                                     minimum: 1
                                     maximum: 100000
+                                  promo_code:
+                                    type: string
+                                    example: PROMO21
+                                    minLength: 1
+                                    maxLength: 20
                                   total_discount:
                                     type: number
                                     x-faker: commerce.price
@@ -2669,6 +2679,12 @@ paths:
                       minLength: 3
                       maxLength: 3
                       description: currency of the booking
+                    promo_code:
+                      type: string
+                      description: promocode for the booking
+                      example: PROMO21
+                      minLength: 1
+                      maxLength: 20
                   required:
                     - currency
                 - properties:
@@ -4763,6 +4779,11 @@ paths:
                                     format: double
                                     minimum: 1
                                     maximum: 100000
+                                  promo_code:
+                                    type: string
+                                    example: PROMO21
+                                    minLength: 1
+                                    maxLength: 20
                                   total_discount:
                                     type: number
                                     x-faker: commerce.price
@@ -6020,6 +6041,11 @@ paths:
                                     format: double
                                     minimum: 1
                                     maximum: 100000
+                                  promo_code:
+                                    type: string
+                                    example: PROMO21
+                                    minLength: 1
+                                    maxLength: 20
                                   total_discount:
                                     type: number
                                     x-faker: commerce.price
@@ -6101,6 +6127,12 @@ paths:
                       minLength: 3
                       maxLength: 3
                       description: currency of the booking
+                    promo_code:
+                      type: string
+                      description: promocode for the booking
+                      example: PROMO21
+                      minLength: 1
+                      maxLength: 20
                   required:
                     - currency
                 - properties:
@@ -8551,6 +8583,11 @@ paths:
                                     format: double
                                     minimum: 1
                                     maximum: 100000
+                                  promo_code:
+                                    type: string
+                                    example: PROMO21
+                                    minLength: 1
+                                    maxLength: 20
                                   total_discount:
                                     type: number
                                     x-faker: commerce.price
@@ -9893,6 +9930,11 @@ paths:
                                     format: double
                                     minimum: 1
                                     maximum: 100000
+                                  promo_code:
+                                    type: string
+                                    example: PROMO21
+                                    minLength: 1
+                                    maxLength: 20
                                   total_discount:
                                     type: number
                                     x-faker: commerce.price
