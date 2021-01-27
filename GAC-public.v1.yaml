@@ -11454,7 +11454,7 @@ paths:
         description: booking id
     delete:
       summary: '/bookings/{id}/cancel'
-      operationId: delete-bookings-id-cancel
+      operationId: DELETE-bookings-bookingId-cancel
       responses:
         '204':
           description: No Content
