@@ -1287,6 +1287,199 @@ paths:
                                 - billing
                           title: /bookings response body
                           type: object
+              examples:
+                /bookings GET response example:
+                  value:
+                    status:
+                      success: true
+                      status: 200
+                      message: Data retreived successfully
+                    trace:
+                      X-GAC-Trace-Id: a949eea7-56d5-4864-a5e6-0f15b6897960
+                      X-Trace-Id: 56d9e9d0-08d6-481e-94e7-e2667423cf37
+                      Idempotency-Key: 687d997b-391e-4906-94c5-a24c2fc12ba0
+                    pagination:
+                      total_count: 100
+                      total_pages: 20
+                      current_page: 3
+                      limit: 10
+                    data:
+                      - id: 497f6eca-6276-4993-bfeb-53cbbbba6f08
+                        ref_no: 497f6eca-6276-4993-bfeb-53cbbbba6f08
+                        status: Quote
+                        expires_on: '2019-08-24T14:15:22Z'
+                        journeys:
+                          - flight: BA281
+                            pax:
+                              meta:
+                                adult: 2
+                                child: 1
+                                infant: 0
+                                bags:
+                                  small: 5
+                                  medium: 5
+                                  large: 5
+                              passengers:
+                                adult:
+                                  - lead: true
+                                    pnr: SJE34D
+                                    class: First
+                                    details:
+                                      id: 497f6eca-6276-4993-bfeb-53cbbbba6f08
+                                      type: Adult
+                                      name:
+                                        title: Mr.
+                                        forename: John
+                                        surname: Doe
+                                      contacts:
+                                        address:
+                                          streets:
+                                            - 'No 221/1, Baker''s Street'
+                                          city: Hethrow
+                                          state: London
+                                          postal_code: LN223 2323
+                                          country: United Kingdom
+                                        emails:
+                                          - type: Main
+                                            email: email@email.com
+                                        phones:
+                                          - type: Office
+                                            name: Head Office
+                                            phone: '+18666612345'
+                                      date_of_birth: '1989-02-14'
+                                      passport_no: N32343423
+                                      comments: First time traveller.
+                                      signage: John Doe
+                                child:
+                                  - lead: true
+                                    pnr: SJE34D
+                                    class: First
+                                    details:
+                                      id: 497f6eca-6276-4993-bfeb-53cbbbba6f08
+                                      type: Adult
+                                      name:
+                                        title: Mr.
+                                        forename: John
+                                        surname: Doe
+                                      contacts:
+                                        address:
+                                          streets:
+                                            - 'No 221/1, Baker''s Street'
+                                          city: Hethrow
+                                          state: London
+                                          postal_code: LN223 2323
+                                          country: United Kingdom
+                                        emails:
+                                          - type: Main
+                                            email: email@email.com
+                                        phones:
+                                          - type: Office
+                                            name: Head Office
+                                            phone: '+18666612345'
+                                      date_of_birth: '1989-02-14'
+                                      passport_no: N32343423
+                                      comments: First time traveller.
+                                      signage: John Doe
+                                infant:
+                                  - lead: true
+                                    pnr: SJE34D
+                                    class: First
+                                    details:
+                                      id: 497f6eca-6276-4993-bfeb-53cbbbba6f08
+                                      type: Adult
+                                      name:
+                                        title: Mr.
+                                        forename: John
+                                        surname: Doe
+                                      contacts:
+                                        address:
+                                          streets:
+                                            - 'No 221/1, Baker''s Street'
+                                          city: Hethrow
+                                          state: London
+                                          postal_code: LN223 2323
+                                          country: United Kingdom
+                                        emails:
+                                          - type: Main
+                                            email: email@email.com
+                                        phones:
+                                          - type: Office
+                                            name: Head Office
+                                            phone: '+18666612345'
+                                      date_of_birth: '1989-02-14'
+                                      passport_no: N32343423
+                                      comments: First time traveller.
+                                      signage: John Doe
+                            stops:
+                              departure:
+                                connection: true
+                                meeting_date: '2020-10-10T18:13:00.000Z'
+                                departure_date: '2020-10-10T20:13:00.000Z'
+                                terminal_id: 497f6eca-6276-4993-bfeb-53cbbbba6f08
+                                terminal_name: LHR Terminal 2
+                                airport:
+                                  id: 497f6eca-6276-4993-bfeb-53cbbbba6f08
+                                  iata: LHR
+                                  icao: EGLL
+                                  name: LHR London Heathrow Airport
+                                  city: London
+                                  country: United Kingdom
+                                contact_point:
+                                  name: John
+                                  contact: '+18666612345'
+                                special_notes: Need translator
+                                additional_hour_charge: '100.00'
+                                surcharge: '200.00'
+                                services:
+                                  - id: 497f6eca-6276-4993-bfeb-53cbbbba6f08
+                                    service_name: Meet & Assist
+                                    rate: '200.00'
+                                    fields:
+                                      - name: pax_count
+                                        value: '1'
+                                location_total:
+                                  value: '200.00'
+                                  currency: USD
+                              arrival:
+                                connection: true
+                                meeting_date: '2020-10-10T18:13:00.000Z'
+                                date: '2020-10-10T18:13:00.000Z'
+                                terminal_id: 497f6eca-6276-4993-bfeb-53cbbbba6f08
+                                terminal_name: LHR Terminal 2
+                                airport:
+                                  id: 497f6eca-6276-4993-bfeb-53cbbbba6f08
+                                  iata: LHR
+                                  icao: EGLL
+                                  name: LHR London Heathrow Airport
+                                  city: London
+                                  country: United Kingdom
+                                contact_point:
+                                  name: John
+                                  contact: '+18666612345'
+                                special_notes: Need translator
+                                additional_hour_charge: '100.00'
+                                surcharge: '200.00'
+                                services:
+                                  - id: 497f6eca-6276-4993-bfeb-53cbbbba6f08
+                                    service_name: Meet & Assist
+                                    rate: '200.00'
+                                    fields:
+                                      - name: pax_count
+                                        value: '1'
+                                location_total:
+                                  value: '200.00'
+                                  currency: USD
+                        billing:
+                          currency: USD
+                          total_service_cost: '336.38'
+                          add_hrs_charge: '0.00'
+                          surcharge: '0.00'
+                          total_booking_cost: '336.38'
+                          promo_code: PROMO21
+                          total_discount: '33.63'
+                          grand_total: '302.75'
+                          total_paid: '302.75'
+                        comments: First Time Traveller
       operationId: GET-bookings
       description: GET a list of bookings and quotations
       parameters:
@@ -2647,6 +2840,194 @@ paths:
                               - billing
                         title: /bookings response body
                         type: object
+              examples:
+                /bookings POST response example:
+                  value:
+                    status:
+                      success: true
+                      status: 200
+                      message: Data retreived successfully
+                    trace:
+                      X-GAC-Trace-Id: a949eea7-56d5-4864-a5e6-0f15b6897960
+                      X-Trace-Id: 56d9e9d0-08d6-481e-94e7-e2667423cf37
+                      Idempotency-Key: 687d997b-391e-4906-94c5-a24c2fc12ba0
+                    data:
+                      id: 497f6eca-6276-4993-bfeb-53cbbbba6f08
+                      ref_no: 497f6eca-6276-4993-bfeb-53cbbbba6f08
+                      status: Quote
+                      expires_on: '2019-08-24T14:15:22Z'
+                      journeys:
+                        - flight: BA281
+                          pax:
+                            meta:
+                              adult: 2
+                              child: 1
+                              infant: 0
+                              bags:
+                                small: 5
+                                medium: 5
+                                large: 5
+                            passengers:
+                              adult:
+                                - lead: true
+                                  pnr: SJE34D
+                                  class: First
+                                  details:
+                                    id: 497f6eca-6276-4993-bfeb-53cbbbba6f08
+                                    type: Adult
+                                    name:
+                                      title: Mr.
+                                      forename: John
+                                      surname: Doe
+                                    contacts:
+                                      address:
+                                        streets:
+                                          - 'No 221/1, Baker''s Street'
+                                        city: Hethrow
+                                        state: London
+                                        postal_code: LN223 2323
+                                        country: United Kingdom
+                                      emails:
+                                        - type: Main
+                                          email: email@email.com
+                                      phones:
+                                        - type: Office
+                                          name: Head Office
+                                          phone: '+18666612345'
+                                    date_of_birth: '1989-02-14'
+                                    passport_no: N32343423
+                                    comments: First time traveller.
+                                    signage: John Doe
+                              child:
+                                - lead: true
+                                  pnr: SJE34D
+                                  class: First
+                                  details:
+                                    id: 497f6eca-6276-4993-bfeb-53cbbbba6f08
+                                    type: Adult
+                                    name:
+                                      title: Mr.
+                                      forename: John
+                                      surname: Doe
+                                    contacts:
+                                      address:
+                                        streets:
+                                          - 'No 221/1, Baker''s Street'
+                                        city: Hethrow
+                                        state: London
+                                        postal_code: LN223 2323
+                                        country: United Kingdom
+                                      emails:
+                                        - type: Main
+                                          email: email@email.com
+                                      phones:
+                                        - type: Office
+                                          name: Head Office
+                                          phone: '+18666612345'
+                                    date_of_birth: '1989-02-14'
+                                    passport_no: N32343423
+                                    comments: First time traveller.
+                                    signage: John Doe
+                              infant:
+                                - lead: true
+                                  pnr: SJE34D
+                                  class: First
+                                  details:
+                                    id: 497f6eca-6276-4993-bfeb-53cbbbba6f08
+                                    type: Adult
+                                    name:
+                                      title: Mr.
+                                      forename: John
+                                      surname: Doe
+                                    contacts:
+                                      address:
+                                        streets:
+                                          - 'No 221/1, Baker''s Street'
+                                        city: Hethrow
+                                        state: London
+                                        postal_code: LN223 2323
+                                        country: United Kingdom
+                                      emails:
+                                        - type: Main
+                                          email: email@email.com
+                                      phones:
+                                        - type: Office
+                                          name: Head Office
+                                          phone: '+18666612345'
+                                    date_of_birth: '1989-02-14'
+                                    passport_no: N32343423
+                                    comments: First time traveller.
+                                    signage: John Doe
+                          stops:
+                            departure:
+                              connection: true
+                              meeting_date: '2020-10-10T18:13:00.000Z'
+                              departure_date: '2020-10-10T20:13:00.000Z'
+                              terminal_id: 497f6eca-6276-4993-bfeb-53cbbbba6f08
+                              terminal_name: LHR Terminal 2
+                              airport:
+                                id: 497f6eca-6276-4993-bfeb-53cbbbba6f08
+                                iata: LHR
+                                icao: EGLL
+                                name: LHR London Heathrow Airport
+                                city: London
+                                country: United Kingdom
+                              contact_point:
+                                name: John
+                                contact: '+18666612345'
+                              special_notes: Need translator
+                              additional_hour_charge: '100.00'
+                              surcharge: '200.00'
+                              services:
+                                - id: 497f6eca-6276-4993-bfeb-53cbbbba6f08
+                                  service_name: Meet & Assist
+                                  rate: '200.00'
+                                  fields:
+                                    - name: pax_count
+                                      value: '1'
+                              location_total:
+                                value: '200.00'
+                                currency: string
+                            arrival:
+                              connection: true
+                              meeting_date: '2020-10-10T18:13:00.000Z'
+                              date: '2020-10-10T18:13:00.000Z'
+                              terminal_id: 497f6eca-6276-4993-bfeb-53cbbbba6f08
+                              terminal_name: LHR Terminal 2
+                              airport:
+                                id: 497f6eca-6276-4993-bfeb-53cbbbba6f08
+                                iata: LHR
+                                icao: EGLL
+                                name: LHR London Heathrow Airport
+                                city: London
+                                country: United Kingdom
+                              contact_point:
+                                name: John
+                                contact: '+18666612345'
+                              special_notes: Need translator
+                              additional_hour_charge: '100.00'
+                              surcharge: '200.00'
+                              services:
+                                - id: 497f6eca-6276-4993-bfeb-53cbbbba6f08
+                                  service_name: Meet & Assist
+                                  rate: '200.00'
+                                  fields:
+                                    - name: pax_count
+                                      value: '1'
+                              location_total:
+                                value: '200.00'
+                                currency: string
+                      billing:
+                        currency: USD
+                        total_service_cost: '336.38'
+                        add_hrs_charge: '0.00'
+                        surcharge: '0.00'
+                        total_booking_cost: '336.38'
+                        promo_code: PROMO21
+                        total_discount: '33.63'
+                        grand_total: '302.75'
+                        total_paid: '302.75'
+                      comments: First Time Traveller
       description: Create a quotation
       requestBody:
         content:
@@ -3540,6 +3921,140 @@ paths:
                     - journeys
               title: /bookings request body
               type: object
+            examples:
+              /bookings POST request example:
+                value:
+                  comments: First Time Traveller
+                  currency: USD
+                  promo_code: PROMO21
+                  journeys:
+                    - flight: BA282
+                      pax:
+                        meta:
+                          adult: 2
+                          child: 1
+                          infant: 1
+                          bags:
+                            small: 5
+                            medium: 5
+                            large: 5
+                        passengers:
+                          adult:
+                            - lead: true
+                              pnr: SJE34D
+                              class: First
+                              details:
+                                type: Adult
+                                name:
+                                  title: Mr.
+                                  forename: John
+                                  surname: Doe
+                                contacts:
+                                  address:
+                                    streets:
+                                      - 'No 221/1, Baker''s Street'
+                                    city: Hethrow
+                                    state: London
+                                    postal_code: LN223 2323
+                                    country: United Kingdom
+                                  emails:
+                                    - type: Main
+                                      email: email@email.com
+                                  phones:
+                                    - type: Office
+                                      name: Head Office
+                                      phone: '+18666612345'
+                                date_of_birth: '1989-02-14'
+                                passport_no: N32343423
+                                comments: First time traveller.
+                                signage: John Doe
+                          child:
+                            - lead: true
+                              pnr: SJE34D
+                              class: First
+                              details:
+                                type: Adult
+                                name:
+                                  title: Mr.
+                                  forename: John
+                                  surname: Doe
+                                contacts:
+                                  address:
+                                    streets:
+                                      - 'No 221/1, Baker''s Street'
+                                    city: Hethrow
+                                    state: London
+                                    postal_code: LN223 2323
+                                    country: United Kingdom
+                                  emails:
+                                    - type: Main
+                                      email: email@email.com
+                                  phones:
+                                    - type: Office
+                                      name: Head Office
+                                      phone: '+18666612345'
+                                date_of_birth: '1989-02-14'
+                                passport_no: N32343423
+                                comments: First time traveller.
+                                signage: John Doe
+                          infant:
+                            - lead: true
+                              pnr: SJE34D
+                              class: First
+                              details:
+                                type: Adult
+                                name:
+                                  title: Mr.
+                                  forename: John
+                                  surname: Doe
+                                contacts:
+                                  address:
+                                    streets:
+                                      - 'No 221/1, Baker''s Street'
+                                    city: Hethrow
+                                    state: London
+                                    postal_code: LN223 2323
+                                    country: United Kingdom
+                                  emails:
+                                    - type: Main
+                                      email: email@email.com
+                                  phones:
+                                    - type: Office
+                                      name: Head Office
+                                      phone: '+18666612345'
+                                date_of_birth: '1989-02-14'
+                                passport_no: N32343423
+                                comments: First time traveller.
+                                signage: John Doe
+                      stops:
+                        departure:
+                          connection: true
+                          meeting_date: '2020-10-10T18:13:00.000Z'
+                          departure_date: '2020-10-10T20:13:00.000Z'
+                          terminal_id: 497f6eca-6276-4993-bfeb-53cbbbba6f08
+                          contact_point:
+                            name: John
+                            contact: '+18666612345'
+                          special_notes: Need translator
+                          services:
+                            - id: 497f6eca-6276-4993-bfeb-53cbbbba6f08
+                              fields:
+                                - name: pax_count
+                                  value: '1'
+                        arrival:
+                          connection: true
+                          meeting_date: '2020-10-10T18:13:00.000Z'
+                          arrival_date: '2020-10-10T20:13:00.000Z'
+                          terminal_id: 497f6eca-6276-4993-bfeb-53cbbbba6f08
+                          contact_point:
+                            name: John
+                            contact: '+18666612345'
+                          special_notes: Need translator
+                          services:
+                            - id: 497f6eca-6276-4993-bfeb-53cbbbba6f08
+                              fields:
+                                - name: pax_count
+                                  value: '1'
         description: booking request body
       parameters:
         - schema:
@@ -4804,6 +5319,194 @@ paths:
                               - billing
                         title: /bookings response body
                         type: object
+              examples:
+                '/bookings/{id} GET response example':
+                  value:
+                    status:
+                      success: true
+                      status: 200
+                      message: Data retreived successfully
+                    trace:
+                      X-GAC-Trace-Id: a949eea7-56d5-4864-a5e6-0f15b6897960
+                      X-Trace-Id: 56d9e9d0-08d6-481e-94e7-e2667423cf37
+                      Idempotency-Key: 687d997b-391e-4906-94c5-a24c2fc12ba0
+                    data:
+                      id: 497f6eca-6276-4993-bfeb-53cbbbba6f08
+                      ref_no: 497f6eca-6276-4993-bfeb-53cbbbba6f08
+                      status: Quote
+                      expires_on: '2019-08-24T14:15:22Z'
+                      journeys:
+                        - flight: BA281
+                          pax:
+                            meta:
+                              adult: 2
+                              child: 1
+                              infant: 0
+                              bags:
+                                small: 5
+                                medium: 5
+                                large: 5
+                            passengers:
+                              adult:
+                                - lead: true
+                                  pnr: SJE34D
+                                  class: First
+                                  details:
+                                    id: 497f6eca-6276-4993-bfeb-53cbbbba6f08
+                                    type: Adult
+                                    name:
+                                      title: Mr.
+                                      forename: John
+                                      surname: Doe
+                                    contacts:
+                                      address:
+                                        streets:
+                                          - 'No 221/1, Baker''s Street'
+                                        city: Hethrow
+                                        state: London
+                                        postal_code: LN223 2323
+                                        country: United Kingdom
+                                      emails:
+                                        - type: Main
+                                          email: email@email.com
+                                      phones:
+                                        - type: Office
+                                          name: Head Office
+                                          phone: '+18666612345'
+                                    date_of_birth: '1989-02-14'
+                                    passport_no: N32343423
+                                    comments: First time traveller.
+                                    signage: John Doe
+                              child:
+                                - lead: true
+                                  pnr: SJE34D
+                                  class: First
+                                  details:
+                                    id: 497f6eca-6276-4993-bfeb-53cbbbba6f08
+                                    type: Adult
+                                    name:
+                                      title: Mr.
+                                      forename: John
+                                      surname: Doe
+                                    contacts:
+                                      address:
+                                        streets:
+                                          - 'No 221/1, Baker''s Street'
+                                        city: Hethrow
+                                        state: London
+                                        postal_code: LN223 2323
+                                        country: United Kingdom
+                                      emails:
+                                        - type: Main
+                                          email: email@email.com
+                                      phones:
+                                        - type: Office
+                                          name: Head Office
+                                          phone: '+18666612345'
+                                    date_of_birth: '1989-02-14'
+                                    passport_no: N32343423
+                                    comments: First time traveller.
+                                    signage: John Doe
+                              infant:
+                                - lead: true
+                                  pnr: SJE34D
+                                  class: First
+                                  details:
+                                    id: 497f6eca-6276-4993-bfeb-53cbbbba6f08
+                                    type: Adult
+                                    name:
+                                      title: Mr.
+                                      forename: John
+                                      surname: Doe
+                                    contacts:
+                                      address:
+                                        streets:
+                                          - 'No 221/1, Baker''s Street'
+                                        city: Hethrow
+                                        state: London
+                                        postal_code: LN223 2323
+                                        country: United Kingdom
+                                      emails:
+                                        - type: Main
+                                          email: email@email.com
+                                      phones:
+                                        - type: Office
+                                          name: Head Office
+                                          phone: '+18666612345'
+                                    date_of_birth: '1989-02-14'
+                                    passport_no: N32343423
+                                    comments: First time traveller.
+                                    signage: John Doe
+                          stops:
+                            departure:
+                              connection: true
+                              meeting_date: '2020-10-10T18:13:00.000Z'
+                              departure_date: '2020-10-10T20:13:00.000Z'
+                              terminal_id: 497f6eca-6276-4993-bfeb-53cbbbba6f08
+                              terminal_name: LHR Terminal 2
+                              airport:
+                                id: 497f6eca-6276-4993-bfeb-53cbbbba6f08
+                                iata: LHR
+                                icao: EGLL
+                                name: LHR London Heathrow Airport
+                                city: London
+                                country: United Kingdom
+                              contact_point:
+                                name: John
+                                contact: '+18666612345'
+                              special_notes: Need translator
+                              additional_hour_charge: '100.00'
+                              surcharge: '200.00'
+                              services:
+                                - id: 497f6eca-6276-4993-bfeb-53cbbbba6f08
+                                  service_name: Meet & Assist
+                                  rate: '200.00'
+                                  fields:
+                                    - name: pax_count
+                                      value: '1'
+                              location_total:
+                                value: '200.00'
+                                currency: string
+                            arrival:
+                              connection: true
+                              meeting_date: '2020-10-10T18:13:00.000Z'
+                              date: '2020-10-10T18:13:00.000Z'
+                              terminal_id: 497f6eca-6276-4993-bfeb-53cbbbba6f08
+                              terminal_name: LHR Terminal 2
+                              airport:
+                                id: 497f6eca-6276-4993-bfeb-53cbbbba6f08
+                                iata: LHR
+                                icao: EGLL
+                                name: LHR London Heathrow Airport
+                                city: London
+                                country: United Kingdom
+                              contact_point:
+                                name: John
+                                contact: '+18666612345'
+                              special_notes: Need translator
+                              additional_hour_charge: '100.00'
+                              surcharge: '200.00'
+                              services:
+                                - id: 497f6eca-6276-4993-bfeb-53cbbbba6f08
+                                  service_name: Meet & Assist
+                                  rate: '200.00'
+                                  fields:
+                                    - name: pax_count
+                                      value: '1'
+                              location_total:
+                                value: '200.00'
+                                currency: string
+                      billing:
+                        currency: USD
+                        total_service_cost: '336.38'
+                        add_hrs_charge: '0.00'
+                        surcharge: '0.00'
+                        total_booking_cost: '336.38'
+                        promo_code: PROMO21
+                        total_discount: '33.63'
+                        grand_total: '302.75'
+                        total_paid: '302.75'
+                      comments: First Time Traveller
       operationId: GET-bookings-id
       description: GET a booking or a quotation by id
       parameters:
@@ -6062,6 +6765,194 @@ paths:
                               - billing
                         title: /bookings response body
                         type: object
+              examples:
+                '/bookings/{id} PUT response example':
+                  value:
+                    status:
+                      success: true
+                      status: 200
+                      message: Data retreived successfully
+                    trace:
+                      X-GAC-Trace-Id: a949eea7-56d5-4864-a5e6-0f15b6897960
+                      X-Trace-Id: 56d9e9d0-08d6-481e-94e7-e2667423cf37
+                      Idempotency-Key: 687d997b-391e-4906-94c5-a24c2fc12ba0
+                    data:
+                      id: 497f6eca-6276-4993-bfeb-53cbbbba6f08
+                      ref_no: 497f6eca-6276-4993-bfeb-53cbbbba6f08
+                      status: Quote
+                      expires_on: '2019-08-24T14:15:22Z'
+                      journeys:
+                        - flight: BA281
+                          pax:
+                            meta:
+                              adult: 2
+                              child: 1
+                              infant: 0
+                              bags:
+                                small: 5
+                                medium: 5
+                                large: 5
+                            passengers:
+                              adult:
+                                - lead: true
+                                  pnr: SJE34D
+                                  class: First
+                                  details:
+                                    id: 497f6eca-6276-4993-bfeb-53cbbbba6f08
+                                    type: Adult
+                                    name:
+                                      title: Mr.
+                                      forename: John
+                                      surname: Doe
+                                    contacts:
+                                      address:
+                                        streets:
+                                          - 'No 221/1, Baker''s Street'
+                                        city: Hethrow
+                                        state: London
+                                        postal_code: LN223 2323
+                                        country: United Kingdom
+                                      emails:
+                                        - type: Main
+                                          email: email@email.com
+                                      phones:
+                                        - type: Office
+                                          name: Head Office
+                                          phone: '+18666612345'
+                                    date_of_birth: '1989-02-14'
+                                    passport_no: N32343423
+                                    comments: First time traveller.
+                                    signage: John Doe
+                              child:
+                                - lead: true
+                                  pnr: SJE34D
+                                  class: First
+                                  details:
+                                    id: 497f6eca-6276-4993-bfeb-53cbbbba6f08
+                                    type: Adult
+                                    name:
+                                      title: Mr.
+                                      forename: John
+                                      surname: Doe
+                                    contacts:
+                                      address:
+                                        streets:
+                                          - 'No 221/1, Baker''s Street'
+                                        city: Hethrow
+                                        state: London
+                                        postal_code: LN223 2323
+                                        country: United Kingdom
+                                      emails:
+                                        - type: Main
+                                          email: email@email.com
+                                      phones:
+                                        - type: Office
+                                          name: Head Office
+                                          phone: '+18666612345'
+                                    date_of_birth: '1989-02-14'
+                                    passport_no: N32343423
+                                    comments: First time traveller.
+                                    signage: John Doe
+                              infant:
+                                - lead: true
+                                  pnr: SJE34D
+                                  class: First
+                                  details:
+                                    id: 497f6eca-6276-4993-bfeb-53cbbbba6f08
+                                    type: Adult
+                                    name:
+                                      title: Mr.
+                                      forename: John
+                                      surname: Doe
+                                    contacts:
+                                      address:
+                                        streets:
+                                          - 'No 221/1, Baker''s Street'
+                                        city: Hethrow
+                                        state: London
+                                        postal_code: LN223 2323
+                                        country: United Kingdom
+                                      emails:
+                                        - type: Main
+                                          email: email@email.com
+                                      phones:
+                                        - type: Office
+                                          name: Head Office
+                                          phone: '+18666612345'
+                                    date_of_birth: '1989-02-14'
+                                    passport_no: N32343423
+                                    comments: First time traveller.
+                                    signage: John Doe
+                          stops:
+                            departure:
+                              connection: true
+                              meeting_date: '2020-10-10T18:13:00.000Z'
+                              departure_date: '2020-10-10T20:13:00.000Z'
+                              terminal_id: 497f6eca-6276-4993-bfeb-53cbbbba6f08
+                              terminal_name: LHR Terminal 2
+                              airport:
+                                id: 497f6eca-6276-4993-bfeb-53cbbbba6f08
+                                iata: LHR
+                                icao: EGLL
+                                name: LHR London Heathrow Airport
+                                city: London
+                                country: United Kingdom
+                              contact_point:
+                                name: John
+                                contact: '+18666612345'
+                              special_notes: Need translator
+                              additional_hour_charge: '100.00'
+                              surcharge: '200.00'
+                              services:
+                                - id: 497f6eca-6276-4993-bfeb-53cbbbba6f08
+                                  service_name: Meet & Assist
+                                  rate: '200.00'
+                                  fields:
+                                    - name: pax_count
+                                      value: '1'
+                              location_total:
+                                value: '200.00'
+                                currency: string
+                            arrival:
+                              connection: true
+                              meeting_date: '2020-10-10T18:13:00.000Z'
+                              date: '2020-10-10T18:13:00.000Z'
+                              terminal_id: 497f6eca-6276-4993-bfeb-53cbbbba6f08
+                              terminal_name: LHR Terminal 2
+                              airport:
+                                id: 497f6eca-6276-4993-bfeb-53cbbbba6f08
+                                iata: LHR
+                                icao: EGLL
+                                name: LHR London Heathrow Airport
+                                city: London
+                                country: United Kingdom
+                              contact_point:
+                                name: John
+                                contact: '+18666612345'
+                              special_notes: Need translator
+                              additional_hour_charge: '100.00'
+                              surcharge: '200.00'
+                              services:
+                                - id: 497f6eca-6276-4993-bfeb-53cbbbba6f08
+                                  service_name: Meet & Assist
+                                  rate: '200.00'
+                                  fields:
+                                    - name: pax_count
+                                      value: '1'
+                              location_total:
+                                value: '200.00'
+                                currency: string
+                      billing:
+                        currency: USD
+                        total_service_cost: '336.38'
+                        add_hrs_charge: '0.00'
+                        surcharge: '0.00'
+                        total_booking_cost: '336.38'
+                        promo_code: PROMO21
+                        total_discount: '33.63'
+                        grand_total: '302.75'
+                        total_paid: '302.75'
+                      comments: First Time Traveller
       description: Update a quotation
       parameters:
         - schema:
@@ -6980,6 +7871,140 @@ paths:
                     - journeys
               title: /bookings request body
               type: object
+            examples:
+              '/bookings/{id} PUT request example':
+                value:
+                  comments: First Time Traveller
+                  currency: USD
+                  promo_code: PROMO21
+                  journeys:
+                    - flight: BA282
+                      pax:
+                        meta:
+                          adult: 2
+                          child: 1
+                          infant: 1
+                          bags:
+                            small: 5
+                            medium: 5
+                            large: 5
+                        passengers:
+                          adult:
+                            - lead: true
+                              pnr: SJE34D
+                              class: First
+                              details:
+                                type: Adult
+                                name:
+                                  title: Mr.
+                                  forename: John
+                                  surname: Doe
+                                contacts:
+                                  address:
+                                    streets:
+                                      - 'No 221/1, Baker''s Street'
+                                    city: Hethrow
+                                    state: London
+                                    postal_code: LN223 2323
+                                    country: United Kingdom
+                                  emails:
+                                    - type: Main
+                                      email: email@email.com
+                                  phones:
+                                    - type: Office
+                                      name: Head Office
+                                      phone: '+18666612345'
+                                date_of_birth: '1989-02-14'
+                                passport_no: N32343423
+                                comments: First time traveller.
+                                signage: John Doe
+                          child:
+                            - lead: true
+                              pnr: SJE34D
+                              class: First
+                              details:
+                                type: Adult
+                                name:
+                                  title: Mr.
+                                  forename: John
+                                  surname: Doe
+                                contacts:
+                                  address:
+                                    streets:
+                                      - 'No 221/1, Baker''s Street'
+                                    city: Hethrow
+                                    state: London
+                                    postal_code: LN223 2323
+                                    country: United Kingdom
+                                  emails:
+                                    - type: Main
+                                      email: email@email.com
+                                  phones:
+                                    - type: Office
+                                      name: Head Office
+                                      phone: '+18666612345'
+                                date_of_birth: '1989-02-14'
+                                passport_no: N32343423
+                                comments: First time traveller.
+                                signage: John Doe
+                          infant:
+                            - lead: true
+                              pnr: SJE34D
+                              class: First
+                              details:
+                                type: Adult
+                                name:
+                                  title: Mr.
+                                  forename: John
+                                  surname: Doe
+                                contacts:
+                                  address:
+                                    streets:
+                                      - 'No 221/1, Baker''s Street'
+                                    city: Hethrow
+                                    state: London
+                                    postal_code: LN223 2323
+                                    country: United Kingdom
+                                  emails:
+                                    - type: Main
+                                      email: email@email.com
+                                  phones:
+                                    - type: Office
+                                      name: Head Office
+                                      phone: '+18666612345'
+                                date_of_birth: '1989-02-14'
+                                passport_no: N32343423
+                                comments: First time traveller.
+                                signage: John Doe
+                      stops:
+                        departure:
+                          connection: true
+                          meeting_date: '2020-10-10T18:13:00.000Z'
+                          departure_date: '2020-10-10T20:13:00.000Z'
+                          terminal_id: 497f6eca-6276-4993-bfeb-53cbbbba6f08
+                          contact_point:
+                            name: John
+                            contact: '+18666612345'
+                          special_notes: Need translator
+                          services:
+                            - id: 497f6eca-6276-4993-bfeb-53cbbbba6f08
+                              fields:
+                                - name: pax_count
+                                  value: '1'
+                        arrival:
+                          connection: true
+                          meeting_date: '2020-10-10T18:13:00.000Z'
+                          arrival_date: '2020-10-10T20:13:00.000Z'
+                          terminal_id: 497f6eca-6276-4993-bfeb-53cbbbba6f08
+                          contact_point:
+                            name: John
+                            contact: '+18666612345'
+                          special_notes: Need translator
+                          services:
+                            - id: 497f6eca-6276-4993-bfeb-53cbbbba6f08
+                              fields:
+                                - name: pax_count
+                                  value: '1'
         description: update booking request body
       security:
         - Authorization: []
@@ -7266,6 +8291,49 @@ paths:
                                 - city
                           title: /services response body
                           type: object
+              examples:
+                /services GET response example:
+                  value:
+                    status:
+                      success: true
+                      status: 200
+                      message: Data retreived successfully
+                    trace:
+                      X-GAC-Trace-Id: a949eea7-56d5-4864-a5e6-0f15b6897960
+                      X-Trace-Id: 56d9e9d0-08d6-481e-94e7-e2667423cf37
+                      Idempotency-Key: 687d997b-391e-4906-94c5-a24c2fc12ba0
+                    data:
+                      - id: 497f6eca-6276-4993-bfeb-53cbbbba6f08
+                        iata: LHR
+                        icao: EGLL
+                        name: LHR London Heahrow Airport
+                        country: United Kingdom
+                        city: London
+                        booking_window: 48
+                        terminals:
+                          - terminal_id: 497f6eca-6276-4993-bfeb-53cbbbba6f08
+                            terminal_name: LHR Terminal 2
+                            services:
+                              - service_id: 497f6eca-6276-4993-bfeb-53cbbbba6f08
+                                service_name: Meet & Assist Service
+                                fields:
+                                  - type: integer
+                                    name: paxCount
+                                    label: Pax Count
+                                    validation:
+                                      - required: true
+                                        pattern: '([A-Z])\\w+'
+                                        min: 1
+                                        max: 100
+                        air_side_meetup:
+                          international:
+                            arrival: true
+                            depature: true
+                            transit: true
+                          domestic:
+                            arrival: true
+                            depature: true
+                            transit: true
       operationId: get-services
       description: GET services at departure and arival for a flight
       security:
@@ -7363,6 +8431,19 @@ paths:
                       - departure_date
               required:
                 - flights
+            examples:
+              /services GET resquest example:
+                value:
+                  flights:
+                    - arrival_airport:
+                        icao: EGLL
+                        gac: 497f6eca-6276-4993-bfeb-53cbbbba6f08
+                      departure_airport:
+                        icao: EGLL
+                        gac: 497f6eca-6276-4993-bfeb-53cbbbba6f08
+                        iata: EWR
+                      flight_no: UA452
+                      departure_date: '2019-08-24T14:15:22Z'
         description: get services request body
   '/bookings/{bookingId}/checkout':
     parameters:
@@ -8600,6 +9681,194 @@ paths:
                               - billing
                         title: /bookings response body
                         type: object
+              examples:
+                '/bookings/{bookingId}/checkout POST response example':
+                  value:
+                    status:
+                      success: true
+                      status: 200
+                      message: Data retreived successfully
+                    trace:
+                      X-GAC-Trace-Id: a949eea7-56d5-4864-a5e6-0f15b6897960
+                      X-Trace-Id: 56d9e9d0-08d6-481e-94e7-e2667423cf37
+                      Idempotency-Key: 687d997b-391e-4906-94c5-a24c2fc12ba0
+                    data:
+                      id: 497f6eca-6276-4993-bfeb-53cbbbba6f08
+                      ref_no: 497f6eca-6276-4993-bfeb-53cbbbba6f08
+                      status: Quote
+                      expires_on: '2019-08-24T14:15:22Z'
+                      journeys:
+                        - flight: BA281
+                          pax:
+                            meta:
+                              adult: 2
+                              child: 1
+                              infant: 0
+                              bags:
+                                small: 5
+                                medium: 5
+                                large: 5
+                            passengers:
+                              adult:
+                                - lead: true
+                                  pnr: SJE34D
+                                  class: First
+                                  details:
+                                    id: 497f6eca-6276-4993-bfeb-53cbbbba6f08
+                                    type: Adult
+                                    name:
+                                      title: Mr.
+                                      forename: John
+                                      surname: Doe
+                                    contacts:
+                                      address:
+                                        streets:
+                                          - 'No 221/1, Baker''s Street'
+                                        city: Hethrow
+                                        state: London
+                                        postal_code: LN223 2323
+                                        country: United Kingdom
+                                      emails:
+                                        - type: Main
+                                          email: email@email.com
+                                      phones:
+                                        - type: Office
+                                          name: Head Office
+                                          phone: '+18666612345'
+                                    date_of_birth: '1989-02-14'
+                                    passport_no: N32343423
+                                    comments: First time traveller.
+                                    signage: John Doe
+                              child:
+                                - lead: true
+                                  pnr: SJE34D
+                                  class: First
+                                  details:
+                                    id: 497f6eca-6276-4993-bfeb-53cbbbba6f08
+                                    type: Adult
+                                    name:
+                                      title: Mr.
+                                      forename: John
+                                      surname: Doe
+                                    contacts:
+                                      address:
+                                        streets:
+                                          - 'No 221/1, Baker''s Street'
+                                        city: Hethrow
+                                        state: London
+                                        postal_code: LN223 2323
+                                        country: United Kingdom
+                                      emails:
+                                        - type: Main
+                                          email: email@email.com
+                                      phones:
+                                        - type: Office
+                                          name: Head Office
+                                          phone: '+18666612345'
+                                    date_of_birth: '1989-02-14'
+                                    passport_no: N32343423
+                                    comments: First time traveller.
+                                    signage: John Doe
+                              infant:
+                                - lead: true
+                                  pnr: SJE34D
+                                  class: First
+                                  details:
+                                    id: 497f6eca-6276-4993-bfeb-53cbbbba6f08
+                                    type: Adult
+                                    name:
+                                      title: Mr.
+                                      forename: John
+                                      surname: Doe
+                                    contacts:
+                                      address:
+                                        streets:
+                                          - 'No 221/1, Baker''s Street'
+                                        city: Hethrow
+                                        state: London
+                                        postal_code: LN223 2323
+                                        country: United Kingdom
+                                      emails:
+                                        - type: Main
+                                          email: email@email.com
+                                      phones:
+                                        - type: Office
+                                          name: Head Office
+                                          phone: '+18666612345'
+                                    date_of_birth: '1989-02-14'
+                                    passport_no: N32343423
+                                    comments: First time traveller.
+                                    signage: John Doe
+                          stops:
+                            departure:
+                              connection: true
+                              meeting_date: '2020-10-10T18:13:00.000Z'
+                              departure_date: '2020-10-10T20:13:00.000Z'
+                              terminal_id: 497f6eca-6276-4993-bfeb-53cbbbba6f08
+                              terminal_name: LHR Terminal 2
+                              airport:
+                                id: 497f6eca-6276-4993-bfeb-53cbbbba6f08
+                                iata: LHR
+                                icao: EGLL
+                                name: LHR London Heathrow Airport
+                                city: London
+                                country: United Kingdom
+                              contact_point:
+                                name: John
+                                contact: '+18666612345'
+                              special_notes: Need translator
+                              additional_hour_charge: '100.00'
+                              surcharge: '200.00'
+                              services:
+                                - id: 497f6eca-6276-4993-bfeb-53cbbbba6f08
+                                  service_name: Meet & Assist
+                                  rate: '200.00'
+                                  fields:
+                                    - name: pax_count
+                                      value: '1'
+                              location_total:
+                                value: '200.00'
+                                currency: USD
+                            arrival:
+                              connection: true
+                              meeting_date: '2020-10-10T18:13:00.000Z'
+                              date: '2020-10-10T18:13:00.000Z'
+                              terminal_id: 497f6eca-6276-4993-bfeb-53cbbbba6f08
+                              terminal_name: LHR Terminal 2
+                              airport:
+                                id: 497f6eca-6276-4993-bfeb-53cbbbba6f08
+                                iata: LHR
+                                icao: EGLL
+                                name: LHR London Heathrow Airport
+                                city: London
+                                country: United Kingdom
+                              contact_point:
+                                name: John
+                                contact: '+18666612345'
+                              special_notes: Need translator
+                              additional_hour_charge: '100.00'
+                              surcharge: '200.00'
+                              services:
+                                - id: 497f6eca-6276-4993-bfeb-53cbbbba6f08
+                                  service_name: Meet & Assist
+                                  rate: '200.00'
+                                  fields:
+                                    - name: pax_count
+                                      value: '1'
+                              location_total:
+                                value: '200.00'
+                                currency: USD
+                      billing:
+                        currency: USD
+                        total_service_cost: '336.38'
+                        add_hrs_charge: '0.00'
+                        surcharge: '0.00'
+                        total_booking_cost: '336.38'
+                        promo_code: PROMO21
+                        total_discount: '33.63'
+                        grand_total: '302.75'
+                        total_paid: '302.75'
+                      comments: First Time Traveller
         '422':
           description: Unprocessable Entity (WebDAV)
           content:
@@ -8678,6 +9947,21 @@ paths:
                             minLength: 1
                     required:
                       - trace
+              examples:
+                '/bookings/{bookingId}/checkout POST error response example':
+                  value:
+                    error:
+                      code: 0
+                      message: string
+                      moreInfo: string
+                      errors:
+                        - code: string
+                          message: string
+                          description: string
+                    trace:
+                      X-GAC-Trace-Id: a949eea7-56d5-4864-a5e6-0f15b6897960
+                      X-Trace-Id: 56d9e9d0-08d6-481e-94e7-e2667423cf37
+                      Idempotency-Key: 687d997b-391e-4906-94c5-a24c2fc12ba0
       operationId: POST-bookings-bookingId-checkout
       description: Save a quotation as a booking
       security:
@@ -9943,6 +11227,194 @@ paths:
                               - billing
                         title: /bookings response body
                         type: object
+              examples:
+                '/bookings/{bookingId}/recalculate PUT response example':
+                  value:
+                    status:
+                      success: true
+                      status: 200
+                      message: Data retreived successfully
+                    trace:
+                      X-GAC-Trace-Id: a949eea7-56d5-4864-a5e6-0f15b6897960
+                      X-Trace-Id: 56d9e9d0-08d6-481e-94e7-e2667423cf37
+                      Idempotency-Key: 687d997b-391e-4906-94c5-a24c2fc12ba0
+                    data:
+                      id: 497f6eca-6276-4993-bfeb-53cbbbba6f08
+                      ref_no: 497f6eca-6276-4993-bfeb-53cbbbba6f08
+                      status: Quote
+                      expires_on: '2019-08-24T14:15:22Z'
+                      journeys:
+                        - flight: BA281
+                          pax:
+                            meta:
+                              adult: 2
+                              child: 1
+                              infant: 0
+                              bags:
+                                small: 5
+                                medium: 5
+                                large: 5
+                            passengers:
+                              adult:
+                                - lead: true
+                                  pnr: SJE34D
+                                  class: First
+                                  details:
+                                    id: 497f6eca-6276-4993-bfeb-53cbbbba6f08
+                                    type: Adult
+                                    name:
+                                      title: Mr.
+                                      forename: John
+                                      surname: Doe
+                                    contacts:
+                                      address:
+                                        streets:
+                                          - 'No 221/1, Baker''s Street'
+                                        city: Hethrow
+                                        state: London
+                                        postal_code: LN223 2323
+                                        country: United Kingdom
+                                      emails:
+                                        - type: Main
+                                          email: email@email.com
+                                      phones:
+                                        - type: Office
+                                          name: Head Office
+                                          phone: '+18666612345'
+                                    date_of_birth: '1989-02-14'
+                                    passport_no: N32343423
+                                    comments: First time traveller.
+                                    signage: John Doe
+                              child:
+                                - lead: true
+                                  pnr: SJE34D
+                                  class: First
+                                  details:
+                                    id: 497f6eca-6276-4993-bfeb-53cbbbba6f08
+                                    type: Adult
+                                    name:
+                                      title: Mr.
+                                      forename: John
+                                      surname: Doe
+                                    contacts:
+                                      address:
+                                        streets:
+                                          - 'No 221/1, Baker''s Street'
+                                        city: Hethrow
+                                        state: London
+                                        postal_code: LN223 2323
+                                        country: United Kingdom
+                                      emails:
+                                        - type: Main
+                                          email: email@email.com
+                                      phones:
+                                        - type: Office
+                                          name: Head Office
+                                          phone: '+18666612345'
+                                    date_of_birth: '1989-02-14'
+                                    passport_no: N32343423
+                                    comments: First time traveller.
+                                    signage: John Doe
+                              infant:
+                                - lead: true
+                                  pnr: SJE34D
+                                  class: First
+                                  details:
+                                    id: 497f6eca-6276-4993-bfeb-53cbbbba6f08
+                                    type: Adult
+                                    name:
+                                      title: Mr.
+                                      forename: John
+                                      surname: Doe
+                                    contacts:
+                                      address:
+                                        streets:
+                                          - 'No 221/1, Baker''s Street'
+                                        city: Hethrow
+                                        state: London
+                                        postal_code: LN223 2323
+                                        country: United Kingdom
+                                      emails:
+                                        - type: Main
+                                          email: email@email.com
+                                      phones:
+                                        - type: Office
+                                          name: Head Office
+                                          phone: '+18666612345'
+                                    date_of_birth: '1989-02-14'
+                                    passport_no: N32343423
+                                    comments: First time traveller.
+                                    signage: John Doe
+                          stops:
+                            departure:
+                              connection: true
+                              meeting_date: '2020-10-10T18:13:00.000Z'
+                              departure_date: '2020-10-10T20:13:00.000Z'
+                              terminal_id: 497f6eca-6276-4993-bfeb-53cbbbba6f08
+                              terminal_name: LHR Terminal 2
+                              airport:
+                                id: 497f6eca-6276-4993-bfeb-53cbbbba6f08
+                                iata: LHR
+                                icao: EGLL
+                                name: LHR London Heathrow Airport
+                                city: London
+                                country: United Kingdom
+                              contact_point:
+                                name: John
+                                contact: '+18666612345'
+                              special_notes: Need translator
+                              additional_hour_charge: '100.00'
+                              surcharge: '200.00'
+                              services:
+                                - id: 497f6eca-6276-4993-bfeb-53cbbbba6f08
+                                  service_name: Meet & Assist
+                                  rate: '200.00'
+                                  fields:
+                                    - name: pax_count
+                                      value: '1'
+                              location_total:
+                                value: '200.00'
+                                currency: string
+                            arrival:
+                              connection: true
+                              meeting_date: '2020-10-10T18:13:00.000Z'
+                              date: '2020-10-10T18:13:00.000Z'
+                              terminal_id: 497f6eca-6276-4993-bfeb-53cbbbba6f08
+                              terminal_name: LHR Terminal 2
+                              airport:
+                                id: 497f6eca-6276-4993-bfeb-53cbbbba6f08
+                                iata: LHR
+                                icao: EGLL
+                                name: LHR London Heathrow Airport
+                                city: London
+                                country: United Kingdom
+                              contact_point:
+                                name: John
+                                contact: '+18666612345'
+                              special_notes: Need translator
+                              additional_hour_charge: '100.00'
+                              surcharge: '200.00'
+                              services:
+                                - id: 497f6eca-6276-4993-bfeb-53cbbbba6f08
+                                  service_name: Meet & Assist
+                                  rate: '200.00'
+                                  fields:
+                                    - name: pax_count
+                                      value: '1'
+                              location_total:
+                                value: '200.00'
+                                currency: string
+                      billing:
+                        currency: USD
+                        total_service_cost: '336.38'
+                        add_hrs_charge: '0.00'
+                        surcharge: '0.00'
+                        total_booking_cost: '336.38'
+                        promo_code: PROMO21
+                        total_discount: '33.63'
+                        grand_total: '302.75'
+                        total_paid: '302.75'
+                      comments: First Time Traveller
       operationId: PUT-bookings-bookingId-recalculate
       description: Recalculate a quotation
       security:
@@ -10050,6 +11522,17 @@ paths:
                             minLength: 1
                     required:
                       - trace
+              examples:
+                '/bookings/{id}/cancel DELETE response example':
+                  value:
+                    status:
+                      success: true
+                      status: 200
+                      message: Data retreived successfully
+                    trace:
+                      X-GAC-Trace-Id: a949eea7-56d5-4864-a5e6-0f15b6897960
+                      X-Trace-Id: 56d9e9d0-08d6-481e-94e7-e2667423cf37
+                      Idempotency-Key: 687d997b-391e-4906-94c5-a24c2fc12ba0
       tags:
         - Bookings
       description: Cancel a booking
