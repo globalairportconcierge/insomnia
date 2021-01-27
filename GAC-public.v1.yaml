@@ -942,17 +942,17 @@ paths:
                                                     minLength: 0
                                                     example: Need translator
                                                   additional_hour_charge:
-                                                    type: number
+                                                    type: string
                                                     x-faker: commerce.price
-                                                    example: 100
-                                                    minimum: 0
-                                                    maximum: 10000
+                                                    example: '100.00'
+                                                    minLength: 1
+                                                    maxLength: 15
                                                   surcharge:
-                                                    type: number
+                                                    type: string
                                                     x-faker: commerce.price
-                                                    example: 200
-                                                    minimum: 0
-                                                    maximum: 10000
+                                                    example: '200.00'
+                                                    minLength: 1
+                                                    maxLength: 15
                                                   services:
                                                     type: array
                                                     uniqueItems: true
@@ -971,11 +971,11 @@ paths:
                                                               example: Meet & Assist
                                                               maxLength: 200
                                                             rate:
-                                                              type: number
+                                                              type: string
                                                               x-faker: commerce.price
-                                                              example: 200
-                                                              minimum: 1
-                                                              maximum: 10000
+                                                              example: '200.00'
+                                                              minLength: 1
+                                                              maxLength: 15
                                                           required:
                                                             - id
                                                             - service_name
@@ -1014,10 +1014,10 @@ paths:
                                                       - currency
                                                     properties:
                                                       value:
-                                                        type: number
-                                                        example: 200
-                                                        minimum: 1
-                                                        maximum: 10000
+                                                        type: string
+                                                        example: '200.00'
+                                                        minLength: 1
+                                                        maxLength: 15
                                                       currency:
                                                         type: string
                                               arrival:
@@ -1110,17 +1110,16 @@ paths:
                                                     minLength: 0
                                                     example: Need translator
                                                   additional_hour_charge:
-                                                    type: number
+                                                    type: string
                                                     x-faker: commerce.price
-                                                    example: 100
-                                                    minimum: 0
-                                                    maximum: 10000
+                                                    example: '100.00'
+                                                    maxLength: 15
                                                   surcharge:
-                                                    type: number
+                                                    type: string
                                                     x-faker: commerce.price
-                                                    example: 200
-                                                    minimum: 0
-                                                    maximum: 10000
+                                                    example: '200.00'
+                                                    minLength: 1
+                                                    maxLength: 15
                                                   services:
                                                     type: array
                                                     uniqueItems: true
@@ -1139,11 +1138,11 @@ paths:
                                                               example: Meet & Assist
                                                               maxLength: 200
                                                             rate:
-                                                              type: number
+                                                              type: string
                                                               x-faker: commerce.price
-                                                              example: 200
-                                                              minimum: 1
-                                                              maximum: 10000
+                                                              example: '200.00'
+                                                              minLength: 1
+                                                              maxLength: 15
                                                           required:
                                                             - id
                                                             - service_name
@@ -1182,10 +1181,9 @@ paths:
                                                       - currency
                                                     properties:
                                                       value:
-                                                        type: number
-                                                        example: 200
-                                                        minimum: 1
-                                                        maximum: 10000
+                                                        type: string
+                                                        example: '200.00'
+                                                        maxLength: 15
                                                       currency:
                                                         type: string
                                                 required:
@@ -1229,53 +1227,51 @@ paths:
                                       minLength: 3
                                       maxLength: 3
                                     total_service_cost:
-                                      type: number
+                                      type: string
                                       x-faker: commerce.price
-                                      example: 336.38
-                                      minimum: 1
-                                      maximum: 100000
-                                      format: double
+                                      example: '336.38'
+                                      minLength: 1
+                                      maxLength: 15
                                     add_hrs_charge:
-                                      type: number
+                                      type: string
                                       x-faker: commerce.price
-                                      example: 0.00
-                                      minimum: 0
-                                      maximum: 10000
+                                      example: '0.00'
+                                      minLength: 1
+                                      maxLength: 15
                                     surcharge:
-                                      type: number
+                                      type: string
                                       x-faker: commerce.price
-                                      example: 0
-                                      minimum: 0
-                                      maximum: 10000
-                                      format: double
+                                      example: '0.00'
+                                      minLength: 1
+                                      maxLength: 15
                                     total_booking_cost:
-                                      type: number
-                                      example: 336.38
-                                      format: double
-                                      minimum: 1
-                                      maximum: 100000
+                                      type: string
+                                      x-faker: commerce.price
+                                      example: '336.38'
+                                      minLength: 1
+                                      maxLength: 15
                                     promo_code:
                                       type: string
                                       example: PROMO21
                                       minLength: 1
                                       maxLength: 20
                                     total_discount:
-                                      type: number
+                                      type: string
                                       x-faker: commerce.price
-                                      example: 33.63
-                                      minimum: 0
-                                      maximum: 100000
+                                      example: '33.63'
+                                      minLength: 1
+                                      maxLength: 15
                                     grand_total:
-                                      type: number
-                                      example: 302.75
-                                      minimum: 1
-                                      maximum: 100000
+                                      type: string
+                                      example: '302.75'
+                                      minLength: 1
+                                      maxLength: 15
                                     total_paid:
-                                      type: number
+                                      type: string
                                       x-faker: commerce.price
-                                      example: 302.75
-                                      minimum: 1
-                                      maximum: 100000
+                                      example: '302.75'
+                                      minLength: 1
+                                      maxLength: 15
                                 comments:
                                   type: string
                                   example: First Time Traveller
@@ -2306,17 +2302,17 @@ paths:
                                                   minLength: 0
                                                   example: Need translator
                                                 additional_hour_charge:
-                                                  type: number
+                                                  type: string
                                                   x-faker: commerce.price
-                                                  example: 100
-                                                  minimum: 0
-                                                  maximum: 10000
+                                                  example: '100.00'
+                                                  minLength: 1
+                                                  maxLength: 15
                                                 surcharge:
-                                                  type: number
+                                                  type: string
                                                   x-faker: commerce.price
-                                                  example: 200
-                                                  minimum: 0
-                                                  maximum: 10000
+                                                  example: '200.00'
+                                                  minLength: 1
+                                                  maxLength: 15
                                                 services:
                                                   type: array
                                                   uniqueItems: true
@@ -2335,11 +2331,11 @@ paths:
                                                             example: Meet & Assist
                                                             maxLength: 200
                                                           rate:
-                                                            type: number
+                                                            type: string
                                                             x-faker: commerce.price
-                                                            example: 200
-                                                            minimum: 1
-                                                            maximum: 10000
+                                                            example: '200.00'
+                                                            minLength: 1
+                                                            maxLength: 15
                                                         required:
                                                           - id
                                                           - service_name
@@ -2378,10 +2374,10 @@ paths:
                                                     - currency
                                                   properties:
                                                     value:
-                                                      type: number
-                                                      example: 200
-                                                      minimum: 1
-                                                      maximum: 10000
+                                                      type: string
+                                                      example: '200.00'
+                                                      minLength: 1
+                                                      maxLength: 15
                                                     currency:
                                                       type: string
                                             arrival:
@@ -2474,17 +2470,16 @@ paths:
                                                   minLength: 0
                                                   example: Need translator
                                                 additional_hour_charge:
-                                                  type: number
+                                                  type: string
                                                   x-faker: commerce.price
-                                                  example: 100
-                                                  minimum: 0
-                                                  maximum: 10000
+                                                  example: '100.00'
+                                                  maxLength: 15
                                                 surcharge:
-                                                  type: number
+                                                  type: string
                                                   x-faker: commerce.price
-                                                  example: 200
-                                                  minimum: 0
-                                                  maximum: 10000
+                                                  example: '200.00'
+                                                  minLength: 1
+                                                  maxLength: 15
                                                 services:
                                                   type: array
                                                   uniqueItems: true
@@ -2503,11 +2498,11 @@ paths:
                                                             example: Meet & Assist
                                                             maxLength: 200
                                                           rate:
-                                                            type: number
+                                                            type: string
                                                             x-faker: commerce.price
-                                                            example: 200
-                                                            minimum: 1
-                                                            maximum: 10000
+                                                            example: '200.00'
+                                                            minLength: 1
+                                                            maxLength: 15
                                                         required:
                                                           - id
                                                           - service_name
@@ -2546,10 +2541,9 @@ paths:
                                                     - currency
                                                   properties:
                                                     value:
-                                                      type: number
-                                                      example: 200
-                                                      minimum: 1
-                                                      maximum: 10000
+                                                      type: string
+                                                      example: '200.00'
+                                                      maxLength: 15
                                                     currency:
                                                       type: string
                                               required:
@@ -2593,53 +2587,51 @@ paths:
                                     minLength: 3
                                     maxLength: 3
                                   total_service_cost:
-                                    type: number
+                                    type: string
                                     x-faker: commerce.price
-                                    example: 336.38
-                                    minimum: 1
-                                    maximum: 100000
-                                    format: double
+                                    example: '336.38'
+                                    minLength: 1
+                                    maxLength: 15
                                   add_hrs_charge:
-                                    type: number
+                                    type: string
                                     x-faker: commerce.price
-                                    example: 0.00
-                                    minimum: 0
-                                    maximum: 10000
+                                    example: '0.00'
+                                    minLength: 1
+                                    maxLength: 15
                                   surcharge:
-                                    type: number
+                                    type: string
                                     x-faker: commerce.price
-                                    example: 0
-                                    minimum: 0
-                                    maximum: 10000
-                                    format: double
+                                    example: '0.00'
+                                    minLength: 1
+                                    maxLength: 15
                                   total_booking_cost:
-                                    type: number
-                                    example: 336.38
-                                    format: double
-                                    minimum: 1
-                                    maximum: 100000
+                                    type: string
+                                    x-faker: commerce.price
+                                    example: '336.38'
+                                    minLength: 1
+                                    maxLength: 15
                                   promo_code:
                                     type: string
                                     example: PROMO21
                                     minLength: 1
                                     maxLength: 20
                                   total_discount:
-                                    type: number
+                                    type: string
                                     x-faker: commerce.price
-                                    example: 33.63
-                                    minimum: 0
-                                    maximum: 100000
+                                    example: '33.63'
+                                    minLength: 1
+                                    maxLength: 15
                                   grand_total:
-                                    type: number
-                                    example: 302.75
-                                    minimum: 1
-                                    maximum: 100000
+                                    type: string
+                                    example: '302.75'
+                                    minLength: 1
+                                    maxLength: 15
                                   total_paid:
-                                    type: number
+                                    type: string
                                     x-faker: commerce.price
-                                    example: 302.75
-                                    minimum: 1
-                                    maximum: 100000
+                                    example: '302.75'
+                                    minLength: 1
+                                    maxLength: 15
                               comments:
                                 type: string
                                 example: First Time Traveller
@@ -4467,17 +4459,17 @@ paths:
                                                   minLength: 0
                                                   example: Need translator
                                                 additional_hour_charge:
-                                                  type: number
+                                                  type: string
                                                   x-faker: commerce.price
-                                                  example: 100
-                                                  minimum: 0
-                                                  maximum: 10000
+                                                  example: '100.00'
+                                                  minLength: 1
+                                                  maxLength: 15
                                                 surcharge:
-                                                  type: number
+                                                  type: string
                                                   x-faker: commerce.price
-                                                  example: 200
-                                                  minimum: 0
-                                                  maximum: 10000
+                                                  example: '200.00'
+                                                  minLength: 1
+                                                  maxLength: 15
                                                 services:
                                                   type: array
                                                   uniqueItems: true
@@ -4496,11 +4488,11 @@ paths:
                                                             example: Meet & Assist
                                                             maxLength: 200
                                                           rate:
-                                                            type: number
+                                                            type: string
                                                             x-faker: commerce.price
-                                                            example: 200
-                                                            minimum: 1
-                                                            maximum: 10000
+                                                            example: '200.00'
+                                                            minLength: 1
+                                                            maxLength: 15
                                                         required:
                                                           - id
                                                           - service_name
@@ -4539,10 +4531,10 @@ paths:
                                                     - currency
                                                   properties:
                                                     value:
-                                                      type: number
-                                                      example: 200
-                                                      minimum: 1
-                                                      maximum: 10000
+                                                      type: string
+                                                      example: '200.00'
+                                                      minLength: 1
+                                                      maxLength: 15
                                                     currency:
                                                       type: string
                                             arrival:
@@ -4635,17 +4627,16 @@ paths:
                                                   minLength: 0
                                                   example: Need translator
                                                 additional_hour_charge:
-                                                  type: number
+                                                  type: string
                                                   x-faker: commerce.price
-                                                  example: 100
-                                                  minimum: 0
-                                                  maximum: 10000
+                                                  example: '100.00'
+                                                  maxLength: 15
                                                 surcharge:
-                                                  type: number
+                                                  type: string
                                                   x-faker: commerce.price
-                                                  example: 200
-                                                  minimum: 0
-                                                  maximum: 10000
+                                                  example: '200.00'
+                                                  minLength: 1
+                                                  maxLength: 15
                                                 services:
                                                   type: array
                                                   uniqueItems: true
@@ -4664,11 +4655,11 @@ paths:
                                                             example: Meet & Assist
                                                             maxLength: 200
                                                           rate:
-                                                            type: number
+                                                            type: string
                                                             x-faker: commerce.price
-                                                            example: 200
-                                                            minimum: 1
-                                                            maximum: 10000
+                                                            example: '200.00'
+                                                            minLength: 1
+                                                            maxLength: 15
                                                         required:
                                                           - id
                                                           - service_name
@@ -4707,10 +4698,9 @@ paths:
                                                     - currency
                                                   properties:
                                                     value:
-                                                      type: number
-                                                      example: 200
-                                                      minimum: 1
-                                                      maximum: 10000
+                                                      type: string
+                                                      example: '200.00'
+                                                      maxLength: 15
                                                     currency:
                                                       type: string
                                               required:
@@ -4754,53 +4744,51 @@ paths:
                                     minLength: 3
                                     maxLength: 3
                                   total_service_cost:
-                                    type: number
+                                    type: string
                                     x-faker: commerce.price
-                                    example: 336.38
-                                    minimum: 1
-                                    maximum: 100000
-                                    format: double
+                                    example: '336.38'
+                                    minLength: 1
+                                    maxLength: 15
                                   add_hrs_charge:
-                                    type: number
+                                    type: string
                                     x-faker: commerce.price
-                                    example: 0.00
-                                    minimum: 0
-                                    maximum: 10000
+                                    example: '0.00'
+                                    minLength: 1
+                                    maxLength: 15
                                   surcharge:
-                                    type: number
+                                    type: string
                                     x-faker: commerce.price
-                                    example: 0
-                                    minimum: 0
-                                    maximum: 10000
-                                    format: double
+                                    example: '0.00'
+                                    minLength: 1
+                                    maxLength: 15
                                   total_booking_cost:
-                                    type: number
-                                    example: 336.38
-                                    format: double
-                                    minimum: 1
-                                    maximum: 100000
+                                    type: string
+                                    x-faker: commerce.price
+                                    example: '336.38'
+                                    minLength: 1
+                                    maxLength: 15
                                   promo_code:
                                     type: string
                                     example: PROMO21
                                     minLength: 1
                                     maxLength: 20
                                   total_discount:
-                                    type: number
+                                    type: string
                                     x-faker: commerce.price
-                                    example: 33.63
-                                    minimum: 0
-                                    maximum: 100000
+                                    example: '33.63'
+                                    minLength: 1
+                                    maxLength: 15
                                   grand_total:
-                                    type: number
-                                    example: 302.75
-                                    minimum: 1
-                                    maximum: 100000
+                                    type: string
+                                    example: '302.75'
+                                    minLength: 1
+                                    maxLength: 15
                                   total_paid:
-                                    type: number
+                                    type: string
                                     x-faker: commerce.price
-                                    example: 302.75
-                                    minimum: 1
-                                    maximum: 100000
+                                    example: '302.75'
+                                    minLength: 1
+                                    maxLength: 15
                               comments:
                                 type: string
                                 example: First Time Traveller
@@ -5729,17 +5717,17 @@ paths:
                                                   minLength: 0
                                                   example: Need translator
                                                 additional_hour_charge:
-                                                  type: number
+                                                  type: string
                                                   x-faker: commerce.price
-                                                  example: 100
-                                                  minimum: 0
-                                                  maximum: 10000
+                                                  example: '100.00'
+                                                  minLength: 1
+                                                  maxLength: 15
                                                 surcharge:
-                                                  type: number
+                                                  type: string
                                                   x-faker: commerce.price
-                                                  example: 200
-                                                  minimum: 0
-                                                  maximum: 10000
+                                                  example: '200.00'
+                                                  minLength: 1
+                                                  maxLength: 15
                                                 services:
                                                   type: array
                                                   uniqueItems: true
@@ -5758,11 +5746,11 @@ paths:
                                                             example: Meet & Assist
                                                             maxLength: 200
                                                           rate:
-                                                            type: number
+                                                            type: string
                                                             x-faker: commerce.price
-                                                            example: 200
-                                                            minimum: 1
-                                                            maximum: 10000
+                                                            example: '200.00'
+                                                            minLength: 1
+                                                            maxLength: 15
                                                         required:
                                                           - id
                                                           - service_name
@@ -5801,10 +5789,10 @@ paths:
                                                     - currency
                                                   properties:
                                                     value:
-                                                      type: number
-                                                      example: 200
-                                                      minimum: 1
-                                                      maximum: 10000
+                                                      type: string
+                                                      example: '200.00'
+                                                      minLength: 1
+                                                      maxLength: 15
                                                     currency:
                                                       type: string
                                             arrival:
@@ -5897,17 +5885,16 @@ paths:
                                                   minLength: 0
                                                   example: Need translator
                                                 additional_hour_charge:
-                                                  type: number
+                                                  type: string
                                                   x-faker: commerce.price
-                                                  example: 100
-                                                  minimum: 0
-                                                  maximum: 10000
+                                                  example: '100.00'
+                                                  maxLength: 15
                                                 surcharge:
-                                                  type: number
+                                                  type: string
                                                   x-faker: commerce.price
-                                                  example: 200
-                                                  minimum: 0
-                                                  maximum: 10000
+                                                  example: '200.00'
+                                                  minLength: 1
+                                                  maxLength: 15
                                                 services:
                                                   type: array
                                                   uniqueItems: true
@@ -5926,11 +5913,11 @@ paths:
                                                             example: Meet & Assist
                                                             maxLength: 200
                                                           rate:
-                                                            type: number
+                                                            type: string
                                                             x-faker: commerce.price
-                                                            example: 200
-                                                            minimum: 1
-                                                            maximum: 10000
+                                                            example: '200.00'
+                                                            minLength: 1
+                                                            maxLength: 15
                                                         required:
                                                           - id
                                                           - service_name
@@ -5969,10 +5956,9 @@ paths:
                                                     - currency
                                                   properties:
                                                     value:
-                                                      type: number
-                                                      example: 200
-                                                      minimum: 1
-                                                      maximum: 10000
+                                                      type: string
+                                                      example: '200.00'
+                                                      maxLength: 15
                                                     currency:
                                                       type: string
                                               required:
@@ -6016,53 +6002,51 @@ paths:
                                     minLength: 3
                                     maxLength: 3
                                   total_service_cost:
-                                    type: number
+                                    type: string
                                     x-faker: commerce.price
-                                    example: 336.38
-                                    minimum: 1
-                                    maximum: 100000
-                                    format: double
+                                    example: '336.38'
+                                    minLength: 1
+                                    maxLength: 15
                                   add_hrs_charge:
-                                    type: number
+                                    type: string
                                     x-faker: commerce.price
-                                    example: 0.00
-                                    minimum: 0
-                                    maximum: 10000
+                                    example: '0.00'
+                                    minLength: 1
+                                    maxLength: 15
                                   surcharge:
-                                    type: number
+                                    type: string
                                     x-faker: commerce.price
-                                    example: 0
-                                    minimum: 0
-                                    maximum: 10000
-                                    format: double
+                                    example: '0.00'
+                                    minLength: 1
+                                    maxLength: 15
                                   total_booking_cost:
-                                    type: number
-                                    example: 336.38
-                                    format: double
-                                    minimum: 1
-                                    maximum: 100000
+                                    type: string
+                                    x-faker: commerce.price
+                                    example: '336.38'
+                                    minLength: 1
+                                    maxLength: 15
                                   promo_code:
                                     type: string
                                     example: PROMO21
                                     minLength: 1
                                     maxLength: 20
                                   total_discount:
-                                    type: number
+                                    type: string
                                     x-faker: commerce.price
-                                    example: 33.63
-                                    minimum: 0
-                                    maximum: 100000
+                                    example: '33.63'
+                                    minLength: 1
+                                    maxLength: 15
                                   grand_total:
-                                    type: number
-                                    example: 302.75
-                                    minimum: 1
-                                    maximum: 100000
+                                    type: string
+                                    example: '302.75'
+                                    minLength: 1
+                                    maxLength: 15
                                   total_paid:
-                                    type: number
+                                    type: string
                                     x-faker: commerce.price
-                                    example: 302.75
-                                    minimum: 1
-                                    maximum: 100000
+                                    example: '302.75'
+                                    minLength: 1
+                                    maxLength: 15
                               comments:
                                 type: string
                                 example: First Time Traveller
@@ -8271,17 +8255,17 @@ paths:
                                                   minLength: 0
                                                   example: Need translator
                                                 additional_hour_charge:
-                                                  type: number
+                                                  type: string
                                                   x-faker: commerce.price
-                                                  example: 100
-                                                  minimum: 0
-                                                  maximum: 10000
+                                                  example: '100.00'
+                                                  minLength: 1
+                                                  maxLength: 15
                                                 surcharge:
-                                                  type: number
+                                                  type: string
                                                   x-faker: commerce.price
-                                                  example: 200
-                                                  minimum: 0
-                                                  maximum: 10000
+                                                  example: '200.00'
+                                                  minLength: 1
+                                                  maxLength: 15
                                                 services:
                                                   type: array
                                                   uniqueItems: true
@@ -8300,11 +8284,11 @@ paths:
                                                             example: Meet & Assist
                                                             maxLength: 200
                                                           rate:
-                                                            type: number
+                                                            type: string
                                                             x-faker: commerce.price
-                                                            example: 200
-                                                            minimum: 1
-                                                            maximum: 10000
+                                                            example: '200.00'
+                                                            minLength: 1
+                                                            maxLength: 15
                                                         required:
                                                           - id
                                                           - service_name
@@ -8343,10 +8327,10 @@ paths:
                                                     - currency
                                                   properties:
                                                     value:
-                                                      type: number
-                                                      example: 200
-                                                      minimum: 1
-                                                      maximum: 10000
+                                                      type: string
+                                                      example: '200.00'
+                                                      minLength: 1
+                                                      maxLength: 15
                                                     currency:
                                                       type: string
                                             arrival:
@@ -8439,17 +8423,16 @@ paths:
                                                   minLength: 0
                                                   example: Need translator
                                                 additional_hour_charge:
-                                                  type: number
+                                                  type: string
                                                   x-faker: commerce.price
-                                                  example: 100
-                                                  minimum: 0
-                                                  maximum: 10000
+                                                  example: '100.00'
+                                                  maxLength: 15
                                                 surcharge:
-                                                  type: number
+                                                  type: string
                                                   x-faker: commerce.price
-                                                  example: 200
-                                                  minimum: 0
-                                                  maximum: 10000
+                                                  example: '200.00'
+                                                  minLength: 1
+                                                  maxLength: 15
                                                 services:
                                                   type: array
                                                   uniqueItems: true
@@ -8468,11 +8451,11 @@ paths:
                                                             example: Meet & Assist
                                                             maxLength: 200
                                                           rate:
-                                                            type: number
+                                                            type: string
                                                             x-faker: commerce.price
-                                                            example: 200
-                                                            minimum: 1
-                                                            maximum: 10000
+                                                            example: '200.00'
+                                                            minLength: 1
+                                                            maxLength: 15
                                                         required:
                                                           - id
                                                           - service_name
@@ -8511,10 +8494,9 @@ paths:
                                                     - currency
                                                   properties:
                                                     value:
-                                                      type: number
-                                                      example: 200
-                                                      minimum: 1
-                                                      maximum: 10000
+                                                      type: string
+                                                      example: '200.00'
+                                                      maxLength: 15
                                                     currency:
                                                       type: string
                                               required:
@@ -8558,53 +8540,51 @@ paths:
                                     minLength: 3
                                     maxLength: 3
                                   total_service_cost:
-                                    type: number
+                                    type: string
                                     x-faker: commerce.price
-                                    example: 336.38
-                                    minimum: 1
-                                    maximum: 100000
-                                    format: double
+                                    example: '336.38'
+                                    minLength: 1
+                                    maxLength: 15
                                   add_hrs_charge:
-                                    type: number
+                                    type: string
                                     x-faker: commerce.price
-                                    example: 0.00
-                                    minimum: 0
-                                    maximum: 10000
+                                    example: '0.00'
+                                    minLength: 1
+                                    maxLength: 15
                                   surcharge:
-                                    type: number
+                                    type: string
                                     x-faker: commerce.price
-                                    example: 0
-                                    minimum: 0
-                                    maximum: 10000
-                                    format: double
+                                    example: '0.00'
+                                    minLength: 1
+                                    maxLength: 15
                                   total_booking_cost:
-                                    type: number
-                                    example: 336.38
-                                    format: double
-                                    minimum: 1
-                                    maximum: 100000
+                                    type: string
+                                    x-faker: commerce.price
+                                    example: '336.38'
+                                    minLength: 1
+                                    maxLength: 15
                                   promo_code:
                                     type: string
                                     example: PROMO21
                                     minLength: 1
                                     maxLength: 20
                                   total_discount:
-                                    type: number
+                                    type: string
                                     x-faker: commerce.price
-                                    example: 33.63
-                                    minimum: 0
-                                    maximum: 100000
+                                    example: '33.63'
+                                    minLength: 1
+                                    maxLength: 15
                                   grand_total:
-                                    type: number
-                                    example: 302.75
-                                    minimum: 1
-                                    maximum: 100000
+                                    type: string
+                                    example: '302.75'
+                                    minLength: 1
+                                    maxLength: 15
                                   total_paid:
-                                    type: number
+                                    type: string
                                     x-faker: commerce.price
-                                    example: 302.75
-                                    minimum: 1
-                                    maximum: 100000
+                                    example: '302.75'
+                                    minLength: 1
+                                    maxLength: 15
                               comments:
                                 type: string
                                 example: First Time Traveller
@@ -9618,17 +9598,17 @@ paths:
                                                   minLength: 0
                                                   example: Need translator
                                                 additional_hour_charge:
-                                                  type: number
+                                                  type: string
                                                   x-faker: commerce.price
-                                                  example: 100
-                                                  minimum: 0
-                                                  maximum: 10000
+                                                  example: '100.00'
+                                                  minLength: 1
+                                                  maxLength: 15
                                                 surcharge:
-                                                  type: number
+                                                  type: string
                                                   x-faker: commerce.price
-                                                  example: 200
-                                                  minimum: 0
-                                                  maximum: 10000
+                                                  example: '200.00'
+                                                  minLength: 1
+                                                  maxLength: 15
                                                 services:
                                                   type: array
                                                   uniqueItems: true
@@ -9647,11 +9627,11 @@ paths:
                                                             example: Meet & Assist
                                                             maxLength: 200
                                                           rate:
-                                                            type: number
+                                                            type: string
                                                             x-faker: commerce.price
-                                                            example: 200
-                                                            minimum: 1
-                                                            maximum: 10000
+                                                            example: '200.00'
+                                                            minLength: 1
+                                                            maxLength: 15
                                                         required:
                                                           - id
                                                           - service_name
@@ -9690,10 +9670,10 @@ paths:
                                                     - currency
                                                   properties:
                                                     value:
-                                                      type: number
-                                                      example: 200
-                                                      minimum: 1
-                                                      maximum: 10000
+                                                      type: string
+                                                      example: '200.00'
+                                                      minLength: 1
+                                                      maxLength: 15
                                                     currency:
                                                       type: string
                                             arrival:
@@ -9786,17 +9766,16 @@ paths:
                                                   minLength: 0
                                                   example: Need translator
                                                 additional_hour_charge:
-                                                  type: number
+                                                  type: string
                                                   x-faker: commerce.price
-                                                  example: 100
-                                                  minimum: 0
-                                                  maximum: 10000
+                                                  example: '100.00'
+                                                  maxLength: 15
                                                 surcharge:
-                                                  type: number
+                                                  type: string
                                                   x-faker: commerce.price
-                                                  example: 200
-                                                  minimum: 0
-                                                  maximum: 10000
+                                                  example: '200.00'
+                                                  minLength: 1
+                                                  maxLength: 15
                                                 services:
                                                   type: array
                                                   uniqueItems: true
@@ -9815,11 +9794,11 @@ paths:
                                                             example: Meet & Assist
                                                             maxLength: 200
                                                           rate:
-                                                            type: number
+                                                            type: string
                                                             x-faker: commerce.price
-                                                            example: 200
-                                                            minimum: 1
-                                                            maximum: 10000
+                                                            example: '200.00'
+                                                            minLength: 1
+                                                            maxLength: 15
                                                         required:
                                                           - id
                                                           - service_name
@@ -9858,10 +9837,9 @@ paths:
                                                     - currency
                                                   properties:
                                                     value:
-                                                      type: number
-                                                      example: 200
-                                                      minimum: 1
-                                                      maximum: 10000
+                                                      type: string
+                                                      example: '200.00'
+                                                      maxLength: 15
                                                     currency:
                                                       type: string
                                               required:
@@ -9905,53 +9883,51 @@ paths:
                                     minLength: 3
                                     maxLength: 3
                                   total_service_cost:
-                                    type: number
+                                    type: string
                                     x-faker: commerce.price
-                                    example: 336.38
-                                    minimum: 1
-                                    maximum: 100000
-                                    format: double
+                                    example: '336.38'
+                                    minLength: 1
+                                    maxLength: 15
                                   add_hrs_charge:
-                                    type: number
+                                    type: string
                                     x-faker: commerce.price
-                                    example: 0.00
-                                    minimum: 0
-                                    maximum: 10000
+                                    example: '0.00'
+                                    minLength: 1
+                                    maxLength: 15
                                   surcharge:
-                                    type: number
+                                    type: string
                                     x-faker: commerce.price
-                                    example: 0
-                                    minimum: 0
-                                    maximum: 10000
-                                    format: double
+                                    example: '0.00'
+                                    minLength: 1
+                                    maxLength: 15
                                   total_booking_cost:
-                                    type: number
-                                    example: 336.38
-                                    format: double
-                                    minimum: 1
-                                    maximum: 100000
+                                    type: string
+                                    x-faker: commerce.price
+                                    example: '336.38'
+                                    minLength: 1
+                                    maxLength: 15
                                   promo_code:
                                     type: string
                                     example: PROMO21
                                     minLength: 1
                                     maxLength: 20
                                   total_discount:
-                                    type: number
+                                    type: string
                                     x-faker: commerce.price
-                                    example: 33.63
-                                    minimum: 0
-                                    maximum: 100000
+                                    example: '33.63'
+                                    minLength: 1
+                                    maxLength: 15
                                   grand_total:
-                                    type: number
-                                    example: 302.75
-                                    minimum: 1
-                                    maximum: 100000
+                                    type: string
+                                    example: '302.75'
+                                    minLength: 1
+                                    maxLength: 15
                                   total_paid:
-                                    type: number
+                                    type: string
                                     x-faker: commerce.price
-                                    example: 302.75
-                                    minimum: 1
-                                    maximum: 100000
+                                    example: '302.75'
+                                    minLength: 1
+                                    maxLength: 15
                               comments:
                                 type: string
                                 example: First Time Traveller
@@ -9969,6 +9945,114 @@ paths:
                         type: object
       operationId: PUT-bookings-bookingId-recalculate
       description: Recalculate a quotation
+      security:
+        - Authorization: []
+      parameters:
+        - schema:
+            type: string
+            default: 1061b7fe-e742-47e2-a41c-1f8cb3c58d9f
+            example: 1061b7fe-e742-47e2-a41c-1f8cb3c58d9f
+          name: X-Trace-Id
+          in: header
+          required: false
+          description: Please provide your UUID for tracing
+        - schema:
+            type: string
+            default: application/json
+            example: application/json
+          name: Content-Type
+          in: header
+          required: true
+          description: application/json
+        - schema:
+            type: string
+            default: gzip
+            example: gzip
+          name: Accept-Encoding
+          in: header
+          required: true
+          description: add a req. header for payload to be compressed by the server
+  '/bookings/{id}/cancel':
+    parameters:
+      - schema:
+          type: string
+        name: id
+        in: path
+        required: true
+        description: booking id
+    delete:
+      summary: '/bookings/{id}/cancel'
+      operationId: delete-bookings-id-cancel
+      responses:
+        '204':
+          description: No Content
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - description: 'Successs response , needs to be accompanied by an X-Trace object'
+                    type: object
+                    title: success.v1.json
+                    properties:
+                      status:
+                        type: object
+                        description: status object
+                        required:
+                          - success
+                          - status
+                          - message
+                        properties:
+                          success:
+                            type: boolean
+                            description: The response was a success or not
+                          status:
+                            type: number
+                            enum:
+                              - 200
+                              - 201
+                              - 204
+                            example: 200
+                            default: 200
+                            description: Response status code
+                          message:
+                            type: string
+                            minLength: 1
+                            description: Response message
+                            example: Data retreived successfully
+                    required:
+                      - status
+                  - description: This X-Trace-Ids is passed in by the calling party and will be returned withing each response objects. It can also be used as "Idempotency-Key" to ensure retries are for the same request.
+                    type: object
+                    title: rsp-x-trace.v1.json
+                    properties:
+                      trace:
+                        type: object
+                        description: trace object
+                        required:
+                          - X-GAC-Trace-Id
+                          - X-Trace-Id
+                          - Idempotency-Key
+                        properties:
+                          X-GAC-Trace-Id:
+                            type: string
+                            minLength: 1
+                            format: uuid
+                            description: GAC x-trace id
+                          X-Trace-Id:
+                            type: string
+                            minLength: 1
+                            format: uuid
+                            description: User x-trace id
+                          Idempotency-Key:
+                            type: string
+                            format: uuid
+                            description: Idempotency-Key to ensure safe retries of failed requests
+                            minLength: 1
+                    required:
+                      - trace
+      tags:
+        - Bookings
+      description: Cancel a booking
       security:
         - Authorization: []
       parameters:
