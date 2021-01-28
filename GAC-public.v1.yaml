@@ -3051,10 +3051,10 @@ paths:
                         - EUR
                       minLength: 3
                       maxLength: 3
-                      description: currency of the booking
+                      description: Currency of the booking
                     promo_code:
                       type: string
-                      description: promocode for the booking
+                      description: Promocode for the booking
                       example: PROMO21
                       minLength: 1
                       maxLength: 20
@@ -3065,28 +3065,29 @@ paths:
                       type: array
                       uniqueItems: true
                       minItems: 1
-                      description: list of journeys in the booking
+                      description: List of journeys in the booking
                       items:
                         type: object
-                        description: journey request model
+                        description: Journey request model
                         title: ''
                         minProperties: 1
                         properties:
                           flight:
                             type: string
                             minLength: 3
-                            description: a flight number
+                            description: A flight number
                             example: BA282
                             maxLength: 6
                           pax:
                             type: object
-                            description: passenger object
+                            description: Passenger object
                             required:
                               - meta
                               - passengers
                             properties:
                               meta:
                                 type: object
+                                description: Pax meta data
                                 required:
                                   - adult
                                   - child
@@ -3098,18 +3099,22 @@ paths:
                                     example: 2
                                     minimum: 0
                                     maximum: 1000
+                                    description: Number of Adult passengers
                                   child:
                                     type: integer
                                     example: 1
                                     minimum: 0
                                     maximum: 1000
+                                    description: Number of Child passengers
                                   infant:
                                     type: integer
                                     example: 1
                                     minimum: 0
                                     maximum: 1000
+                                    description: Number of Infant passengers
                                   bags:
                                     type: object
+                                    description: Number of bags
                                     required:
                                       - small
                                       - medium
@@ -3120,38 +3125,43 @@ paths:
                                         minimum: 0
                                         maximum: 100
                                         example: 5
+                                        description: Number of small bags
                                       medium:
                                         type: integer
                                         minimum: 0
                                         maximum: 100
                                         example: 5
+                                        description: Number of medium bags
                                       large:
                                         type: integer
                                         minimum: 0
                                         maximum: 1000
                                         example: 5
+                                        description: mNumber of large bags
                               passengers:
                                 type: object
+                                description: Passenger details
                                 properties:
                                   adult:
                                     type: array
+                                    description: Adult passengers' information
                                     items:
                                       title: passenger.v1
                                       type: object
-                                      description: passenger model
+                                      description: Passenger model
                                       properties:
                                         lead:
                                           type: boolean
-                                          description: is lead passenger
+                                          description: Is lead passenger
                                         pnr:
                                           type: string
-                                          description: passenger PNR
+                                          description: Passenger PNR
                                           example: SJE34D
                                           minLength: 0
                                           maxLength: 7
                                         class:
                                           type: string
-                                          description: passenger class
+                                          description: Passenger class
                                           example: First
                                           minLength: 0
                                           maxLength: 50
@@ -3193,18 +3203,21 @@ paths:
                                                         - Team
                                                       example: Mr.
                                                       maxLength: 6
+                                                      description: Title
                                                     forename:
                                                       type: string
                                                       x-faker: name.firstName
                                                       minLength: 1
                                                       example: John
                                                       maxLength: 200
+                                                      description: Forname
                                                     surname:
                                                       type: string
                                                       x-faker: name.lastName
                                                       minLength: 1
                                                       example: Doe
                                                       maxLength: 200
+                                                      description: Surname
                                                 contacts:
                                                   description: Contact model
                                                   type: object
@@ -3218,7 +3231,7 @@ paths:
                                                         streets:
                                                           type: array
                                                           minItems: 1
-                                                          description: ''
+                                                          description: Address streets
                                                           items:
                                                             type: string
                                                             x-faker: address.streetAddress
@@ -3231,24 +3244,28 @@ paths:
                                                           example: Hethrow
                                                           minLength: 0
                                                           maxLength: 100
+                                                          description: City
                                                         state:
                                                           type: string
                                                           x-faker: address.state
                                                           example: London
                                                           minLength: 0
                                                           maxLength: 100
+                                                          description: State
                                                         postal_code:
                                                           type: string
                                                           x-faker: address.zipCode
                                                           example: LN223 2323
                                                           minLength: 0
                                                           maxLength: 100
+                                                          description: Postal/zip Code
                                                         country:
                                                           type: string
                                                           x-faker: address.country
                                                           example: United Kingdom
                                                           minLength: 0
                                                           maxLength: 60
+                                                          description: Country
                                                     emails:
                                                       type: array
                                                       uniqueItems: true
@@ -3262,6 +3279,7 @@ paths:
                                                             example: Main
                                                             maxLength: 100
                                                             minLength: 1
+                                                            description: Email type
                                                           email:
                                                             type: string
                                                             x-faker: internet.email
@@ -3269,6 +3287,7 @@ paths:
                                                             format: email
                                                             example: email@email.com
                                                             maxLength: 100
+                                                            description: Email
                                                     phones:
                                                       type: array
                                                       uniqueItems: true
@@ -3282,12 +3301,14 @@ paths:
                                                             minLength: 1
                                                             example: Office
                                                             maxLength: 100
+                                                            description: Type of phone
                                                           name:
                                                             type: string
                                                             x-faker: name.jobTitle
                                                             minLength: 1
                                                             example: Head Office
                                                             maxLength: 100
+                                                            description: Contact nme of the phone
                                                           phone:
                                                             type: string
                                                             x-faker: phone.phoneNumber
@@ -3295,6 +3316,7 @@ paths:
                                                             example: '+18666612345'
                                                             maxLength: 16
                                                             pattern: '^\+[1-9]{1}[0-9]{3,14}$'
+                                                            description: Phone number
                                                 date_of_birth:
                                                   type: string
                                                   minLength: 10
@@ -3332,6 +3354,7 @@ paths:
                                         - class
                                   child:
                                     type: array
+                                    description: Child passengers' information
                                     items:
                                       title: passenger.v1
                                       type: object
@@ -3390,18 +3413,21 @@ paths:
                                                         - Team
                                                       example: Mr.
                                                       maxLength: 6
+                                                      description: Tilte
                                                     forename:
                                                       type: string
                                                       x-faker: name.firstName
                                                       minLength: 1
                                                       example: John
                                                       maxLength: 200
+                                                      description: Forname
                                                     surname:
                                                       type: string
                                                       x-faker: name.lastName
                                                       minLength: 1
                                                       example: Doe
                                                       maxLength: 200
+                                                      description: Surname
                                                 contacts:
                                                   description: Contact model
                                                   type: object
@@ -3415,7 +3441,7 @@ paths:
                                                         streets:
                                                           type: array
                                                           minItems: 1
-                                                          description: ''
+                                                          description: Address streets
                                                           items:
                                                             type: string
                                                             x-faker: address.streetAddress
@@ -3428,24 +3454,28 @@ paths:
                                                           example: Hethrow
                                                           minLength: 0
                                                           maxLength: 100
+                                                          description: City
                                                         state:
                                                           type: string
                                                           x-faker: address.state
                                                           example: London
                                                           minLength: 0
                                                           maxLength: 100
+                                                          description: State
                                                         postal_code:
                                                           type: string
                                                           x-faker: address.zipCode
                                                           example: LN223 2323
                                                           minLength: 0
                                                           maxLength: 100
+                                                          description: Postal/Zip Code
                                                         country:
                                                           type: string
                                                           x-faker: address.country
                                                           example: United Kingdom
                                                           minLength: 0
                                                           maxLength: 60
+                                                          description: Country
                                                     emails:
                                                       type: array
                                                       uniqueItems: true
@@ -3459,6 +3489,7 @@ paths:
                                                             example: Main
                                                             maxLength: 100
                                                             minLength: 1
+                                                            description: Type of email
                                                           email:
                                                             type: string
                                                             x-faker: internet.email
@@ -3466,6 +3497,7 @@ paths:
                                                             format: email
                                                             example: email@email.com
                                                             maxLength: 100
+                                                            description: Email
                                                     phones:
                                                       type: array
                                                       uniqueItems: true
@@ -3479,12 +3511,14 @@ paths:
                                                             minLength: 1
                                                             example: Office
                                                             maxLength: 100
+                                                            description: Type of phone
                                                           name:
                                                             type: string
                                                             x-faker: name.jobTitle
                                                             minLength: 1
                                                             example: Head Office
                                                             maxLength: 100
+                                                            description: Contact person of the phone
                                                           phone:
                                                             type: string
                                                             x-faker: phone.phoneNumber
@@ -3492,6 +3526,7 @@ paths:
                                                             example: '+18666612345'
                                                             maxLength: 16
                                                             pattern: '^\+[1-9]{1}[0-9]{3,14}$'
+                                                            description: Phone number
                                                 date_of_birth:
                                                   type: string
                                                   minLength: 10
@@ -3529,6 +3564,7 @@ paths:
                                         - class
                                   infant:
                                     type: array
+                                    description: Infant passengers' information
                                     items:
                                       title: passenger.v1
                                       type: object
@@ -3587,18 +3623,21 @@ paths:
                                                         - Team
                                                       example: Mr.
                                                       maxLength: 6
+                                                      description: Title
                                                     forename:
                                                       type: string
                                                       x-faker: name.firstName
                                                       minLength: 1
                                                       example: John
                                                       maxLength: 200
+                                                      description: Forname
                                                     surname:
                                                       type: string
                                                       x-faker: name.lastName
                                                       minLength: 1
                                                       example: Doe
                                                       maxLength: 200
+                                                      description: Surname
                                                 contacts:
                                                   description: Contact model
                                                   type: object
@@ -3612,7 +3651,7 @@ paths:
                                                         streets:
                                                           type: array
                                                           minItems: 1
-                                                          description: ''
+                                                          description: Address streets
                                                           items:
                                                             type: string
                                                             x-faker: address.streetAddress
@@ -3625,24 +3664,28 @@ paths:
                                                           example: Hethrow
                                                           minLength: 0
                                                           maxLength: 100
+                                                          description: City
                                                         state:
                                                           type: string
                                                           x-faker: address.state
                                                           example: London
                                                           minLength: 0
                                                           maxLength: 100
+                                                          description: State
                                                         postal_code:
                                                           type: string
                                                           x-faker: address.zipCode
                                                           example: LN223 2323
                                                           minLength: 0
                                                           maxLength: 100
+                                                          description: Postal/Zip Code
                                                         country:
                                                           type: string
                                                           x-faker: address.country
                                                           example: United Kingdom
                                                           minLength: 0
                                                           maxLength: 60
+                                                          description: Country
                                                     emails:
                                                       type: array
                                                       uniqueItems: true
@@ -3656,6 +3699,7 @@ paths:
                                                             example: Main
                                                             maxLength: 100
                                                             minLength: 1
+                                                            description: Type of email
                                                           email:
                                                             type: string
                                                             x-faker: internet.email
@@ -3663,6 +3707,7 @@ paths:
                                                             format: email
                                                             example: email@email.com
                                                             maxLength: 100
+                                                            description: Email
                                                     phones:
                                                       type: array
                                                       uniqueItems: true
@@ -3676,12 +3721,14 @@ paths:
                                                             minLength: 1
                                                             example: Office
                                                             maxLength: 100
+                                                            description: Type of phone
                                                           name:
                                                             type: string
                                                             x-faker: name.jobTitle
                                                             minLength: 1
                                                             example: Head Office
                                                             maxLength: 100
+                                                            description: Contact person of the phone
                                                           phone:
                                                             type: string
                                                             x-faker: phone.phoneNumber
@@ -3689,6 +3736,7 @@ paths:
                                                             example: '+18666612345'
                                                             maxLength: 16
                                                             pattern: '^\+[1-9]{1}[0-9]{3,14}$'
+                                                            description: Phone number
                                                 date_of_birth:
                                                   type: string
                                                   minLength: 10
@@ -3733,6 +3781,7 @@ paths:
                             properties:
                               departure:
                                 type: object
+                                description: Departure location informaion
                                 required:
                                   - connection
                                   - meeting_date
@@ -3744,21 +3793,25 @@ paths:
                                 properties:
                                   connection:
                                     type: boolean
+                                    description: If it is a connection location (should combine and match with previous flight arrival location)
                                   meeting_date:
                                     type: string
                                     example: '2020-10-10T18:13:00.000Z'
                                     format: date-time
+                                    description: 'Departure meeting date. Will differ as meeting time is prior flight departure time. Ex: If the departure date of a flight is 21st at 00:10hrs, the meeting date will be 20th at 10:10hrs.'
                                   departure_date:
                                     type: string
                                     format: date-time
                                     example: '2020-10-10T20:13:00.000Z'
-                                    description: flight departure date
+                                    description: Flight departure date
                                   terminal_id:
                                     type: string
                                     example: 497f6eca-6276-4993-bfeb-53cbbbba6f08
                                     format: uuid
+                                    description: Terminal id
                                   contact_point:
                                     type: object
+                                    description: Contact point at ground during the operation. Could be passenger's or driver/PA contact.
                                     required:
                                       - name
                                       - contact
@@ -3769,6 +3822,7 @@ paths:
                                         minLength: 0
                                         maxLength: 200
                                         example: John
+                                        description: Name of the contact person
                                       contact:
                                         type: string
                                         x-faker: phone.phoneNumber
@@ -3776,27 +3830,29 @@ paths:
                                         example: '+18666612345'
                                         pattern: '^\+[1-9]{1}[0-9]{3,14}$'
                                         maxLength: 16
+                                        description: Contact number of the contact point
                                   special_notes:
                                     type: string
                                     minLength: 0
                                     maxLength: 1000
                                     example: Need translator
+                                    description: 'Special notes or instructions regarding the passengers during the operation (Ex: Need Hindi speaking greeter)'
                                   services:
                                     type: array
                                     uniqueItems: true
                                     minItems: 1
+                                    description: Services to be quoted at departing location
                                     items:
                                       allOf:
-                                        - type: object
-                                          properties:
-                                            id:
+                                        - properties:
+                                            service_id:
                                               type: string
                                               example: 497f6eca-6276-4993-bfeb-53cbbbba6f08
                                               format: uuid
+                                              description: Service id
                                           required:
-                                            - id
-                                        - type: object
-                                          description: service field request model
+                                            - service_id
+                                        - description: service field request model
                                           title: /services fields request body
                                           properties:
                                             fields:
@@ -3812,18 +3868,22 @@ paths:
                                                     minLength: 1
                                                     maxLength: 50
                                                     example: pax_count
+                                                    description: Field name
                                                   value:
                                                     type: string
                                                     example: '1'
                                                     minLength: 1
                                                     maxLength: 100
+                                                    description: Field value
                                                 required:
                                                   - name
                                                   - value
                                           required:
                                             - fields
+                                      type: object
                               arrival:
                                 type: object
+                                description: Arrival location informaion
                                 required:
                                   - connection
                                   - meeting_date
@@ -3835,24 +3895,28 @@ paths:
                                 properties:
                                   connection:
                                     type: boolean
+                                    description: If it is a connection location (should combine and match with next flight departure location)
                                   meeting_date:
                                     type: string
                                     format: date-time
                                     example: '2020-10-10T18:13:00.000Z'
+                                    description: Meeting date. (Should be same as the flight's arrival time)
                                   arrival_date:
                                     type: string
                                     example: '2020-10-10T20:13:00.000Z'
                                     format: date-time
-                                    description: flight arrival date
+                                    description: Flight arrival date
                                   terminal_id:
                                     type: string
                                     example: 497f6eca-6276-4993-bfeb-53cbbbba6f08
                                     format: uuid
+                                    description: Terminal id
                                   contact_point:
                                     type: object
                                     required:
                                       - name
                                       - contact
+                                    description: Contact point at ground during the operation. Could be passenger's or driver/PA contact.
                                     properties:
                                       name:
                                         type: string
@@ -3860,6 +3924,7 @@ paths:
                                         minLength: 0
                                         example: John
                                         maxLength: 200
+                                        description: Name of the contact person
                                       contact:
                                         type: string
                                         x-faker: phone.phoneNumber
@@ -3867,27 +3932,29 @@ paths:
                                         example: '+18666612345'
                                         pattern: '^\+[1-9]{1}[0-9]{3,14}$'
                                         maxLength: 16
+                                        description: Contact number of the contact point
                                   special_notes:
                                     type: string
                                     example: Need translator
                                     minLength: 0
                                     maxLength: 1000
+                                    description: 'Special notes or instructions regarding the passengers during the operation (Ex: Need Hindi speaking greeter)'
                                   services:
                                     type: array
                                     uniqueItems: true
                                     minItems: 1
+                                    description: Services to be quoted at arrival location
                                     items:
                                       allOf:
-                                        - type: object
-                                          properties:
-                                            id:
+                                        - properties:
+                                            service_id:
                                               type: string
                                               example: 497f6eca-6276-4993-bfeb-53cbbbba6f08
                                               format: uuid
+                                              description: Service id
                                           required:
-                                            - id
-                                        - type: object
-                                          description: service field request model
+                                            - service_id
+                                        - description: service field request model
                                           title: /services fields request body
                                           properties:
                                             fields:
@@ -3903,16 +3970,19 @@ paths:
                                                     minLength: 1
                                                     maxLength: 50
                                                     example: pax_count
+                                                    description: Field name
                                                   value:
                                                     type: string
                                                     example: '1'
                                                     minLength: 1
                                                     maxLength: 100
+                                                    description: Field value
                                                 required:
                                                   - name
                                                   - value
                                           required:
                                             - fields
+                                      type: object
                         required:
                           - flight
                           - pax
