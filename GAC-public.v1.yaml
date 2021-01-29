@@ -8,7 +8,7 @@ info:
     name: GAC
     url: 'https://gac.com/api-license.html'
 servers:
-  - url: 'http://online.globalairportconcierge.com'
+  - url: 'http://next.globalairportconcierge.com'
     description: DO Prism Mock
   - description: Local Prism Mock
     url: 'http://127.0.0.1:4010'
