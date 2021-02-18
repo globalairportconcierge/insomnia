@@ -8,7 +8,7 @@ info:
     name: GAC
     url: 'https://gac.com/api-license.html'
 servers:
-  - url: 'http://online.globalairportconcierge.com/'
+  - url: 'http://baas.globalairportconcierge.com/v1'
     description: DO Prism Mock
   - description: Local Prism Mock
     url: 'http://127.0.0.1:4010'
@@ -1506,23 +1506,6 @@ paths:
           in: query
           name: reference_id
           description: booking referece id
-        - schema:
-            type: string
-            default: GAC
-            enum:
-              - GAC
-              - USS
-              - MCS
-            example: GAC
-          in: query
-          name: type
-          description: booking type
-        - schema:
-            type: string
-            example: 47cc67093475061e3d95369d
-          in: query
-          name: booker_id
-          description: booker id
         - schema:
             type: string
             example: LHR London Hethrow Airport
@@ -3845,13 +3828,13 @@ paths:
                                     items:
                                       allOf:
                                         - properties:
-                                            service_id:
+                                            id:
                                               type: string
                                               example: 497f6eca-6276-4993-bfeb-53cbbbba6f08
                                               format: uuid
                                               description: Service id
                                           required:
-                                            - service_id
+                                            - id
                                         - description: service field request model
                                           title: /services fields request body
                                           properties:
@@ -3913,10 +3896,10 @@ paths:
                                     description: Terminal id
                                   contact_point:
                                     type: object
+                                    description: Contact point at ground during the operation. Could be passenger's or driver/PA contact.
                                     required:
                                       - name
                                       - contact
-                                    description: Contact point at ground during the operation. Could be passenger's or driver/PA contact.
                                     properties:
                                       name:
                                         type: string
@@ -3947,13 +3930,13 @@ paths:
                                     items:
                                       allOf:
                                         - properties:
-                                            service_id:
+                                            id:
                                               type: string
                                               example: 497f6eca-6276-4993-bfeb-53cbbbba6f08
                                               format: uuid
                                               description: Service id
                                           required:
-                                            - service_id
+                                            - id
                                         - description: service field request model
                                           title: /services fields request body
                                           properties:
