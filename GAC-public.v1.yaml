@@ -1319,7 +1319,7 @@ paths:
                           title: /bookings response body
                           type: object
               examples:
-                /bookings GET Response Success Example:
+                example-1:
                   value:
                     status:
                       success: true
@@ -1516,39 +1516,69 @@ paths:
           content:
             application/json:
               schema:
-                description: 'Successs response , needs to be accompanied by an X-Trace object'
-                type: object
-                title: success.v1.json
-                properties:
-                  status:
+                allOf:
+                  - description: 'Successs response , needs to be accompanied by an X-Trace object'
                     type: object
-                    description: status object
-                    required:
-                      - success
-                      - status
-                      - message
+                    title: success.v1.json
                     properties:
-                      success:
-                        type: boolean
-                        description: The response was a success or not
                       status:
-                        type: number
-                        enum:
-                          - 200
-                          - 201
-                          - 204
-                        example: 200
-                        default: 200
-                        description: Response status code
-                      message:
-                        type: string
-                        minLength: 1
-                        description: Response message
-                        example: Data retreived successfully
-                required:
-                  - status
+                        type: object
+                        description: status object
+                        required:
+                          - success
+                          - status
+                          - message
+                        properties:
+                          success:
+                            type: boolean
+                            description: The response was a success or not
+                          status:
+                            type: number
+                            enum:
+                              - 200
+                              - 201
+                              - 204
+                            example: 200
+                            default: 200
+                            description: Response status code
+                          message:
+                            type: string
+                            minLength: 1
+                            description: Response message
+                            example: Data retreived successfully
+                    required:
+                      - status
+                  - description: This X-Trace-Ids is passed in by the calling party and will be returned withing each response objects. It can also be used as "Idempotency-Key" to ensure retries are for the same request.
+                    type: object
+                    title: rsp-x-trace.v1.json
+                    properties:
+                      trace:
+                        type: object
+                        description: trace object
+                        required:
+                          - X-GAC-Trace-Id
+                          - X-Trace-Id
+                          - Idempotency-Key
+                        properties:
+                          X-GAC-Trace-Id:
+                            type: string
+                            minLength: 1
+                            format: uuid
+                            description: GAC x-trace id
+                          X-Trace-Id:
+                            type: string
+                            minLength: 1
+                            format: uuid
+                            description: User x-trace id
+                          Idempotency-Key:
+                            type: string
+                            format: uuid
+                            description: Idempotency-Key to ensure safe retries of failed requests
+                            minLength: 1
+                    required:
+                      - trace
               examples:
-                /bookings GET Response No Data Example:
+                example-1:
                   value:
                     status:
                       success: true
@@ -1621,6 +1651,285 @@ paths:
                             minLength: 1
                     required:
                       - trace
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - description: Erorr response object
+                    type: object
+                    title: error.v1.json
+                    properties:
+                      error:
+                        type: object
+                        required:
+                          - code
+                          - message
+                          - moreInfo
+                          - errors
+                        description: Error information
+                        properties:
+                          code:
+                            type: number
+                          message:
+                            type: string
+                            minLength: 1
+                          moreInfo:
+                            type: string
+                            minLength: 1
+                          errors:
+                            type: array
+                            uniqueItems: true
+                            minItems: 1
+                            items:
+                              type: object
+                              properties:
+                                code:
+                                  type: string
+                                  minLength: 1
+                                message:
+                                  type: string
+                                  minLength: 1
+                                description:
+                                  type: string
+                                  minLength: 1
+                              required:
+                                - code
+                                - message
+                                - description
+                    required:
+                      - error
+                  - description: This X-Trace-Ids is passed in by the calling party and will be returned withing each response objects. It can also be used as "Idempotency-Key" to ensure retries are for the same request.
+                    type: object
+                    title: rsp-x-trace.v1.json
+                    properties:
+                      trace:
+                        type: object
+                        description: trace object
+                        required:
+                          - X-GAC-Trace-Id
+                          - X-Trace-Id
+                          - Idempotency-Key
+                        properties:
+                          X-GAC-Trace-Id:
+                            type: string
+                            minLength: 1
+                            format: uuid
+                            description: GAC x-trace id
+                          X-Trace-Id:
+                            type: string
+                            minLength: 1
+                            format: uuid
+                            description: User x-trace id
+                          Idempotency-Key:
+                            type: string
+                            format: uuid
+                            description: Idempotency-Key to ensure safe retries of failed requests
+                            minLength: 1
+                    required:
+                      - trace
+              examples:
+                example-1:
+                  value:
+                    error:
+                      code: 500
+                      message: Server Error
+                      moreInfo: Internal Server Error
+                      errors:
+                        - code: '5000'
+                          message: Server Error
+                          description: Internal Server Error
+                    trace:
+                      X-GAC-Trace-Id: a949eea7-56d5-4864-a5e6-0f15b6897960
+                      X-Trace-Id: 56d9e9d0-08d6-481e-94e7-e2667423cf37
+                      Idempotency-Key: 687d997b-391e-4906-94c5-a24c2fc12ba0
+        '502':
+          description: Bad Gateway
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - description: Erorr response object
+                    type: object
+                    title: error.v1.json
+                    properties:
+                      error:
+                        type: object
+                        required:
+                          - code
+                          - message
+                          - moreInfo
+                          - errors
+                        description: Error information
+                        properties:
+                          code:
+                            type: number
+                          message:
+                            type: string
+                            minLength: 1
+                          moreInfo:
+                            type: string
+                            minLength: 1
+                          errors:
+                            type: array
+                            uniqueItems: true
+                            minItems: 1
+                            items:
+                              type: object
+                              properties:
+                                code:
+                                  type: string
+                                  minLength: 1
+                                message:
+                                  type: string
+                                  minLength: 1
+                                description:
+                                  type: string
+                                  minLength: 1
+                              required:
+                                - code
+                                - message
+                                - description
+                    required:
+                      - error
+                  - description: This X-Trace-Ids is passed in by the calling party and will be returned withing each response objects. It can also be used as "Idempotency-Key" to ensure retries are for the same request.
+                    type: object
+                    title: rsp-x-trace.v1.json
+                    properties:
+                      trace:
+                        type: object
+                        description: trace object
+                        required:
+                          - X-GAC-Trace-Id
+                          - X-Trace-Id
+                          - Idempotency-Key
+                        properties:
+                          X-GAC-Trace-Id:
+                            type: string
+                            minLength: 1
+                            format: uuid
+                            description: GAC x-trace id
+                          X-Trace-Id:
+                            type: string
+                            minLength: 1
+                            format: uuid
+                            description: User x-trace id
+                          Idempotency-Key:
+                            type: string
+                            format: uuid
+                            description: Idempotency-Key to ensure safe retries of failed requests
+                            minLength: 1
+                    required:
+                      - trace
+              examples:
+                example-1:
+                  value:
+                    error:
+                      code: 502
+                      message: Server Error
+                      moreInfo: Bad Gateway
+                      errors:
+                        - code: '5002'
+                          message: Server Error
+                          description: Bad Gateway
+                    trace:
+                      X-GAC-Trace-Id: a949eea7-56d5-4864-a5e6-0f15b6897960
+                      X-Trace-Id: 56d9e9d0-08d6-481e-94e7-e2667423cf37
+                      Idempotency-Key: 687d997b-391e-4906-94c5-a24c2fc12ba0
+        '504':
+          description: Gateway Timeout
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - description: Erorr response object
+                    type: object
+                    title: error.v1.json
+                    properties:
+                      error:
+                        type: object
+                        required:
+                          - code
+                          - message
+                          - moreInfo
+                          - errors
+                        description: Error information
+                        properties:
+                          code:
+                            type: number
+                          message:
+                            type: string
+                            minLength: 1
+                          moreInfo:
+                            type: string
+                            minLength: 1
+                          errors:
+                            type: array
+                            uniqueItems: true
+                            minItems: 1
+                            items:
+                              type: object
+                              properties:
+                                code:
+                                  type: string
+                                  minLength: 1
+                                message:
+                                  type: string
+                                  minLength: 1
+                                description:
+                                  type: string
+                                  minLength: 1
+                              required:
+                                - code
+                                - message
+                                - description
+                    required:
+                      - error
+                  - description: This X-Trace-Ids is passed in by the calling party and will be returned withing each response objects. It can also be used as "Idempotency-Key" to ensure retries are for the same request.
+                    type: object
+                    title: rsp-x-trace.v1.json
+                    properties:
+                      trace:
+                        type: object
+                        description: trace object
+                        required:
+                          - X-GAC-Trace-Id
+                          - X-Trace-Id
+                          - Idempotency-Key
+                        properties:
+                          X-GAC-Trace-Id:
+                            type: string
+                            minLength: 1
+                            format: uuid
+                            description: GAC x-trace id
+                          X-Trace-Id:
+                            type: string
+                            minLength: 1
+                            format: uuid
+                            description: User x-trace id
+                          Idempotency-Key:
+                            type: string
+                            format: uuid
+                            description: Idempotency-Key to ensure safe retries of failed requests
+                            minLength: 1
+                    required:
+                      - trace
+              examples:
+                example-1:
+                  value:
+                    error:
+                      code: 504
+                      message: Server Error
+                      moreInfo: Gateway Timeout
+                      errors:
+                        - code: '5004'
+                          message: Server Error
+                          description: Gateway Timeout
+                    trace:
+                      X-GAC-Trace-Id: a949eea7-56d5-4864-a5e6-0f15b6897960
+                      X-Trace-Id: 56d9e9d0-08d6-481e-94e7-e2667423cf37
+                      Idempotency-Key: 687d997b-391e-4906-94c5-a24c2fc12ba0
       operationId: GET-bookings
       description: GET a list of bookings and quotations
       parameters:
@@ -2996,7 +3305,7 @@ paths:
                         title: /bookings response body
                         type: object
               examples:
-                /bookings POST Response Success Example:
+                example-1:
                   value:
                     status:
                       success: true
@@ -3262,7 +3571,7 @@ paths:
                     required:
                       - trace
               examples:
-                /bookings POST Response Error Example:
+                example-1:
                   value:
                     error:
                       code: 422
@@ -3272,6 +3581,285 @@ paths:
                         - code: '4001'
                           message: Service Field Undefined
                           description: Number of Pax Required
+                    trace:
+                      X-GAC-Trace-Id: a949eea7-56d5-4864-a5e6-0f15b6897960
+                      X-Trace-Id: 56d9e9d0-08d6-481e-94e7-e2667423cf37
+                      Idempotency-Key: 687d997b-391e-4906-94c5-a24c2fc12ba0
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - description: Erorr response object
+                    type: object
+                    title: error.v1.json
+                    properties:
+                      error:
+                        type: object
+                        required:
+                          - code
+                          - message
+                          - moreInfo
+                          - errors
+                        description: Error information
+                        properties:
+                          code:
+                            type: number
+                          message:
+                            type: string
+                            minLength: 1
+                          moreInfo:
+                            type: string
+                            minLength: 1
+                          errors:
+                            type: array
+                            uniqueItems: true
+                            minItems: 1
+                            items:
+                              type: object
+                              properties:
+                                code:
+                                  type: string
+                                  minLength: 1
+                                message:
+                                  type: string
+                                  minLength: 1
+                                description:
+                                  type: string
+                                  minLength: 1
+                              required:
+                                - code
+                                - message
+                                - description
+                    required:
+                      - error
+                  - description: This X-Trace-Ids is passed in by the calling party and will be returned withing each response objects. It can also be used as "Idempotency-Key" to ensure retries are for the same request.
+                    type: object
+                    title: rsp-x-trace.v1.json
+                    properties:
+                      trace:
+                        type: object
+                        description: trace object
+                        required:
+                          - X-GAC-Trace-Id
+                          - X-Trace-Id
+                          - Idempotency-Key
+                        properties:
+                          X-GAC-Trace-Id:
+                            type: string
+                            minLength: 1
+                            format: uuid
+                            description: GAC x-trace id
+                          X-Trace-Id:
+                            type: string
+                            minLength: 1
+                            format: uuid
+                            description: User x-trace id
+                          Idempotency-Key:
+                            type: string
+                            format: uuid
+                            description: Idempotency-Key to ensure safe retries of failed requests
+                            minLength: 1
+                    required:
+                      - trace
+              examples:
+                example-1:
+                  value:
+                    error:
+                      code: 500
+                      message: Server Error
+                      moreInfo: Internal Server Error
+                      errors:
+                        - code: '5000'
+                          message: Server Error
+                          description: Internal Server Error
+                    trace:
+                      X-GAC-Trace-Id: a949eea7-56d5-4864-a5e6-0f15b6897960
+                      X-Trace-Id: 56d9e9d0-08d6-481e-94e7-e2667423cf37
+                      Idempotency-Key: 687d997b-391e-4906-94c5-a24c2fc12ba0
+        '502':
+          description: Bad Gateway
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - description: Erorr response object
+                    type: object
+                    title: error.v1.json
+                    properties:
+                      error:
+                        type: object
+                        required:
+                          - code
+                          - message
+                          - moreInfo
+                          - errors
+                        description: Error information
+                        properties:
+                          code:
+                            type: number
+                          message:
+                            type: string
+                            minLength: 1
+                          moreInfo:
+                            type: string
+                            minLength: 1
+                          errors:
+                            type: array
+                            uniqueItems: true
+                            minItems: 1
+                            items:
+                              type: object
+                              properties:
+                                code:
+                                  type: string
+                                  minLength: 1
+                                message:
+                                  type: string
+                                  minLength: 1
+                                description:
+                                  type: string
+                                  minLength: 1
+                              required:
+                                - code
+                                - message
+                                - description
+                    required:
+                      - error
+                  - description: This X-Trace-Ids is passed in by the calling party and will be returned withing each response objects. It can also be used as "Idempotency-Key" to ensure retries are for the same request.
+                    type: object
+                    title: rsp-x-trace.v1.json
+                    properties:
+                      trace:
+                        type: object
+                        description: trace object
+                        required:
+                          - X-GAC-Trace-Id
+                          - X-Trace-Id
+                          - Idempotency-Key
+                        properties:
+                          X-GAC-Trace-Id:
+                            type: string
+                            minLength: 1
+                            format: uuid
+                            description: GAC x-trace id
+                          X-Trace-Id:
+                            type: string
+                            minLength: 1
+                            format: uuid
+                            description: User x-trace id
+                          Idempotency-Key:
+                            type: string
+                            format: uuid
+                            description: Idempotency-Key to ensure safe retries of failed requests
+                            minLength: 1
+                    required:
+                      - trace
+              examples:
+                example-1:
+                  value:
+                    error:
+                      code: 502
+                      message: Server Error
+                      moreInfo: Bad Gateway
+                      errors:
+                        - code: '5002'
+                          message: Server Error
+                          description: Bad Gateway
+                    trace:
+                      X-GAC-Trace-Id: a949eea7-56d5-4864-a5e6-0f15b6897960
+                      X-Trace-Id: 56d9e9d0-08d6-481e-94e7-e2667423cf37
+                      Idempotency-Key: 687d997b-391e-4906-94c5-a24c2fc12ba0
+        '504':
+          description: Gateway Timeout
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - description: Erorr response object
+                    type: object
+                    title: error.v1.json
+                    properties:
+                      error:
+                        type: object
+                        required:
+                          - code
+                          - message
+                          - moreInfo
+                          - errors
+                        description: Error information
+                        properties:
+                          code:
+                            type: number
+                          message:
+                            type: string
+                            minLength: 1
+                          moreInfo:
+                            type: string
+                            minLength: 1
+                          errors:
+                            type: array
+                            uniqueItems: true
+                            minItems: 1
+                            items:
+                              type: object
+                              properties:
+                                code:
+                                  type: string
+                                  minLength: 1
+                                message:
+                                  type: string
+                                  minLength: 1
+                                description:
+                                  type: string
+                                  minLength: 1
+                              required:
+                                - code
+                                - message
+                                - description
+                    required:
+                      - error
+                  - description: This X-Trace-Ids is passed in by the calling party and will be returned withing each response objects. It can also be used as "Idempotency-Key" to ensure retries are for the same request.
+                    type: object
+                    title: rsp-x-trace.v1.json
+                    properties:
+                      trace:
+                        type: object
+                        description: trace object
+                        required:
+                          - X-GAC-Trace-Id
+                          - X-Trace-Id
+                          - Idempotency-Key
+                        properties:
+                          X-GAC-Trace-Id:
+                            type: string
+                            minLength: 1
+                            format: uuid
+                            description: GAC x-trace id
+                          X-Trace-Id:
+                            type: string
+                            minLength: 1
+                            format: uuid
+                            description: User x-trace id
+                          Idempotency-Key:
+                            type: string
+                            format: uuid
+                            description: Idempotency-Key to ensure safe retries of failed requests
+                            minLength: 1
+                    required:
+                      - trace
+              examples:
+                example-1:
+                  value:
+                    error:
+                      code: 504
+                      message: Server Error
+                      moreInfo: Gateway Timeout
+                      errors:
+                        - code: '5004'
+                          message: Server Error
+                          description: Gateway Timeout
                     trace:
                       X-GAC-Trace-Id: a949eea7-56d5-4864-a5e6-0f15b6897960
                       X-Trace-Id: 56d9e9d0-08d6-481e-94e7-e2667423cf37
@@ -4242,7 +4830,7 @@ paths:
               title: /bookings request body
               type: object
             examples:
-              /bookings POST Request Example:
+              example-1:
                 value:
                   comments: First Time Traveller
                   currency: USD
@@ -5671,7 +6259,7 @@ paths:
                         title: /bookings response body
                         type: object
               examples:
-                '/bookings/{id} GET Response Success Example':
+                example-1:
                   value:
                     status:
                       success: true
@@ -5937,7 +6525,7 @@ paths:
                     required:
                       - trace
               examples:
-                '/bookings/{id} GET Response Error Example':
+                example-1:
                   value:
                     error:
                       code: 404
@@ -5947,6 +6535,285 @@ paths:
                         - code: '4002'
                           message: Data Not Found
                           description: Booking not found
+                    trace:
+                      X-GAC-Trace-Id: a949eea7-56d5-4864-a5e6-0f15b6897960
+                      X-Trace-Id: 56d9e9d0-08d6-481e-94e7-e2667423cf37
+                      Idempotency-Key: 687d997b-391e-4906-94c5-a24c2fc12ba0
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - description: Erorr response object
+                    type: object
+                    title: error.v1.json
+                    properties:
+                      error:
+                        type: object
+                        required:
+                          - code
+                          - message
+                          - moreInfo
+                          - errors
+                        description: Error information
+                        properties:
+                          code:
+                            type: number
+                          message:
+                            type: string
+                            minLength: 1
+                          moreInfo:
+                            type: string
+                            minLength: 1
+                          errors:
+                            type: array
+                            uniqueItems: true
+                            minItems: 1
+                            items:
+                              type: object
+                              properties:
+                                code:
+                                  type: string
+                                  minLength: 1
+                                message:
+                                  type: string
+                                  minLength: 1
+                                description:
+                                  type: string
+                                  minLength: 1
+                              required:
+                                - code
+                                - message
+                                - description
+                    required:
+                      - error
+                  - description: This X-Trace-Ids is passed in by the calling party and will be returned withing each response objects. It can also be used as "Idempotency-Key" to ensure retries are for the same request.
+                    type: object
+                    title: rsp-x-trace.v1.json
+                    properties:
+                      trace:
+                        type: object
+                        description: trace object
+                        required:
+                          - X-GAC-Trace-Id
+                          - X-Trace-Id
+                          - Idempotency-Key
+                        properties:
+                          X-GAC-Trace-Id:
+                            type: string
+                            minLength: 1
+                            format: uuid
+                            description: GAC x-trace id
+                          X-Trace-Id:
+                            type: string
+                            minLength: 1
+                            format: uuid
+                            description: User x-trace id
+                          Idempotency-Key:
+                            type: string
+                            format: uuid
+                            description: Idempotency-Key to ensure safe retries of failed requests
+                            minLength: 1
+                    required:
+                      - trace
+              examples:
+                example-1:
+                  value:
+                    error:
+                      code: 500
+                      message: Server Error
+                      moreInfo: Internal Server Error
+                      errors:
+                        - code: '5000'
+                          message: Server Error
+                          description: Internal Server Error
+                    trace:
+                      X-GAC-Trace-Id: a949eea7-56d5-4864-a5e6-0f15b6897960
+                      X-Trace-Id: 56d9e9d0-08d6-481e-94e7-e2667423cf37
+                      Idempotency-Key: 687d997b-391e-4906-94c5-a24c2fc12ba0
+        '502':
+          description: Bad Gateway
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - description: Erorr response object
+                    type: object
+                    title: error.v1.json
+                    properties:
+                      error:
+                        type: object
+                        required:
+                          - code
+                          - message
+                          - moreInfo
+                          - errors
+                        description: Error information
+                        properties:
+                          code:
+                            type: number
+                          message:
+                            type: string
+                            minLength: 1
+                          moreInfo:
+                            type: string
+                            minLength: 1
+                          errors:
+                            type: array
+                            uniqueItems: true
+                            minItems: 1
+                            items:
+                              type: object
+                              properties:
+                                code:
+                                  type: string
+                                  minLength: 1
+                                message:
+                                  type: string
+                                  minLength: 1
+                                description:
+                                  type: string
+                                  minLength: 1
+                              required:
+                                - code
+                                - message
+                                - description
+                    required:
+                      - error
+                  - description: This X-Trace-Ids is passed in by the calling party and will be returned withing each response objects. It can also be used as "Idempotency-Key" to ensure retries are for the same request.
+                    type: object
+                    title: rsp-x-trace.v1.json
+                    properties:
+                      trace:
+                        type: object
+                        description: trace object
+                        required:
+                          - X-GAC-Trace-Id
+                          - X-Trace-Id
+                          - Idempotency-Key
+                        properties:
+                          X-GAC-Trace-Id:
+                            type: string
+                            minLength: 1
+                            format: uuid
+                            description: GAC x-trace id
+                          X-Trace-Id:
+                            type: string
+                            minLength: 1
+                            format: uuid
+                            description: User x-trace id
+                          Idempotency-Key:
+                            type: string
+                            format: uuid
+                            description: Idempotency-Key to ensure safe retries of failed requests
+                            minLength: 1
+                    required:
+                      - trace
+              examples:
+                example-1:
+                  value:
+                    error:
+                      code: 502
+                      message: Server Error
+                      moreInfo: Bad Gateway
+                      errors:
+                        - code: '5002'
+                          message: Server Error
+                          description: Bad Gateway
+                    trace:
+                      X-GAC-Trace-Id: a949eea7-56d5-4864-a5e6-0f15b6897960
+                      X-Trace-Id: 56d9e9d0-08d6-481e-94e7-e2667423cf37
+                      Idempotency-Key: 687d997b-391e-4906-94c5-a24c2fc12ba0
+        '504':
+          description: Gateway Timeout
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - description: Erorr response object
+                    type: object
+                    title: error.v1.json
+                    properties:
+                      error:
+                        type: object
+                        required:
+                          - code
+                          - message
+                          - moreInfo
+                          - errors
+                        description: Error information
+                        properties:
+                          code:
+                            type: number
+                          message:
+                            type: string
+                            minLength: 1
+                          moreInfo:
+                            type: string
+                            minLength: 1
+                          errors:
+                            type: array
+                            uniqueItems: true
+                            minItems: 1
+                            items:
+                              type: object
+                              properties:
+                                code:
+                                  type: string
+                                  minLength: 1
+                                message:
+                                  type: string
+                                  minLength: 1
+                                description:
+                                  type: string
+                                  minLength: 1
+                              required:
+                                - code
+                                - message
+                                - description
+                    required:
+                      - error
+                  - description: This X-Trace-Ids is passed in by the calling party and will be returned withing each response objects. It can also be used as "Idempotency-Key" to ensure retries are for the same request.
+                    type: object
+                    title: rsp-x-trace.v1.json
+                    properties:
+                      trace:
+                        type: object
+                        description: trace object
+                        required:
+                          - X-GAC-Trace-Id
+                          - X-Trace-Id
+                          - Idempotency-Key
+                        properties:
+                          X-GAC-Trace-Id:
+                            type: string
+                            minLength: 1
+                            format: uuid
+                            description: GAC x-trace id
+                          X-Trace-Id:
+                            type: string
+                            minLength: 1
+                            format: uuid
+                            description: User x-trace id
+                          Idempotency-Key:
+                            type: string
+                            format: uuid
+                            description: Idempotency-Key to ensure safe retries of failed requests
+                            minLength: 1
+                    required:
+                      - trace
+              examples:
+                example-1:
+                  value:
+                    error:
+                      code: 504
+                      message: Server Error
+                      moreInfo: Gateway Timeout
+                      errors:
+                        - code: '5004'
+                          message: Server Error
+                          description: Gateway Timeout
                     trace:
                       X-GAC-Trace-Id: a949eea7-56d5-4864-a5e6-0f15b6897960
                       X-Trace-Id: 56d9e9d0-08d6-481e-94e7-e2667423cf37
@@ -7241,7 +8108,7 @@ paths:
                         title: /bookings response body
                         type: object
               examples:
-                '/bookings/{id} PUT Response Success Example':
+                example-1:
                   value:
                     status:
                       success: true
@@ -7507,7 +8374,7 @@ paths:
                     required:
                       - trace
               examples:
-                '/bookings/{id} PUT Response Error Example':
+                example-1:
                   value:
                     error:
                       code: 422
@@ -7517,6 +8384,285 @@ paths:
                         - code: '4001'
                           message: Service Field Undefined
                           description: Number of Pax Required
+                    trace:
+                      X-GAC-Trace-Id: a949eea7-56d5-4864-a5e6-0f15b6897960
+                      X-Trace-Id: 56d9e9d0-08d6-481e-94e7-e2667423cf37
+                      Idempotency-Key: 687d997b-391e-4906-94c5-a24c2fc12ba0
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - description: Erorr response object
+                    type: object
+                    title: error.v1.json
+                    properties:
+                      error:
+                        type: object
+                        required:
+                          - code
+                          - message
+                          - moreInfo
+                          - errors
+                        description: Error information
+                        properties:
+                          code:
+                            type: number
+                          message:
+                            type: string
+                            minLength: 1
+                          moreInfo:
+                            type: string
+                            minLength: 1
+                          errors:
+                            type: array
+                            uniqueItems: true
+                            minItems: 1
+                            items:
+                              type: object
+                              properties:
+                                code:
+                                  type: string
+                                  minLength: 1
+                                message:
+                                  type: string
+                                  minLength: 1
+                                description:
+                                  type: string
+                                  minLength: 1
+                              required:
+                                - code
+                                - message
+                                - description
+                    required:
+                      - error
+                  - description: This X-Trace-Ids is passed in by the calling party and will be returned withing each response objects. It can also be used as "Idempotency-Key" to ensure retries are for the same request.
+                    type: object
+                    title: rsp-x-trace.v1.json
+                    properties:
+                      trace:
+                        type: object
+                        description: trace object
+                        required:
+                          - X-GAC-Trace-Id
+                          - X-Trace-Id
+                          - Idempotency-Key
+                        properties:
+                          X-GAC-Trace-Id:
+                            type: string
+                            minLength: 1
+                            format: uuid
+                            description: GAC x-trace id
+                          X-Trace-Id:
+                            type: string
+                            minLength: 1
+                            format: uuid
+                            description: User x-trace id
+                          Idempotency-Key:
+                            type: string
+                            format: uuid
+                            description: Idempotency-Key to ensure safe retries of failed requests
+                            minLength: 1
+                    required:
+                      - trace
+              examples:
+                example-1:
+                  value:
+                    error:
+                      code: 500
+                      message: Server Error
+                      moreInfo: Internal Server Error
+                      errors:
+                        - code: '5000'
+                          message: Server Error
+                          description: Internal Server Error
+                    trace:
+                      X-GAC-Trace-Id: a949eea7-56d5-4864-a5e6-0f15b6897960
+                      X-Trace-Id: 56d9e9d0-08d6-481e-94e7-e2667423cf37
+                      Idempotency-Key: 687d997b-391e-4906-94c5-a24c2fc12ba0
+        '502':
+          description: Bad Gateway
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - description: Erorr response object
+                    type: object
+                    title: error.v1.json
+                    properties:
+                      error:
+                        type: object
+                        required:
+                          - code
+                          - message
+                          - moreInfo
+                          - errors
+                        description: Error information
+                        properties:
+                          code:
+                            type: number
+                          message:
+                            type: string
+                            minLength: 1
+                          moreInfo:
+                            type: string
+                            minLength: 1
+                          errors:
+                            type: array
+                            uniqueItems: true
+                            minItems: 1
+                            items:
+                              type: object
+                              properties:
+                                code:
+                                  type: string
+                                  minLength: 1
+                                message:
+                                  type: string
+                                  minLength: 1
+                                description:
+                                  type: string
+                                  minLength: 1
+                              required:
+                                - code
+                                - message
+                                - description
+                    required:
+                      - error
+                  - description: This X-Trace-Ids is passed in by the calling party and will be returned withing each response objects. It can also be used as "Idempotency-Key" to ensure retries are for the same request.
+                    type: object
+                    title: rsp-x-trace.v1.json
+                    properties:
+                      trace:
+                        type: object
+                        description: trace object
+                        required:
+                          - X-GAC-Trace-Id
+                          - X-Trace-Id
+                          - Idempotency-Key
+                        properties:
+                          X-GAC-Trace-Id:
+                            type: string
+                            minLength: 1
+                            format: uuid
+                            description: GAC x-trace id
+                          X-Trace-Id:
+                            type: string
+                            minLength: 1
+                            format: uuid
+                            description: User x-trace id
+                          Idempotency-Key:
+                            type: string
+                            format: uuid
+                            description: Idempotency-Key to ensure safe retries of failed requests
+                            minLength: 1
+                    required:
+                      - trace
+              examples:
+                example-1:
+                  value:
+                    error:
+                      code: 502
+                      message: Server Error
+                      moreInfo: Bad Gateway
+                      errors:
+                        - code: '5002'
+                          message: Server Error
+                          description: Bad Gateway
+                    trace:
+                      X-GAC-Trace-Id: a949eea7-56d5-4864-a5e6-0f15b6897960
+                      X-Trace-Id: 56d9e9d0-08d6-481e-94e7-e2667423cf37
+                      Idempotency-Key: 687d997b-391e-4906-94c5-a24c2fc12ba0
+        '504':
+          description: Gateway Timeout
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - description: Erorr response object
+                    type: object
+                    title: error.v1.json
+                    properties:
+                      error:
+                        type: object
+                        required:
+                          - code
+                          - message
+                          - moreInfo
+                          - errors
+                        description: Error information
+                        properties:
+                          code:
+                            type: number
+                          message:
+                            type: string
+                            minLength: 1
+                          moreInfo:
+                            type: string
+                            minLength: 1
+                          errors:
+                            type: array
+                            uniqueItems: true
+                            minItems: 1
+                            items:
+                              type: object
+                              properties:
+                                code:
+                                  type: string
+                                  minLength: 1
+                                message:
+                                  type: string
+                                  minLength: 1
+                                description:
+                                  type: string
+                                  minLength: 1
+                              required:
+                                - code
+                                - message
+                                - description
+                    required:
+                      - error
+                  - description: This X-Trace-Ids is passed in by the calling party and will be returned withing each response objects. It can also be used as "Idempotency-Key" to ensure retries are for the same request.
+                    type: object
+                    title: rsp-x-trace.v1.json
+                    properties:
+                      trace:
+                        type: object
+                        description: trace object
+                        required:
+                          - X-GAC-Trace-Id
+                          - X-Trace-Id
+                          - Idempotency-Key
+                        properties:
+                          X-GAC-Trace-Id:
+                            type: string
+                            minLength: 1
+                            format: uuid
+                            description: GAC x-trace id
+                          X-Trace-Id:
+                            type: string
+                            minLength: 1
+                            format: uuid
+                            description: User x-trace id
+                          Idempotency-Key:
+                            type: string
+                            format: uuid
+                            description: Idempotency-Key to ensure safe retries of failed requests
+                            minLength: 1
+                    required:
+                      - trace
+              examples:
+                example-1:
+                  value:
+                    error:
+                      code: 504
+                      message: Server Error
+                      moreInfo: Gateway Timeout
+                      errors:
+                        - code: '5004'
+                          message: Server Error
+                          description: Gateway Timeout
                     trace:
                       X-GAC-Trace-Id: a949eea7-56d5-4864-a5e6-0f15b6897960
                       X-Trace-Id: 56d9e9d0-08d6-481e-94e7-e2667423cf37
@@ -8512,7 +9658,7 @@ paths:
               title: /bookings request body
               type: object
             examples:
-              '/bookings/{id} PUT Request Example':
+              example-1:
                 value:
                   comments: First Time Traveller
                   currency: USD
@@ -8948,7 +10094,7 @@ paths:
                           title: /services response body
                           type: object
               examples:
-                /services GET Response Success Example:
+                example-1:
                   value:
                     status:
                       success: true
@@ -9057,12 +10203,291 @@ paths:
                     required:
                       - trace
               examples:
-                /services GET Response No Data Example:
+                example-1:
                   value:
                     status:
                       success: true
                       status: 204
-                      message: Data retreived successfully
+                      message: No Data Found
+                    trace:
+                      X-GAC-Trace-Id: a949eea7-56d5-4864-a5e6-0f15b6897960
+                      X-Trace-Id: 56d9e9d0-08d6-481e-94e7-e2667423cf37
+                      Idempotency-Key: 687d997b-391e-4906-94c5-a24c2fc12ba0
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - description: Erorr response object
+                    type: object
+                    title: error.v1.json
+                    properties:
+                      error:
+                        type: object
+                        required:
+                          - code
+                          - message
+                          - moreInfo
+                          - errors
+                        description: Error information
+                        properties:
+                          code:
+                            type: number
+                          message:
+                            type: string
+                            minLength: 1
+                          moreInfo:
+                            type: string
+                            minLength: 1
+                          errors:
+                            type: array
+                            uniqueItems: true
+                            minItems: 1
+                            items:
+                              type: object
+                              properties:
+                                code:
+                                  type: string
+                                  minLength: 1
+                                message:
+                                  type: string
+                                  minLength: 1
+                                description:
+                                  type: string
+                                  minLength: 1
+                              required:
+                                - code
+                                - message
+                                - description
+                    required:
+                      - error
+                  - description: This X-Trace-Ids is passed in by the calling party and will be returned withing each response objects. It can also be used as "Idempotency-Key" to ensure retries are for the same request.
+                    type: object
+                    title: rsp-x-trace.v1.json
+                    properties:
+                      trace:
+                        type: object
+                        description: trace object
+                        required:
+                          - X-GAC-Trace-Id
+                          - X-Trace-Id
+                          - Idempotency-Key
+                        properties:
+                          X-GAC-Trace-Id:
+                            type: string
+                            minLength: 1
+                            format: uuid
+                            description: GAC x-trace id
+                          X-Trace-Id:
+                            type: string
+                            minLength: 1
+                            format: uuid
+                            description: User x-trace id
+                          Idempotency-Key:
+                            type: string
+                            format: uuid
+                            description: Idempotency-Key to ensure safe retries of failed requests
+                            minLength: 1
+                    required:
+                      - trace
+              examples:
+                example-1:
+                  value:
+                    error:
+                      code: 500
+                      message: Server Error
+                      moreInfo: Internal Server Error
+                      errors:
+                        - code: '5000'
+                          message: Server Error
+                          description: Internal Server Error
+                    trace:
+                      X-GAC-Trace-Id: a949eea7-56d5-4864-a5e6-0f15b6897960
+                      X-Trace-Id: 56d9e9d0-08d6-481e-94e7-e2667423cf37
+                      Idempotency-Key: 687d997b-391e-4906-94c5-a24c2fc12ba0
+        '502':
+          description: Bad Gateway
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - description: Erorr response object
+                    type: object
+                    title: error.v1.json
+                    properties:
+                      error:
+                        type: object
+                        required:
+                          - code
+                          - message
+                          - moreInfo
+                          - errors
+                        description: Error information
+                        properties:
+                          code:
+                            type: number
+                          message:
+                            type: string
+                            minLength: 1
+                          moreInfo:
+                            type: string
+                            minLength: 1
+                          errors:
+                            type: array
+                            uniqueItems: true
+                            minItems: 1
+                            items:
+                              type: object
+                              properties:
+                                code:
+                                  type: string
+                                  minLength: 1
+                                message:
+                                  type: string
+                                  minLength: 1
+                                description:
+                                  type: string
+                                  minLength: 1
+                              required:
+                                - code
+                                - message
+                                - description
+                    required:
+                      - error
+                  - description: This X-Trace-Ids is passed in by the calling party and will be returned withing each response objects. It can also be used as "Idempotency-Key" to ensure retries are for the same request.
+                    type: object
+                    title: rsp-x-trace.v1.json
+                    properties:
+                      trace:
+                        type: object
+                        description: trace object
+                        required:
+                          - X-GAC-Trace-Id
+                          - X-Trace-Id
+                          - Idempotency-Key
+                        properties:
+                          X-GAC-Trace-Id:
+                            type: string
+                            minLength: 1
+                            format: uuid
+                            description: GAC x-trace id
+                          X-Trace-Id:
+                            type: string
+                            minLength: 1
+                            format: uuid
+                            description: User x-trace id
+                          Idempotency-Key:
+                            type: string
+                            format: uuid
+                            description: Idempotency-Key to ensure safe retries of failed requests
+                            minLength: 1
+                    required:
+                      - trace
+              examples:
+                example-1:
+                  value:
+                    error:
+                      code: 502
+                      message: Server Error
+                      moreInfo: Bad Gateway
+                      errors:
+                        - code: '5002'
+                          message: Server Error
+                          description: Bad Gateway
+                    trace:
+                      X-GAC-Trace-Id: a949eea7-56d5-4864-a5e6-0f15b6897960
+                      X-Trace-Id: 56d9e9d0-08d6-481e-94e7-e2667423cf37
+                      Idempotency-Key: 687d997b-391e-4906-94c5-a24c2fc12ba0
+        '504':
+          description: Gateway Timeout
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - description: Erorr response object
+                    type: object
+                    title: error.v1.json
+                    properties:
+                      error:
+                        type: object
+                        required:
+                          - code
+                          - message
+                          - moreInfo
+                          - errors
+                        description: Error information
+                        properties:
+                          code:
+                            type: number
+                          message:
+                            type: string
+                            minLength: 1
+                          moreInfo:
+                            type: string
+                            minLength: 1
+                          errors:
+                            type: array
+                            uniqueItems: true
+                            minItems: 1
+                            items:
+                              type: object
+                              properties:
+                                code:
+                                  type: string
+                                  minLength: 1
+                                message:
+                                  type: string
+                                  minLength: 1
+                                description:
+                                  type: string
+                                  minLength: 1
+                              required:
+                                - code
+                                - message
+                                - description
+                    required:
+                      - error
+                  - description: This X-Trace-Ids is passed in by the calling party and will be returned withing each response objects. It can also be used as "Idempotency-Key" to ensure retries are for the same request.
+                    type: object
+                    title: rsp-x-trace.v1.json
+                    properties:
+                      trace:
+                        type: object
+                        description: trace object
+                        required:
+                          - X-GAC-Trace-Id
+                          - X-Trace-Id
+                          - Idempotency-Key
+                        properties:
+                          X-GAC-Trace-Id:
+                            type: string
+                            minLength: 1
+                            format: uuid
+                            description: GAC x-trace id
+                          X-Trace-Id:
+                            type: string
+                            minLength: 1
+                            format: uuid
+                            description: User x-trace id
+                          Idempotency-Key:
+                            type: string
+                            format: uuid
+                            description: Idempotency-Key to ensure safe retries of failed requests
+                            minLength: 1
+                    required:
+                      - trace
+              examples:
+                example-1:
+                  value:
+                    error:
+                      code: 504
+                      message: Server Error
+                      moreInfo: Gateway Timeout
+                      errors:
+                        - code: '5004'
+                          message: Server Error
+                          description: Gateway Timeout
                     trace:
                       X-GAC-Trace-Id: a949eea7-56d5-4864-a5e6-0f15b6897960
                       X-Trace-Id: 56d9e9d0-08d6-481e-94e7-e2667423cf37
@@ -9165,7 +10590,7 @@ paths:
               required:
                 - flights
             examples:
-              /services GET Request Example:
+              example-1:
                 value:
                   flights:
                     - arrival_airport:
@@ -10446,7 +11871,7 @@ paths:
                         title: /bookings response body
                         type: object
               examples:
-                '/bookings/{id}/checkout POST Response Success Example':
+                example-1:
                   value:
                     status:
                       success: true
@@ -10712,7 +12137,7 @@ paths:
                     required:
                       - trace
               examples:
-                '/bookings/{id}/checkout POST Response Error Example':
+                example-1:
                   value:
                     error:
                       code: 404
@@ -10722,6 +12147,285 @@ paths:
                         - code: '4002'
                           message: Data Not Found
                           description: Booking not found
+                    trace:
+                      X-GAC-Trace-Id: a949eea7-56d5-4864-a5e6-0f15b6897960
+                      X-Trace-Id: 56d9e9d0-08d6-481e-94e7-e2667423cf37
+                      Idempotency-Key: 687d997b-391e-4906-94c5-a24c2fc12ba0
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - description: Erorr response object
+                    type: object
+                    title: error.v1.json
+                    properties:
+                      error:
+                        type: object
+                        required:
+                          - code
+                          - message
+                          - moreInfo
+                          - errors
+                        description: Error information
+                        properties:
+                          code:
+                            type: number
+                          message:
+                            type: string
+                            minLength: 1
+                          moreInfo:
+                            type: string
+                            minLength: 1
+                          errors:
+                            type: array
+                            uniqueItems: true
+                            minItems: 1
+                            items:
+                              type: object
+                              properties:
+                                code:
+                                  type: string
+                                  minLength: 1
+                                message:
+                                  type: string
+                                  minLength: 1
+                                description:
+                                  type: string
+                                  minLength: 1
+                              required:
+                                - code
+                                - message
+                                - description
+                    required:
+                      - error
+                  - description: This X-Trace-Ids is passed in by the calling party and will be returned withing each response objects. It can also be used as "Idempotency-Key" to ensure retries are for the same request.
+                    type: object
+                    title: rsp-x-trace.v1.json
+                    properties:
+                      trace:
+                        type: object
+                        description: trace object
+                        required:
+                          - X-GAC-Trace-Id
+                          - X-Trace-Id
+                          - Idempotency-Key
+                        properties:
+                          X-GAC-Trace-Id:
+                            type: string
+                            minLength: 1
+                            format: uuid
+                            description: GAC x-trace id
+                          X-Trace-Id:
+                            type: string
+                            minLength: 1
+                            format: uuid
+                            description: User x-trace id
+                          Idempotency-Key:
+                            type: string
+                            format: uuid
+                            description: Idempotency-Key to ensure safe retries of failed requests
+                            minLength: 1
+                    required:
+                      - trace
+              examples:
+                example-1:
+                  value:
+                    error:
+                      code: 500
+                      message: Server Error
+                      moreInfo: Internal Server Error
+                      errors:
+                        - code: '5000'
+                          message: Server Error
+                          description: Internal Server Error
+                    trace:
+                      X-GAC-Trace-Id: a949eea7-56d5-4864-a5e6-0f15b6897960
+                      X-Trace-Id: 56d9e9d0-08d6-481e-94e7-e2667423cf37
+                      Idempotency-Key: 687d997b-391e-4906-94c5-a24c2fc12ba0
+        '502':
+          description: Bad Gateway
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - description: Erorr response object
+                    type: object
+                    title: error.v1.json
+                    properties:
+                      error:
+                        type: object
+                        required:
+                          - code
+                          - message
+                          - moreInfo
+                          - errors
+                        description: Error information
+                        properties:
+                          code:
+                            type: number
+                          message:
+                            type: string
+                            minLength: 1
+                          moreInfo:
+                            type: string
+                            minLength: 1
+                          errors:
+                            type: array
+                            uniqueItems: true
+                            minItems: 1
+                            items:
+                              type: object
+                              properties:
+                                code:
+                                  type: string
+                                  minLength: 1
+                                message:
+                                  type: string
+                                  minLength: 1
+                                description:
+                                  type: string
+                                  minLength: 1
+                              required:
+                                - code
+                                - message
+                                - description
+                    required:
+                      - error
+                  - description: This X-Trace-Ids is passed in by the calling party and will be returned withing each response objects. It can also be used as "Idempotency-Key" to ensure retries are for the same request.
+                    type: object
+                    title: rsp-x-trace.v1.json
+                    properties:
+                      trace:
+                        type: object
+                        description: trace object
+                        required:
+                          - X-GAC-Trace-Id
+                          - X-Trace-Id
+                          - Idempotency-Key
+                        properties:
+                          X-GAC-Trace-Id:
+                            type: string
+                            minLength: 1
+                            format: uuid
+                            description: GAC x-trace id
+                          X-Trace-Id:
+                            type: string
+                            minLength: 1
+                            format: uuid
+                            description: User x-trace id
+                          Idempotency-Key:
+                            type: string
+                            format: uuid
+                            description: Idempotency-Key to ensure safe retries of failed requests
+                            minLength: 1
+                    required:
+                      - trace
+              examples:
+                example-1:
+                  value:
+                    error:
+                      code: 502
+                      message: Server Error
+                      moreInfo: Bad Gateway
+                      errors:
+                        - code: '5002'
+                          message: Server Error
+                          description: Bad Gateway
+                    trace:
+                      X-GAC-Trace-Id: a949eea7-56d5-4864-a5e6-0f15b6897960
+                      X-Trace-Id: 56d9e9d0-08d6-481e-94e7-e2667423cf37
+                      Idempotency-Key: 687d997b-391e-4906-94c5-a24c2fc12ba0
+        '504':
+          description: Gateway Timeout
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - description: Erorr response object
+                    type: object
+                    title: error.v1.json
+                    properties:
+                      error:
+                        type: object
+                        required:
+                          - code
+                          - message
+                          - moreInfo
+                          - errors
+                        description: Error information
+                        properties:
+                          code:
+                            type: number
+                          message:
+                            type: string
+                            minLength: 1
+                          moreInfo:
+                            type: string
+                            minLength: 1
+                          errors:
+                            type: array
+                            uniqueItems: true
+                            minItems: 1
+                            items:
+                              type: object
+                              properties:
+                                code:
+                                  type: string
+                                  minLength: 1
+                                message:
+                                  type: string
+                                  minLength: 1
+                                description:
+                                  type: string
+                                  minLength: 1
+                              required:
+                                - code
+                                - message
+                                - description
+                    required:
+                      - error
+                  - description: This X-Trace-Ids is passed in by the calling party and will be returned withing each response objects. It can also be used as "Idempotency-Key" to ensure retries are for the same request.
+                    type: object
+                    title: rsp-x-trace.v1.json
+                    properties:
+                      trace:
+                        type: object
+                        description: trace object
+                        required:
+                          - X-GAC-Trace-Id
+                          - X-Trace-Id
+                          - Idempotency-Key
+                        properties:
+                          X-GAC-Trace-Id:
+                            type: string
+                            minLength: 1
+                            format: uuid
+                            description: GAC x-trace id
+                          X-Trace-Id:
+                            type: string
+                            minLength: 1
+                            format: uuid
+                            description: User x-trace id
+                          Idempotency-Key:
+                            type: string
+                            format: uuid
+                            description: Idempotency-Key to ensure safe retries of failed requests
+                            minLength: 1
+                    required:
+                      - trace
+              examples:
+                example-1:
+                  value:
+                    error:
+                      code: 504
+                      message: Server Error
+                      moreInfo: Gateway Timeout
+                      errors:
+                        - code: '5004'
+                          message: Server Error
+                          description: Gateway Timeout
                     trace:
                       X-GAC-Trace-Id: a949eea7-56d5-4864-a5e6-0f15b6897960
                       X-Trace-Id: 56d9e9d0-08d6-481e-94e7-e2667423cf37
@@ -12023,7 +13727,7 @@ paths:
                         title: /bookings response body
                         type: object
               examples:
-                '/bookings/{id}/recalculate PUT Response Success Example':
+                example-1:
                   value:
                     status:
                       success: true
@@ -12210,8 +13914,8 @@ paths:
                         grand_total: '302.75'
                         total_paid: '302.75'
                       comments: First Time Traveller
-        '404':
-          description: Not Found
+        '422':
+          description: Unprocessable Entity (WebDAV)
           content:
             application/json:
               schema:
@@ -12289,16 +13993,295 @@ paths:
                     required:
                       - trace
               examples:
-                '/bookings/{id}/recalculate PUT Response Error Example':
+                example-1:
                   value:
                     error:
-                      code: 404
-                      message: Not Found
-                      moreInfo: Data requested not found
+                      code: 422
+                      message: Unprocessable Entity (WebDAV)
+                      moreInfo: One or more fields undefined
                       errors:
-                        - code: '4002'
-                          message: Data Not Found
-                          description: Booking not found
+                        - code: '4001'
+                          message: Service Field Undefined
+                          description: Number of Pax Required
+                    trace:
+                      X-GAC-Trace-Id: a949eea7-56d5-4864-a5e6-0f15b6897960
+                      X-Trace-Id: 56d9e9d0-08d6-481e-94e7-e2667423cf37
+                      Idempotency-Key: 687d997b-391e-4906-94c5-a24c2fc12ba0
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - description: Erorr response object
+                    type: object
+                    title: error.v1.json
+                    properties:
+                      error:
+                        type: object
+                        required:
+                          - code
+                          - message
+                          - moreInfo
+                          - errors
+                        description: Error information
+                        properties:
+                          code:
+                            type: number
+                          message:
+                            type: string
+                            minLength: 1
+                          moreInfo:
+                            type: string
+                            minLength: 1
+                          errors:
+                            type: array
+                            uniqueItems: true
+                            minItems: 1
+                            items:
+                              type: object
+                              properties:
+                                code:
+                                  type: string
+                                  minLength: 1
+                                message:
+                                  type: string
+                                  minLength: 1
+                                description:
+                                  type: string
+                                  minLength: 1
+                              required:
+                                - code
+                                - message
+                                - description
+                    required:
+                      - error
+                  - description: This X-Trace-Ids is passed in by the calling party and will be returned withing each response objects. It can also be used as "Idempotency-Key" to ensure retries are for the same request.
+                    type: object
+                    title: rsp-x-trace.v1.json
+                    properties:
+                      trace:
+                        type: object
+                        description: trace object
+                        required:
+                          - X-GAC-Trace-Id
+                          - X-Trace-Id
+                          - Idempotency-Key
+                        properties:
+                          X-GAC-Trace-Id:
+                            type: string
+                            minLength: 1
+                            format: uuid
+                            description: GAC x-trace id
+                          X-Trace-Id:
+                            type: string
+                            minLength: 1
+                            format: uuid
+                            description: User x-trace id
+                          Idempotency-Key:
+                            type: string
+                            format: uuid
+                            description: Idempotency-Key to ensure safe retries of failed requests
+                            minLength: 1
+                    required:
+                      - trace
+              examples:
+                example-1:
+                  value:
+                    error:
+                      code: 500
+                      message: Server Error
+                      moreInfo: Internal Server Error
+                      errors:
+                        - code: '5000'
+                          message: Server Error
+                          description: Internal Server Error
+                    trace:
+                      X-GAC-Trace-Id: a949eea7-56d5-4864-a5e6-0f15b6897960
+                      X-Trace-Id: 56d9e9d0-08d6-481e-94e7-e2667423cf37
+                      Idempotency-Key: 687d997b-391e-4906-94c5-a24c2fc12ba0
+        '502':
+          description: Bad Gateway
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - description: Erorr response object
+                    type: object
+                    title: error.v1.json
+                    properties:
+                      error:
+                        type: object
+                        required:
+                          - code
+                          - message
+                          - moreInfo
+                          - errors
+                        description: Error information
+                        properties:
+                          code:
+                            type: number
+                          message:
+                            type: string
+                            minLength: 1
+                          moreInfo:
+                            type: string
+                            minLength: 1
+                          errors:
+                            type: array
+                            uniqueItems: true
+                            minItems: 1
+                            items:
+                              type: object
+                              properties:
+                                code:
+                                  type: string
+                                  minLength: 1
+                                message:
+                                  type: string
+                                  minLength: 1
+                                description:
+                                  type: string
+                                  minLength: 1
+                              required:
+                                - code
+                                - message
+                                - description
+                    required:
+                      - error
+                  - description: This X-Trace-Ids is passed in by the calling party and will be returned withing each response objects. It can also be used as "Idempotency-Key" to ensure retries are for the same request.
+                    type: object
+                    title: rsp-x-trace.v1.json
+                    properties:
+                      trace:
+                        type: object
+                        description: trace object
+                        required:
+                          - X-GAC-Trace-Id
+                          - X-Trace-Id
+                          - Idempotency-Key
+                        properties:
+                          X-GAC-Trace-Id:
+                            type: string
+                            minLength: 1
+                            format: uuid
+                            description: GAC x-trace id
+                          X-Trace-Id:
+                            type: string
+                            minLength: 1
+                            format: uuid
+                            description: User x-trace id
+                          Idempotency-Key:
+                            type: string
+                            format: uuid
+                            description: Idempotency-Key to ensure safe retries of failed requests
+                            minLength: 1
+                    required:
+                      - trace
+              examples:
+                example-1:
+                  value:
+                    error:
+                      code: 502
+                      message: Server Error
+                      moreInfo: Bad Gateway
+                      errors:
+                        - code: '5002'
+                          message: Server Error
+                          description: Bad Gateway
+                    trace:
+                      X-GAC-Trace-Id: a949eea7-56d5-4864-a5e6-0f15b6897960
+                      X-Trace-Id: 56d9e9d0-08d6-481e-94e7-e2667423cf37
+                      Idempotency-Key: 687d997b-391e-4906-94c5-a24c2fc12ba0
+        '504':
+          description: Gateway Timeout
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - description: Erorr response object
+                    type: object
+                    title: error.v1.json
+                    properties:
+                      error:
+                        type: object
+                        required:
+                          - code
+                          - message
+                          - moreInfo
+                          - errors
+                        description: Error information
+                        properties:
+                          code:
+                            type: number
+                          message:
+                            type: string
+                            minLength: 1
+                          moreInfo:
+                            type: string
+                            minLength: 1
+                          errors:
+                            type: array
+                            uniqueItems: true
+                            minItems: 1
+                            items:
+                              type: object
+                              properties:
+                                code:
+                                  type: string
+                                  minLength: 1
+                                message:
+                                  type: string
+                                  minLength: 1
+                                description:
+                                  type: string
+                                  minLength: 1
+                              required:
+                                - code
+                                - message
+                                - description
+                    required:
+                      - error
+                  - description: This X-Trace-Ids is passed in by the calling party and will be returned withing each response objects. It can also be used as "Idempotency-Key" to ensure retries are for the same request.
+                    type: object
+                    title: rsp-x-trace.v1.json
+                    properties:
+                      trace:
+                        type: object
+                        description: trace object
+                        required:
+                          - X-GAC-Trace-Id
+                          - X-Trace-Id
+                          - Idempotency-Key
+                        properties:
+                          X-GAC-Trace-Id:
+                            type: string
+                            minLength: 1
+                            format: uuid
+                            description: GAC x-trace id
+                          X-Trace-Id:
+                            type: string
+                            minLength: 1
+                            format: uuid
+                            description: User x-trace id
+                          Idempotency-Key:
+                            type: string
+                            format: uuid
+                            description: Idempotency-Key to ensure safe retries of failed requests
+                            minLength: 1
+                    required:
+                      - trace
+              examples:
+                example-1:
+                  value:
+                    error:
+                      code: 504
+                      message: Server Error
+                      moreInfo: Gateway Timeout
+                      errors:
+                        - code: '5004'
+                          message: Server Error
+                          description: Gateway Timeout
                     trace:
                       X-GAC-Trace-Id: a949eea7-56d5-4864-a5e6-0f15b6897960
                       X-Trace-Id: 56d9e9d0-08d6-481e-94e7-e2667423cf37
@@ -12411,12 +14394,12 @@ paths:
                     required:
                       - trace
               examples:
-                '/bookings/{id}/cancel DELETE Response Success Example':
+                example-1:
                   value:
                     status:
                       success: true
                       status: 204
-                      message: Data removed successfully
+                      message: No Data Found
                     trace:
                       X-GAC-Trace-Id: a949eea7-56d5-4864-a5e6-0f15b6897960
                       X-Trace-Id: 56d9e9d0-08d6-481e-94e7-e2667423cf37
@@ -12500,7 +14483,7 @@ paths:
                     required:
                       - trace
               examples:
-                '/bookings/{id}/cancel DELETE Response Error Example':
+                example-1:
                   value:
                     error:
                       code: 404
@@ -12510,6 +14493,285 @@ paths:
                         - code: '4002'
                           message: Data Not Found
                           description: Booking not found
+                    trace:
+                      X-GAC-Trace-Id: a949eea7-56d5-4864-a5e6-0f15b6897960
+                      X-Trace-Id: 56d9e9d0-08d6-481e-94e7-e2667423cf37
+                      Idempotency-Key: 687d997b-391e-4906-94c5-a24c2fc12ba0
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - description: Erorr response object
+                    type: object
+                    title: error.v1.json
+                    properties:
+                      error:
+                        type: object
+                        required:
+                          - code
+                          - message
+                          - moreInfo
+                          - errors
+                        description: Error information
+                        properties:
+                          code:
+                            type: number
+                          message:
+                            type: string
+                            minLength: 1
+                          moreInfo:
+                            type: string
+                            minLength: 1
+                          errors:
+                            type: array
+                            uniqueItems: true
+                            minItems: 1
+                            items:
+                              type: object
+                              properties:
+                                code:
+                                  type: string
+                                  minLength: 1
+                                message:
+                                  type: string
+                                  minLength: 1
+                                description:
+                                  type: string
+                                  minLength: 1
+                              required:
+                                - code
+                                - message
+                                - description
+                    required:
+                      - error
+                  - description: This X-Trace-Ids is passed in by the calling party and will be returned withing each response objects. It can also be used as "Idempotency-Key" to ensure retries are for the same request.
+                    type: object
+                    title: rsp-x-trace.v1.json
+                    properties:
+                      trace:
+                        type: object
+                        description: trace object
+                        required:
+                          - X-GAC-Trace-Id
+                          - X-Trace-Id
+                          - Idempotency-Key
+                        properties:
+                          X-GAC-Trace-Id:
+                            type: string
+                            minLength: 1
+                            format: uuid
+                            description: GAC x-trace id
+                          X-Trace-Id:
+                            type: string
+                            minLength: 1
+                            format: uuid
+                            description: User x-trace id
+                          Idempotency-Key:
+                            type: string
+                            format: uuid
+                            description: Idempotency-Key to ensure safe retries of failed requests
+                            minLength: 1
+                    required:
+                      - trace
+              examples:
+                example-1:
+                  value:
+                    error:
+                      code: 500
+                      message: Server Error
+                      moreInfo: Internal Server Error
+                      errors:
+                        - code: '5000'
+                          message: Server Error
+                          description: Internal Server Error
+                    trace:
+                      X-GAC-Trace-Id: a949eea7-56d5-4864-a5e6-0f15b6897960
+                      X-Trace-Id: 56d9e9d0-08d6-481e-94e7-e2667423cf37
+                      Idempotency-Key: 687d997b-391e-4906-94c5-a24c2fc12ba0
+        '502':
+          description: Bad Gateway
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - description: Erorr response object
+                    type: object
+                    title: error.v1.json
+                    properties:
+                      error:
+                        type: object
+                        required:
+                          - code
+                          - message
+                          - moreInfo
+                          - errors
+                        description: Error information
+                        properties:
+                          code:
+                            type: number
+                          message:
+                            type: string
+                            minLength: 1
+                          moreInfo:
+                            type: string
+                            minLength: 1
+                          errors:
+                            type: array
+                            uniqueItems: true
+                            minItems: 1
+                            items:
+                              type: object
+                              properties:
+                                code:
+                                  type: string
+                                  minLength: 1
+                                message:
+                                  type: string
+                                  minLength: 1
+                                description:
+                                  type: string
+                                  minLength: 1
+                              required:
+                                - code
+                                - message
+                                - description
+                    required:
+                      - error
+                  - description: This X-Trace-Ids is passed in by the calling party and will be returned withing each response objects. It can also be used as "Idempotency-Key" to ensure retries are for the same request.
+                    type: object
+                    title: rsp-x-trace.v1.json
+                    properties:
+                      trace:
+                        type: object
+                        description: trace object
+                        required:
+                          - X-GAC-Trace-Id
+                          - X-Trace-Id
+                          - Idempotency-Key
+                        properties:
+                          X-GAC-Trace-Id:
+                            type: string
+                            minLength: 1
+                            format: uuid
+                            description: GAC x-trace id
+                          X-Trace-Id:
+                            type: string
+                            minLength: 1
+                            format: uuid
+                            description: User x-trace id
+                          Idempotency-Key:
+                            type: string
+                            format: uuid
+                            description: Idempotency-Key to ensure safe retries of failed requests
+                            minLength: 1
+                    required:
+                      - trace
+              examples:
+                example-1:
+                  value:
+                    error:
+                      code: 502
+                      message: Server Error
+                      moreInfo: Bad Gateway
+                      errors:
+                        - code: '5002'
+                          message: Server Error
+                          description: Bad Gateway
+                    trace:
+                      X-GAC-Trace-Id: a949eea7-56d5-4864-a5e6-0f15b6897960
+                      X-Trace-Id: 56d9e9d0-08d6-481e-94e7-e2667423cf37
+                      Idempotency-Key: 687d997b-391e-4906-94c5-a24c2fc12ba0
+        '504':
+          description: Gateway Timeout
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - description: Erorr response object
+                    type: object
+                    title: error.v1.json
+                    properties:
+                      error:
+                        type: object
+                        required:
+                          - code
+                          - message
+                          - moreInfo
+                          - errors
+                        description: Error information
+                        properties:
+                          code:
+                            type: number
+                          message:
+                            type: string
+                            minLength: 1
+                          moreInfo:
+                            type: string
+                            minLength: 1
+                          errors:
+                            type: array
+                            uniqueItems: true
+                            minItems: 1
+                            items:
+                              type: object
+                              properties:
+                                code:
+                                  type: string
+                                  minLength: 1
+                                message:
+                                  type: string
+                                  minLength: 1
+                                description:
+                                  type: string
+                                  minLength: 1
+                              required:
+                                - code
+                                - message
+                                - description
+                    required:
+                      - error
+                  - description: This X-Trace-Ids is passed in by the calling party and will be returned withing each response objects. It can also be used as "Idempotency-Key" to ensure retries are for the same request.
+                    type: object
+                    title: rsp-x-trace.v1.json
+                    properties:
+                      trace:
+                        type: object
+                        description: trace object
+                        required:
+                          - X-GAC-Trace-Id
+                          - X-Trace-Id
+                          - Idempotency-Key
+                        properties:
+                          X-GAC-Trace-Id:
+                            type: string
+                            minLength: 1
+                            format: uuid
+                            description: GAC x-trace id
+                          X-Trace-Id:
+                            type: string
+                            minLength: 1
+                            format: uuid
+                            description: User x-trace id
+                          Idempotency-Key:
+                            type: string
+                            format: uuid
+                            description: Idempotency-Key to ensure safe retries of failed requests
+                            minLength: 1
+                    required:
+                      - trace
+              examples:
+                example-1:
+                  value:
+                    error:
+                      code: 504
+                      message: Server Error
+                      moreInfo: Gateway Timeout
+                      errors:
+                        - code: '5004'
+                          message: Server Error
+                          description: Gateway Timeout
                     trace:
                       X-GAC-Trace-Id: a949eea7-56d5-4864-a5e6-0f15b6897960
                       X-Trace-Id: 56d9e9d0-08d6-481e-94e7-e2667423cf37
@@ -12545,225 +14807,7 @@ paths:
           required: true
           description: add a req. header for payload to be compressed by the server
 components:
-  schemas:
-    service:
-      title: /services Response Body
-      type: object
-      description: Services model
-      properties:
-        lead:
-          type: boolean
-          description: is lead passenger
-        pnr:
-          type: string
-          description: passenger PNR
-          example: SJE34D
-          minLength: 0
-          maxLength: 7
-        class:
-          type: string
-          description: passenger class
-          example: First
-          minLength: 0
-          maxLength: 50
-        details:
-          description: Passenger model
-          allOf:
-            - properties:
-                id:
-                  type: string
-                  example: 497f6eca-6276-4993-bfeb-53cbbbba6f08
-                  description: Passenger object ID
-                  format: uuid
-                type:
-                  type: string
-                  enum:
-                    - Adult
-                    - Child
-                    - Infant
-                  example: Adult
-                  description: passenger type
-                name:
-                  type: object
-                  description: Personal information of the passenger
-                  required:
-                    - title
-                    - forename
-                    - surname
-                  properties:
-                    title:
-                      type: string
-                      minLength: 1
-                      enum:
-                        - Mr.
-                        - Mrs.
-                        - Ms.
-                        - Dr.
-                        - Mstr.
-                        - Miss
-                        - Mx.
-                        - Prof.
-                        - Rev.
-                        - Sir
-                        - Sister
-                        - Team
-                      example: Mr.
-                      maxLength: 6
-                    forename:
-                      type: string
-                      x-faker: name.firstName
-                      minLength: 1
-                      example: John
-                      maxLength: 200
-                    surname:
-                      type: string
-                      x-faker: name.lastName
-                      minLength: 1
-                      example: Doe
-                      maxLength: 200
-                contacts:
-                  description: Contact model
-                  type: object
-                  title: ''
-                  properties:
-                    address:
-                      type: object
-                      minProperties: 1
-                      description: Addres information
-                      properties:
-                        streets:
-                          type: array
-                          minItems: 1
-                          description: ''
-                          items:
-                            type: string
-                            x-faker: address.streetAddress
-                            example: 'No 221/1, Baker''s Street'
-                            minLength: 1
-                            maxLength: 200
-                        city:
-                          type: string
-                          x-faker: address.city
-                          example: Hethrow
-                          minLength: 0
-                          maxLength: 100
-                        state:
-                          type: string
-                          x-faker: address.state
-                          example: London
-                          minLength: 0
-                          maxLength: 100
-                        postal_code:
-                          type: string
-                          x-faker: address.zipCode
-                          example: LN223 2323
-                          minLength: 0
-                          maxLength: 100
-                        country:
-                          type: string
-                          x-faker: address.country
-                          example: United Kingdom
-                          minLength: 0
-                          maxLength: 60
-                    emails:
-                      type: array
-                      uniqueItems: true
-                      minItems: 1
-                      description: Email information
-                      items:
-                        type: object
-                        properties:
-                          type:
-                            type: string
-                            example: Main
-                            maxLength: 100
-                            minLength: 1
-                          email:
-                            type: string
-                            x-faker: internet.email
-                            minLength: 1
-                            format: email
-                            example: email@email.com
-                            maxLength: 100
-                    phones:
-                      type: array
-                      uniqueItems: true
-                      minItems: 1
-                      description: Phone numbers
-                      items:
-                        type: object
-                        properties:
-                          type:
-                            type: string
-                            minLength: 1
-                            example: Office
-                            maxLength: 100
-                          name:
-                            type: string
-                            x-faker: name.jobTitle
-                            minLength: 1
-                            example: Head Office
-                            maxLength: 100
-                          phone:
-                            type: string
-                            x-faker: phone.phoneNumber
-                            minLength: 1
-                            example: '+18666612345'
-                            maxLength: 16
-                            pattern: '^\+[1-9]{1}[0-9]{3,14}$'
-                date_of_birth:
-                  type: string
-                  minLength: 10
-                  format: date
-                  example: '1989-02-14'
-                  maxLength: 10
-                  description: Date of birth of the passenger
-                passport_no:
-                  type: string
-                  minLength: 0
-                  example: N32343423
-                  maxLength: 20
-                  description: Passport number of the passenger
-                comments:
-                  type: string
-                  example: First time traveller.
-                  maxLength: 750
-                  description: Special comments aboout the passenger
-                signage:
-                  type: string
-                  minLength: 0
-                  x-faker: name.firstName
-                  example: John Doe
-                  maxLength: 200
-                  description: Signage of the passenger
-                sig_image:
-                  type: string
-                  x-faker: image.imageUrl
-                  example: signage_image.png
-                  maxLength: 200
-                  description: Sge image
-                image:
-                  type: string
-                  x-faker: image.imageUrl
-                  example: passenger_image.png
-                  maxLength: 200
-                  description: Sge image
-                pas_stat:
-                  type: boolean
-                  description: Status of the passenger
-              required:
-                - id
-                - name
-                - contacts
-                - type
-          title: /passengers response body
-          type: object
-      required:
-        - lead
-        - pnr
-        - class
-      x-tags:
-        - Services
+  schemas: {}
   parameters:
     xTraceId:
       schema:
