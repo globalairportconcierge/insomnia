@@ -8,10 +8,8 @@ info:
     name: GAC
     url: 'https://gac.com/api-license.html'
 servers:
-  - url: 'https://baas.globalairportconcierge.com/v1/'
+  - url: 'http://online.globalairportconcierge.com/'
     description: DO Prism Mock
-  - description: Local Prism Mock
-    url: 'http://127.0.0.1:4010'
 paths:
   /bookings:
     get:
